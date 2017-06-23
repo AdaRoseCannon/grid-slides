@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Grid Slides</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="css/style.css" rel="stylesheet">
+        <style>
+            html, body {
+                min-height: 100vh;
+                min-width: 100vw;
+                margin: 0;
+            }
+        </style>
+        </script>
+        <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/edf84e6e/webcomponents-sd-ce.js"></script>
+        <script src="scripts/main.js"></script>
+        <script src="scripts/defaults.js">
+        </script>
+    </head>
+    <body>
+        <grid-slides-controller presenting>
+
+            <grid-slide el-by-el="preserve: true;">
+                <h1>Grid Slides</h1>
+                <h1>1</h1>
+                <h1>2</h1>
+                <h1>3</h1>
+            </grid-slide>
+            <grid-notes>
+                Lorem Ipsum
+            </grid-notes>
+
+            <grid-slide el-by-el="preserve: true;">
+                <h1>Slide Two</h1>
+                <h1>4</h1>
+                <h1>5</h1>
+                <h1>6</h1>
+            </grid-slide>
+            <grid-notes>
+                Lorem Ipsum
+            </grid-notes>
+
+        </grid-slides-controller>
+    </body>
+</html>
