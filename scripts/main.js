@@ -191,6 +191,7 @@ class GridSlidesController extends HTMLElement {
 			
 			const oldSlide = this.getSlide(oldValue);
 			if (oldSlide) {
+				oldSlide.setAttribute('teardown-pending', '');
 				oldSlide.removeAttribute('active');
 				
 				if (GRIDSLIDES.utils.priorSiblings(oldSlide).includes(newSlide)) {
@@ -207,7 +208,12 @@ class GridSlidesController extends HTMLElement {
 				} else {
 					animOut.push(activeState);
 				}
-				oldSlide.animate(animOut, oldSlideTransitionSettings);
+				oldSlide.animate(animOut, oldSlideTransitionSettings)
+				.finished.then(function () {
+					oldSlide.removeAttribute('teardown-pending');	
+				});
+			} else {
+				direction = 'reverse';
 			}
 
 			const newSlideTransition = newSlide.transition || this.transition;
@@ -356,6 +362,7 @@ class GridSlide extends HTMLElement {
 				top: 0;
 				right: 0;
 				display: var(--button-display, block);
+				grid-area: 1/full;
 			}`;
 
 		var content = document.createElement('slot');
@@ -381,11 +388,7 @@ class GridSlide extends HTMLElement {
 		this.shadowRoot.appendChild(content);
 		this.shadowRoot.appendChild(playButton);
 	}
-
-	static get observedAttributes() {
-		return ['pending', 'active', 'data', 'transition'].concat(Array.from(GRIDSLIDES.registeredSlideDataKeys));
-	}
-
+	
 	update() {
 		this.__data.splice(0);
 		for (const attr of this.attributes) {
@@ -394,17 +397,17 @@ class GridSlide extends HTMLElement {
 			}
 		}
 	}
-
+	
 	registerSlideData(obj) {
 		this.parentNode.registerSlideGenerator(this, obj);
 	}
-
+	
 	reset() {
 		this.teardown();
 		this.setup();
 		this.run(true);
 	}
-
+	
 	setup() {
 		const actions = [];
 		for (const datum of this.__data) {
@@ -423,14 +426,14 @@ class GridSlide extends HTMLElement {
 		this.__dirty = false;
 		this.__complete = false;
 	}
-
+	
 	teardown() {
 		this.__isSetup = false;
 		for (const datum of this.__data) {
 			if (datum.teardown) datum.teardown.apply(this, []);
 		}
 	}
-
+	
 	run(noDirty) {
 		if (!this.__isSetup) {
 			throw Error('Cannot run, Not setup', this);
@@ -442,13 +445,17 @@ class GridSlide extends HTMLElement {
 			this.__complete = true;
 		}
 	}
-
+	
+		static get observedAttributes() {
+			return ['pending', 'active', 'data', 'transition', 'teardown-pending'].concat(Array.from(GRIDSLIDES.registeredSlideDataKeys));
+		}
+	
 	attributeChangedCallback(attr, oldValue, newValue) {
-
+		
 		if (attr === 'active') {
 			if (newValue === null) {
-			   this.teardown();
-			   return;
+				if (!this.hasAttribute('teardown-pending')) this.teardown();
+				return;
 			}
 			if (!this.__isSetup) {
 				this.teardown();
@@ -457,7 +464,15 @@ class GridSlide extends HTMLElement {
 			this.run();
 		}
 
+		if (attr === 'teardown-pending') {
+			if (newValue === null) {
+				this.teardown();
+			}
+		}
+		
 		if (attr === 'pending') {
+
+			if (!this.hasAttribute('pending')) return;
 
 			if (newValue !== null) {
 

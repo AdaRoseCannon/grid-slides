@@ -5,14 +5,27 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="../css/style.css" rel="stylesheet">
+        <link href="https://samsunginter.net/fonts/SamsungOne/fonts.css" rel="stylesheet">
         <style>
             html, body {
                 min-height: 100vh;
                 min-width: 100vw;
-                margin: 0;
-            }
+				margin: 0;
+				font-family: 'Samsung One', Helvetica, Arial, sans-serif;
+			}
+			
+			grid-slide {
+				background-color: darkslategray;
+				background-image: url('images/bg.png');
+				color: white;
+				border: 1px solid grey;
+				flex-direction: column;
+				font-size: 3rem;
+				background-blend-mode: soft-light;
+				background-size: cover;
+				background-position: center center;
+			}
         </style>
-        </script>
         <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/edf84e6e/webcomponents-sd-ce.js"></script>
         <script src="../scripts/main.js"></script>
         <script src="../scripts/defaults.js"></script>
@@ -20,12 +33,14 @@
     <body>
         <grid-slides-controller>
 
-            <grid-slide el-by-el="preserve: true;">
-                <h1>Grid Slides</h1>
-                <h1>1</h1>
-                <h1>2</h1>
-                <h1>3</h1>
-            </grid-slide>
+			<grid-slide el-by-el style="background-image: url(images/me-and-dan.jpg); background-color: #555;">
+				<section>
+					<h1>@samsunginternet</h1>
+					<h1 style="justify-self: flex-end; align-self: flex-end;">@lady_ada_king</h1>
+				</section>
+				<img src="images/StatCounter-browser-GB-monthly-201606-201706.png" style="object-fit: contain; background: white;" />
+			</grid-slide>
+
             <grid-notes>
                 Lorem Ipsum
             </grid-notes>

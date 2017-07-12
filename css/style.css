@@ -63,7 +63,6 @@ grid-slides-controller[presenting] {
 }
 
 grid-slide {
-    display: block;
     grid-column: slide;
     background-color: beige;
 	transform-origin: top center;
@@ -72,11 +71,10 @@ grid-slide {
 	position: relative;
 	display: grid;
 
-	grid-template-columns: [full-start] var(--padding) [content-start] var(--padding) [content-inner-start]  1fr [one-quarter] 2fr [center] 2fr [three-quarter] 1fr [content-inner-end] var(--padding) [content-end] var(--padding) [full-end];
-}
+	max-width: 100%;
+	max-height: 100%;
 
-grid-slide > * {
-	grid-area: auto/content-inner;
+	grid-template-columns: [full-start] var(--padding) [content-start] var(--padding) [content-inner-start]  1fr [one-quarter] 2fr [center] 2fr [three-quarter] 1fr [content-inner-end] var(--padding) [content-end] var(--padding) [full-end];
 }
 
 grid-notes {
@@ -87,11 +85,30 @@ grid-notes {
 }
 
 grid-slides-controller[presenting] > grid-slide {
-    display: block;
-    transform: none;
     grid-row: 1;
 }
 
 grid-slides-controller[presenting] > grid-notes {
     display: none;
+}
+
+grid-slide > section {
+	display: contents;
+}
+
+grid-slide > *,
+grid-slide > section > * {
+	grid-area: auto/content-inner;
+	max-width: 100%;
+	max-height: 100%;
+	
+}
+
+grid-slide > img,
+grid-slide > section > img {
+	grid-area: 1/full/-1/full;
+	align-self: stretch;
+	object-fit: cover;
+	width: 100%;
+	height: 100%;
 }
