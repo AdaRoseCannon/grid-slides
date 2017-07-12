@@ -40,49 +40,56 @@
     --easeInOutBack  : cubic-bezier(0.680, -0.550, 0.265, 1.550);
 }
 
+html,body {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
 grid-slides-controller {
     --padding: 1rem;
     --notes-size: 0.3;
-    --note-height: calc(100vh * var(--notes-size));
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
-    display: grid;
-    grid-template-columns: [full-start] var(
-    --padding) [slide-start] var(--padding) [slide-inner-start]  1fr [one-quarter] 2fr [center] 2fr [three-quarter] 1fr [slide-inner-end] var(--padding) [slide-end] var(--padding) [full-end];
-    margin-top: var(
-    --padding);
+	width: 100%;
+	height: 100%;
+	overflow-y: auto;
+	overflow-x: hidden;
+	display: grid;
+	padding-top: var(--padding);
+    grid-template-columns: [full-start] var(--padding) [slide-start] var(--padding) [slide-inner-start]  1fr [one-quarter] 2fr [center] 2fr [three-quarter] 1fr [slide-inner-end] var(--padding) [slide-end] var(--padding) [full-end];
+}
+
+grid-slides-controller[presenting] {
+	--button-display: none;
 }
 
 grid-slide {
     display: block;
     grid-column: slide;
     background-color: beige;
-    transform-origin: top center;
-    min-height: calc(100vh - var(--padding) * 2);
-    transform: scale(calc(1.0 - var(--notes-size)));
-    margin-bottom: calc(-1 * var(--note-height));
+	transform-origin: top center;
+	margin: 0 0 var(--padding) 0;
+	min-height: calc(100vh - var(--padding) * 2);
+	position: relative;
+	display: grid;
+
+	grid-template-columns: [full-start] var(--padding) [content-start] var(--padding) [content-inner-start]  1fr [one-quarter] 2fr [center] 2fr [three-quarter] 1fr [content-inner-end] var(--padding) [content-end] var(--padding) [full-end];
+}
+
+grid-slide > * {
+	grid-area: auto/content-inner;
 }
 
 grid-notes {
     display: block;
     grid-column: slide;
+	margin: 0 0 var(--padding) 0;
     background: lavender;
-    height: var(--note-height);
-}
-
-grid-slides-controller[presenting] {
-    margin-top: 0;
-    grid-template-rows: [full-start] var(
-    --padding) [slide-start] var(--padding) [slide-inner-start]  1fr [one-quarter] 2fr [center] 2fr [three-quarter] 1fr [slide-inner-end] var(--padding) [slide-end] var(--padding) [full-end];
 }
 
 grid-slides-controller[presenting] > grid-slide {
     display: block;
     transform: none;
-    grid-row: slide;
-    margin-bottom: 0;
-    min-height: 0;
+    grid-row: 1;
 }
 
 grid-slides-controller[presenting] > grid-notes {

@@ -4,7 +4,7 @@
         <title>Grid Slides</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="css/style.css" rel="stylesheet">
+        <link href="../css/style.css" rel="stylesheet">
         <style>
             html, body {
                 min-height: 100vh;
@@ -14,12 +14,11 @@
         </style>
         </script>
         <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/edf84e6e/webcomponents-sd-ce.js"></script>
-        <script src="scripts/main.js"></script>
-        <script src="scripts/defaults.js">
-        </script>
+        <script src="../scripts/main.js"></script>
+        <script src="../scripts/defaults.js"></script>
     </head>
     <body>
-        <grid-slides-controller presenting>
+        <grid-slides-controller>
 
             <grid-slide el-by-el="preserve: true;">
                 <h1>Grid Slides</h1>
@@ -41,6 +40,14 @@
                 Lorem Ipsum
             </grid-notes>
 
-        </grid-slides-controller>
+		</grid-slides-controller>
+		
+		<script>
+
+			window.addEventListener('DOMContentLoaded', function () {
+				// document.querySelector('grid-slides-controller').startPresenting();
+			});
+
+		</script>
     </body>
 </html>

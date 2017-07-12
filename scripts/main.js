@@ -106,61 +106,93 @@ window.GRIDSLIDES = GRIDSLIDES;
 
 class GridSlidesController extends HTMLElement {
 
-	static get observedAttributes() { return ['slide', 'transition']; }
-
+	
 	constructor() {
 		// Always call super first in constructor
 		super();
 		this.transition = GRIDSLIDES.transitions.get(this.getAttribute('transition') || 'slide');
 		GRIDSLIDES.registeredSlideDataKeys = Array.from(GRIDSLIDES.slideData.keys());
-
-		GRIDSLIDES.utils.events.on(this, 'click', function () {
-			this.getCurrentSlide().run();
+		
+		this.addEventListener('click', function () {
+			if (this.hasAttribute('presenting')) {
+				this.getCurrentSlide().run();
+			}
 		});
-
-		GRIDSLIDES.utils.events.on(this, GRIDSLIDES.constants.events.finished, function () {
+		
+		this.addEventListener(GRIDSLIDES.constants.events.finished, function () {
 			this.nextSlide();
 		});
-
-		GRIDSLIDES.utils.events.on(this, 'keyup', e => {
+		
+		this.addEventListener('keyup', e => {
 			switch (e.keyCode) {
-
+				
 				// Left Arrow
 				case 37:
 				case 33:
-					this.prevSlide();
-					e.preventDefault();
-					break;
-
+				this.prevSlide();
+				e.preventDefault();
+				break;
+				
 				// Right Arrow
 				case 13:
 				case 39:
 				case 34:
-					this.getCurrentSlide().run();
-					e.preventDefault();
-					break;
+				this.getCurrentSlide().run();
+				e.preventDefault();
+				break;
 			}
 		});
-
+		
 		this.tabIndex = 0;
+		
+		var style=document.createElement('style');
+		style.innerHTML = `
+		.slide-controls {
+			grid-column: slide;
+			margin-bottom: var(--padding);
+			justify-content: center;
+			display: var(--button-display, flex);
+		}
+		`;
+		
+		var content = document.createElement('slot');
+		
+		var startButton = document.createElement('button');
+		startButton.classList.add('start-button');
+		startButton.textContent = 'Start Presentation';
+		startButton.addEventListener('click', this.startPresenting.bind(this));
+		
+		var controls = document.createElement('div');
+		controls.classList.add('slide-controls');
+		controls.appendChild(startButton);
+		
+		this.attachShadow({mode: 'open'});
+		this.shadowRoot.appendChild(style);
+		this.shadowRoot.appendChild(controls);
+		this.shadowRoot.appendChild(content);
 	}
-
+	
+	static get observedAttributes() { return ['slide', 'transition', 'presenting']; }
 	attributeChangedCallback(attr, oldValue, newValue) {
 		if (attr === 'transition') {
 			this.transition = GRIDSLIDES.transitions.get(newValue || 'slide');
 		}
+		if (attr === 'presenting') {
+			if (newValue === null) return;
+			this.startPresenting();
+		}
 		if (attr === 'slide') {
 			if (newValue === null) return;
-
+			
 			let direction = 'normal';
-
+			
 			const newSlide = this.getSlide(newValue);
 			if (!newSlide) return;
-
+			
 			const oldSlide = this.getSlide(oldValue);
 			if (oldSlide) {
 				oldSlide.removeAttribute('active');
-
+				
 				if (GRIDSLIDES.utils.priorSiblings(oldSlide).includes(newSlide)) {
 					direction = 'reverse';
 				}
@@ -199,7 +231,12 @@ class GridSlidesController extends HTMLElement {
 		}
 	}
 
-	startPresenting() {
+	startPresenting(evt) {
+
+		if (evt) evt.stopPropagation();
+
+		// Set the attribute then it will recrse back to this when the attribute is changed.
+		if (this.hasAttribute('presenting')) return;
 
 		this.setAttribute('presenting', '');
 
@@ -218,7 +255,7 @@ class GridSlidesController extends HTMLElement {
 			}
 		}
 
-		this.setAttribute('slide', firstSlide.id || Array.from(this.children).indexOf(firstSlide));
+		this.setSlide(firstSlide);
 	}
 
 	__setup(slideEl) {
@@ -231,9 +268,12 @@ class GridSlidesController extends HTMLElement {
 	 * throws if invalid number given
 	 * throws if invalid name given
 	 */
-	 getCurrentSlide() {
-		 return this.getSlide(this.getAttribute('slide'));
-	 }
+	getCurrentSlide() {
+		if (!this.getAttribute('slide')) {
+			return false;
+		}
+		return this.getSlide(this.getAttribute('slide'));
+	}
 
 	getSlide(slideVal) {
 		if (slideVal === null) {
@@ -305,6 +345,41 @@ class GridSlide extends HTMLElement {
 		for (const datum of this.__data) {
 			if (datum.init) datum.init.apply(this, []);
 		}
+
+		var style=document.createElement('style');
+		style.innerHTML = `
+
+			.play-button {
+				color: green;
+				font-size: 1.5em;
+				position: absolute;
+				top: 0;
+				right: 0;
+				display: var(--button-display, block);
+			}`;
+
+		var content = document.createElement('slot');
+
+		var playButton = document.createElement('button');
+		playButton.classList.add('play-button');
+		playButton.title = 'Play';
+		playButton.textContent = '►';
+		playButton.addEventListener('click', function () {
+			if (!this.__isSetup) {
+				this.setup();
+			}
+			
+			this.run();
+			
+			if (this.__complete) {
+				return this.reset();
+			}
+		}.bind(this));
+
+		this.attachShadow({mode: 'open'});
+		this.shadowRoot.appendChild(style);
+		this.shadowRoot.appendChild(content);
+		this.shadowRoot.appendChild(playButton);
 	}
 
 	static get observedAttributes() {
@@ -346,6 +421,7 @@ class GridSlide extends HTMLElement {
 		}());
 		this.__isSetup = true;
 		this.__dirty = false;
+		this.__complete = false;
 	}
 
 	teardown() {
@@ -363,6 +439,7 @@ class GridSlide extends HTMLElement {
 		if (noDirty !== true) this.__dirty = true;
 		if (result.done) {
 			GRIDSLIDES.utils.events.fire(this, GRIDSLIDES.constants.events.finished);
+			this.__complete = true;
 		}
 	}
 
@@ -407,9 +484,6 @@ class GridSlide extends HTMLElement {
 }
 
 window.addEventListener('DOMContentLoaded', function () {
-
 	customElements.define('grid-slides-controller', GridSlidesController);
 	customElements.define('grid-slide', GridSlide);
-
-	document.querySelector('grid-slides-controller').startPresenting();
 });

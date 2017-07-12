@@ -10,11 +10,11 @@ GRIDSLIDES.registerTransition('slide', {
 		transform: 'translateX(-100vw)'
 	}],
 	inSettings: {
-		duration: 1000,
+		duration: 500,
 		easing: getComputedStyle(document.documentElement).getPropertyValue('--easeInOutQuart')
 	},
 	outSettings: {
-		duration: 300,
+		duration: 500,
 		easing: getComputedStyle(document.documentElement).getPropertyValue('--easeInQuart')
 	}
 });
