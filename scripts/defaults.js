@@ -46,74 +46,78 @@ GRIDSLIDES.registerSlideData('video-slide', {
 	}
 });
 
-GRIDSLIDES.registerSlideData('el-by-el', function elByEl(options) {
 
-	elByEl.schema = {
+GRIDSLIDES.registerSlideData('el-by-el', 
+	
+	{ //schema
 		preserve: {
 			default: ''
 		},
 		reveal: {
 			default: false
 		}
-	};
+	},
+	
+	function elByEl(options) {
 
-	options = options || {};
-	const selector = options.preserve || false;
-	const preserve = [];
-	const reveal = options.reveal || false;
-	let children;
-	let showFirstChild;
+		options = options || {};
+		const selector = options.preserve || false;
+		const preserve = [];
+		const reveal = options.reveal || false;
+		let children;
+		let showFirstChild;
 
-	function replaceWithEl(el, target) {
-		target.innerHTML = '';
-		preserve.forEach(function (el) {
+		function replaceWithEl(el, target) {
+			target.innerHTML = '';
+			preserve.forEach(function (el) {
+				target.appendChild(el);
+			});
 			target.appendChild(el);
-		});
-		target.appendChild(el);
-	}
-
-	const out = {
-	};
-
-	function init() {
-		const self = this;
-		preserve.push(...Array.from(this.children).filter(function (el) {
-			if (el.matches(selector)) {
-				self.removeChild(el);
-				return true;
-			}
-		}));
-
-		children = Array.from(this.children);
-		const firstChild = children.shift();
-
-		const run = el => {
-			if (reveal) {
-				this.appendChild(el);
-			} else {
-				replaceWithEl(el, this);
-			}
 		}
 
-		showFirstChild = function () {
-			run(firstChild);
+		const out = {
+		};
+
+		function init() {
+			const self = this;
+			preserve.push(...Array.from(this.children).filter(function (el) {
+				if (el.matches(selector)) {
+					self.removeChild(el);
+					return true;
+				}
+			}));
+
+			children = Array.from(this.children);
+			const firstChild = children.shift();
+
+			const run = el => {
+				if (reveal) {
+					this.appendChild(el);
+				} else {
+					replaceWithEl(el, this);
+				}
+			}
+
+			showFirstChild = function () {
+				run(firstChild);
+			}
+			if (!children.length) throw Error('Empty elByEl target');
+
+			out.action = (function * () {
+				yield;
+				for (const el of children) yield run(el);
+			}).bind(this);
 		}
-		if (!children.length) throw Error('Empty elByEl target');
 
-		out.action = (function * () {
-			yield;
-			for (const el of children) yield run(el);
-		}).bind(this);
+		out.teardown = out.setup = function () {
+			if (!children) init.bind(this)();
+			this.innerHTML = '';
+			showFirstChild();
+		};
+
+		return out;
 	}
-
-	out.teardown = out.setup = function () {
-		if (!children) init.bind(this)();
-		this.innerHTML = '';
-		showFirstChild();
-	};
-
-	return out;
-});
+);
 
 function renderContent(el, data) {
 	data.style = data.style || '';

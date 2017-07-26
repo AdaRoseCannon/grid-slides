@@ -13,6 +13,26 @@ Element.prototype.animate = function () {
 	return animation;
 }
 
+function processSchema(schema, data) {
+	let out = {};
+	if (schema.type !== undefined || schema.default !== undefined) {
+		const type = schema.type || typeof schema.default;
+		if (data === undefined && schema.default !== undefined) {
+			return schema.default;
+		}
+		if (type === "number") return Number(data);
+		if (type === "string") return String(data);
+		if (type === "boolean") return data === "true";
+	} else {
+		for (const key of Object.keys(schema)) {
+			if (typeof schema[key] === 'object') {
+				out[key] = processSchema(schema[key], data[key]);
+			}
+		}
+	}
+	return out;
+}
+
 const GRIDSLIDES = {
 
 	utils: {
@@ -78,21 +98,32 @@ const GRIDSLIDES = {
 
 	slideData: new Map(),
 
-	registerSlideData(name, obj) {
+	registerSlideData(name, schema, obj) {
 		if (GRIDSLIDES.registeredSlideDataKeys) {
 			throw Error('Slide data should be defined before page load.');
 		}
+		if (schema && !obj) {
+			obj = schema;
+			schema = {};
+		}
+		obj.schema = schema;
 		GRIDSLIDES.slideData.set(name, obj);
 	},
 
 	getSlideData(name, el, options) {
 		const data = GRIDSLIDES.slideData.get(name);
+		let out;
+		if (data.schema) {
+			options = processSchema(data.schema, options);
+		}
 		if (typeof data === 'object') {
-			return data;
+			out = data;
 		}
 		if (typeof data === 'function') {
-			return data.apply(el, [options]);
+			out = data.bind(el)(options);
 		}
+		out.data = options;
+		return out;
 	},
 
 	registeredSlideDataKeys: undefined
@@ -337,8 +368,8 @@ class GridSlidesController extends HTMLElement {
 
 function parseAttr(string) {
 	const out = {};
-	const l = string.replace(/\W/gi, '').split(';').map(p => p.split(':'));
-	l.forEach(p => out[p[0]] = p[1]);
+	const l = string.split(';').map(p => p.split(':'));
+	l.forEach(p => p[0] && (out[p[0].trim()] = p[1].trim()));
 	return out;
 }
 
@@ -411,8 +442,8 @@ class GridSlide extends HTMLElement {
 	setup() {
 		const actions = [];
 		for (const datum of this.__data) {
-			if (datum.setup) datum.setup.apply(this, []);
-			if (datum.action) actions.push(datum.action.bind(this)());
+			if (datum.setup) datum.setup.bind(this)(datum.data);
+			if (datum.action) actions.push(datum.action.bind(this)(datum.data));
 		}
 		this.__actions = (function *() {
 			if (actions.length === 0) {
@@ -430,7 +461,7 @@ class GridSlide extends HTMLElement {
 	teardown() {
 		this.__isSetup = false;
 		for (const datum of this.__data) {
-			if (datum.teardown) datum.teardown.apply(this, []);
+			if (datum.teardown) datum.teardown.bind(this)(datum.data);
 		}
 	}
 	

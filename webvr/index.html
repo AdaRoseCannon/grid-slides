@@ -25,6 +25,12 @@
 				background-size: cover;
 				background-position: center center;
 			}
+
+			h1.hero {
+				font-size: 5em;
+				text-align: center;
+				align-self: center;
+			}
         </style>
         <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/edf84e6e/webcomponents-sd-ce.js"></script>
         <script src="../scripts/main.js"></script>
@@ -38,23 +44,107 @@
 					<h1>@samsunginternet</h1>
 					<h1 style="justify-self: flex-end; align-self: flex-end;">@lady_ada_king</h1>
 				</section>
-				<img src="images/StatCounter-browser-GB-monthly-201606-201706.png" style="object-fit: contain; background: white;" />
+				<!-- <img src="images/StatCounter-browser-GB-monthly-201606-201706.png" style="object-fit: contain; background: white;" /> -->
 			</grid-slide>
 
             <grid-notes>
-                Lorem Ipsum
+                Hi I am Ada from Samsung, i'm here to talk to you about Virtual Reality.
             </grid-notes>
 
-            <grid-slide el-by-el="preserve: true;">
-                <h1>Slide Two</h1>
-                <h1>4</h1>
-                <h1>5</h1>
-                <h1>6</h1>
+            <grid-slide el-by-el="reveal: true;">
+				<img class="base" src="images/gearvr+controller.png" style="grid-area:1/full/-1/full" style="filter: drop-shadow(0 0 0.4em rgba(255,255,255,170));" />
+				<img src="images/gearvr+controller+detail.png" style="grid-area:1/full/-1/full"  />
             </grid-slide>
+
             <grid-notes>
-                Lorem Ipsum
+                <h1>How VR works,</h1>
+				<p>It works by sending your position and rotation in real space to the headset.</P>
+				<p>We can then use this information to render a scene from the users point of view.</p>
+				<p>We can also render the users hands and use any other information to give the user more agency i nthe scene.</p>
+				<p>Once we have rendered an image we send it to the headset to be displayed to the user.</p>
             </grid-notes>
 
+			<grid-slide></grid-slide>
+			<grid-notes>
+				<h1>Building a virtual world</h1>
+				<p>There are a variety of different types of object that go into building a virtual world.</p>
+				<p>The most fundamental are:</p>
+				<ul>
+					<li>Cameras</li>
+					<li>3D Models</li>
+					<li>Lighting</li>
+				</ul>
+				<p>For VR the camera represents the user's view, it's position should be where the user's eyes are. By moving the camera the user feels like they are moving.</p>
+				<p>3D models give the user something to look at, from the floor and sky to the environment, other users and animated creatures. They are all models.</p>
+				<p>Models have two main parts: Geometry and Texture. The Geometry describes the shape of the model, where all it's points in 3D space are. The texture describes how it looks in the scene. Such as it's colour and how it interacts with light sources.</p>
+				<p>The lighting is approximate simulations of real world lighting, the main options to choose from are: Ambient, point and directional.</p>
+			</grid-notes>
+
+			<grid-slide></grid-slide>
+			<grid-notes>
+				<h1>A-Frame, Web friendly VR!</h1>
+				<p>Who here as done HTML before?</p>
+				<p>A-Frame is html for virtual reality.</p>
+				<p>It kinds looks like <i>this</i> and hopefully will make some sense when being read through.</p>
+				<p>It takes care of a lot of for you, so you can get on with defining some 3D models and it will take care of the camera and lighting until you want to customise it yourself.</p>
+			</grid-notes>
+
+			<grid-slide>
+				<h1 class="hero">Live demo</h1>
+			</grid-slide>
+			<grid-notes>
+				<h1>Buid something</h1>
+				<ul>
+					<li>Introduce Glitch for Online Coding, if wifi is good.</li>
+					<li>Show how to add A-Frame script tag.</li>
+					<li>Add an a-sphere</li>
+					<li>Add a skybox</li>
+					<li>Show inspector</li>
+					<li>Add an a-plane, rotate it to the floor</li>
+					<li>Add a a light and change it.</li>
+				</ul>
+			</grid-notes>
+
+			<grid-slide></grid-slide>
+			<grid-notes>
+				<h1>Sky boxes</h1>
+				Sky boxes can be created in a few ways:
+				<ul>
+					<li>Photographed</li>
+					<li>Screenshots from A-Frame</li>
+					<li>Illustrated by hand</li>
+				</ul>
+			</grid-notes>
+
+
+			<grid-slide></grid-slide>
+			<grid-notes>
+				<h1>Once more with feeling</h1>
+				<ul>
+					<li>Create a new scene,</li>
+					<li>Skybox</li>
+					<li>Floor</li>
+					<li>Import interesting 3D model</li>
+					<li>Spot light + shadows</li>
+					<li>Animationt</li>
+				</ul>
+			</grid-notes>
+
+			<grid-slide></grid-slide>
+			<grid-notes>
+				<h1>Ada's Fave 3rd Party Components</h1>
+				<ul>
+					<li>Environment</li>
+					<li>Physics-System</li>
+					<li>Networked A-Frame</li>
+				</ul>
+			</grid-notes>
+
+			<grid-slide></grid-slide>
+			<grid-notes>
+				<h1>Interactivity</h1>
+				<p>Introduce cursor and pointer</p>
+			</grid-notes>
 		</grid-slides-controller>
 		
 		<script>
