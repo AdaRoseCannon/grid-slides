@@ -5,7 +5,11 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="../css/style.css" rel="stylesheet">
-        <link href="https://samsunginter.net/fonts/SamsungOne/fonts.css" rel="stylesheet">
+		<link href="https://samsunginter.net/fonts/SamsungOne/fonts.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+		<script>hljs.initHighlightingOnLoad();</script>
+
         <style>
             html, body {
                 min-height: 100vh;
@@ -26,6 +30,10 @@
 				background-position: center center;
 			}
 
+			grid-slide code {
+				font-size: 2rem;
+			}
+
 			h1.hero {
 				font-size: 5em;
 				text-align: center;
@@ -34,12 +42,31 @@
         </style>
         <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/edf84e6e/webcomponents-sd-ce.js"></script>
         <script src="../scripts/main.js"></script>
-        <script src="../scripts/defaults.js"></script>
+		<script src="../scripts/defaults.js"></script>
+		<script src="https://aframe.io/releases/0.6.1/aframe.min.js"></script>
+		<script>
+			AFRAME.registerComponent('double-sided', {
+				init: function () {
+					this.el.addEventListener('model-loaded', function () {
+						this.object3D.traverse( function( node ) {
+							if( node.material ) {
+								node.material.side = THREE.DoubleSide;
+								if (node.material.materials) {
+									for (const mat of node.material.materials) {
+										mat.side = THREE.DoubleSide;
+									}
+								}
+							}
+						});
+					});
+				}
+			});
+		</script>
     </head>
     <body>
         <grid-slides-controller>
 
-			<grid-slide el-by-el style="background-image: url(images/me-and-dan.jpg); background-color: #555;">
+			<grid-slide style="background-image: url(images/me-and-dan.jpg); background-color: #555;">
 				<section>
 					<h1>@samsunginternet</h1>
 					<h1 style="justify-self: flex-end; align-self: flex-end;">@lady_ada_king</h1>
@@ -52,8 +79,8 @@
             </grid-notes>
 
             <grid-slide el-by-el="reveal: true;">
-				<img class="base" src="images/gearvr+controller.png" style="grid-area:1/full/-1/full" style="filter: drop-shadow(0 0 0.4em rgba(255,255,255,170));" />
-				<img src="images/gearvr+controller+detail.png" style="grid-area:1/full/-1/full"  />
+				<img class="base" src="images/gearvr+controller.png" style="grid-area:1/full/-1/full; object-fit: contain; filter: drop-shadow(0 0 0.4em rgba(255,255,255,170));" />
+				<img src="images/gearvr+controller+detail.png" style="grid-area:1/full/-1/full; object-fit: contain; z-index: 1;"  />
             </grid-slide>
 
             <grid-notes>
@@ -64,7 +91,41 @@
 				<p>Once we have rendered an image we send it to the headset to be displayed to the user.</p>
             </grid-notes>
 
-			<grid-slide></grid-slide>
+			<grid-slide a-frame-step-by-step id="a-frame-step-by-step">
+				<script type="text/html" action="assets">
+					<a-asset-item id="camera-obj" src="models/camera/model.obj"></a-asset-item>
+					<a-asset-item id="camera-mtl" src="models/camera/materials.mtl"></a-asset-item>
+					<a-asset-item id="bunny-obj" src="models/bunny.obj"></a-asset-item>
+				</script>
+				<script type="text/html">
+					<a-entity obj-model="obj: #camera-obj; mtl: #camera-mtl;" scale="2 2 2" position="4 1 -5" rotation="10 -90 0"></a-entity>
+					<a-light position="1 1 1"></a-light>
+				</script>
+				<script type="text/html" action="append">	
+					<a-box position="-1 0 -5" scale="2 2 2"></a-box>
+				</script>
+				<script type="text/html" action="append">	
+					<a-cylinder position="-6 4 -5" light="color:#fff58b;" rotation="0 0 59.816793811657945" material="" geometry="radius:0.5;height:0.3" scale="2 2 2">
+						<a-cone position="0 -0.59 0" material="" geometry="radiusTop:0.5"></a-cone>
+						<a-cone position="0 -2 0" material="color:#fff58b;opacity:0.2;transparent:true;shader:flat" geometry="radiusBottom:2;height:5"></a-cone>
+					</a-cylinder>
+				</script>
+				<script type="text/html">	
+					<a-entity obj-model="obj:models/bunny.obj" position="0 0 -3"  scale="3 3 3" material="shader:flat;color:green;wireframe:true;wireframe-linewidth: 1;"></a-entity>
+				</script>
+				<script type="text/html">	
+					<a-entity obj-model="obj:models/bunny.obj" position="0 0 -3"  scale="3 3 3" material="shader:standard;color:white; roughness: 1; metalness: 0;"></a-entity>
+					<a-entity light position="1 1 1"></a-entity>
+				</script>
+				<script type="text/html">	
+					<a-entity obj-model="obj:models/bunny.obj" position="0 0 -3" material="src:url(https://aframe.io/sample-assets/assets/images/wood/hardwood2_diffuse.jpg); roughness: 0.5; color: white;" scale="3 3 3"></a-entity>
+					<a-entity light position="1 1 1"></a-entity>
+				</script>
+				<script type="text/html">	
+					<a-entity obj-model="obj:models/bunny.obj" position="0 0 -3" material="offset:0.2 -0.4; color: brown; roughness: 1; metalness: 0;" scale="3 3 3" ></a-entity>
+					<a-entity light position="1 1 1"></a-entity>
+				</script>
+			</grid-slide>
 			<grid-notes>
 				<h1>Building a virtual world</h1>
 				<p>There are a variety of different types of object that go into building a virtual world.</p>
@@ -80,7 +141,27 @@
 				<p>The lighting is approximate simulations of real world lighting, the main options to choose from are: Ambient, point and directional.</p>
 			</grid-notes>
 
-			<grid-slide></grid-slide>
+			<grid-slide el-by-el>
+				<h1 class="hero">Making 3D Scenes</h1>
+				<h1 class="hero">&lt;HTML&gt;</h1>
+				<img src="images/aframevr.png" style="object-fit: contain;" />
+				<pre><code class="html">
+&lt;html&gt;
+&lt;head&gt;
+  &lt;script src="https://aframe.io/releases/0.6.1/aframe.min.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;a-scene&gt;
+    &lt;a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"&gt;&lt;/a-box&gt;
+    &lt;a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"&gt;&lt;/a-sphere&gt;
+    &lt;a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"&gt;&lt;/a-cylinder&gt;
+    &lt;a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"&gt;&lt;/a-plane&gt;
+    &lt;a-sky color="skyblue"&gt;&lt;/a-sky&gt;
+  &lt;/a-scene&gt;
+&lt;/body&gt;
+&lt;/html&gt;							  
+				</code></pre>
+			</grid-slide>
 			<grid-notes>
 				<h1>A-Frame, Web friendly VR!</h1>
 				<p>Who here as done HTML before?</p>
@@ -88,6 +169,18 @@
 				<p>It kinds looks like <i>this</i> and hopefully will make some sense when being read through.</p>
 				<p>It takes care of a lot of for you, so you can get on with defining some 3D models and it will take care of the camera and lighting until you want to customise it yourself.</p>
 			</grid-notes>
+
+			<grid-slide a-frame-step-by-step>
+				<script type="text/html">
+					<a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
+					<a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
+					<a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+					<a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
+					<a-sky color="skyblue"></a-sky>
+					<a-entity light="intensity:0.5;" position="1 1 1"></a-entity>
+					<a-entity light="intensity:0.5; type: ambient;" position="1 1 1"></a-entity>
+				</script>
+			</grid-slide>
 
 			<grid-slide>
 				<h1 class="hero">Live demo</h1>
@@ -144,6 +237,13 @@
 			<grid-notes>
 				<h1>Interactivity</h1>
 				<p>Introduce cursor and pointer</p>
+			</grid-notes>
+
+			<grid-notes style="padding-bottom: 5em;">
+				<h1>References and Attribution</h1>
+				<ul>
+					<li><a href="https://vr.google.com/objects/4fIwIHGRsAn">Camera Model</a></li>
+				</ul>
 			</grid-notes>
 		</grid-slides-controller>
 		

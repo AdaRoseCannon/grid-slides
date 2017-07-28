@@ -316,14 +316,18 @@ class GridSlidesController extends HTMLElement {
 		if (slideVal === null) {
 			return;
 		}
+
 		let slide = Number(slideVal);
-		if (slide !== NaN) {
+		// compare string to int
+		if (slide !== NaN && slide == slideVal) {
 			slide = this.children[slide];
 			if (slide && slide.tagName === 'GRID-SLIDE') return slide;
-			throw Error('Number given but it doesn\'t correspond to a slide', Number(slideVal));
+			throw Error('Number given (' + slideVal + ') but it doesn\'t correspond to a slide', Number(slideVal));
 		}
-		slide = this.querySelector('#' + this.getAttribute('slide'));
+
+		slide = this.querySelector('#' + slideVal);
 		if (slide) return slide;
+
 		throw Error('Slide ID given but it doesn\'t correspond to a slide', this.getAttribute('slide'));
 	}
 
@@ -394,6 +398,7 @@ class GridSlide extends HTMLElement {
 				right: 0;
 				display: var(--button-display, block);
 				grid-area: 1/full;
+				z-index: 100;
 			}`;
 
 		var content = document.createElement('slot');
@@ -477,9 +482,9 @@ class GridSlide extends HTMLElement {
 		}
 	}
 	
-		static get observedAttributes() {
-			return ['pending', 'active', 'data', 'transition', 'teardown-pending'].concat(Array.from(GRIDSLIDES.registeredSlideDataKeys));
-		}
+	static get observedAttributes() {
+		return ['pending', 'active', 'data', 'transition', 'teardown-pending'].concat(Array.from(GRIDSLIDES.registeredSlideDataKeys));
+	}
 	
 	attributeChangedCallback(attr, oldValue, newValue) {
 		
@@ -492,7 +497,7 @@ class GridSlide extends HTMLElement {
 				this.teardown();
 				this.setup();
 			}
-			this.run();
+			this.run(true);
 		}
 
 		if (attr === 'teardown-pending') {

@@ -15,7 +15,64 @@ GRIDSLIDES.registerTransition('slide', {
 	},
 	outSettings: {
 		duration: 500,
-		easing: getComputedStyle(document.documentElement).getPropertyValue('--easeInQuart')
+		easing: getComputedStyle(document.documentElement).getPropertyValue('--easeInOutQuart')
+	}
+});
+
+
+GRIDSLIDES.registerSlideData('a-frame-step-by-step', {
+	static: {
+		default: false
+	}
+}, function (options) {
+
+	let steps;
+	let scene;
+	let target;
+
+	return {
+		setup: function () {
+			let assets;
+			if (!scene) {
+				scene = document.createElement('a-scene');
+				scene.setAttribute('embedded', '');
+				target = document.createElement('a-entity');
+				target.setAttribute('light', 'type:ambient;intensity:0;')
+				scene.appendChild(target);
+				assets = document.createElement('a-assets');
+				scene.appendChild(assets);
+			}
+			if (!steps) {
+				steps = [];
+				for (const el of this.children) {
+					if (el.tagName === 'SCRIPT') {
+						steps.push([el.textContent, el.getAttribute('action') || 'replace']);
+						this.removeChild(el)
+					}
+				}
+			}
+
+			steps.forEach(function (step) {
+				if (step[1] === 'assets') {
+					assets.insertAdjacentHTML('afterbegin', step[0]);
+				}
+			});
+
+			this.appendChild(scene);
+		},
+		action: function *() {
+			target.innerHTML = '';
+			for (const step of steps) {
+				if (step[1] === 'replace') yield target.innerHTML = step[0];
+				if (step[1] === 'append') yield target.insertAdjacentHTML('afterbegin', step[0]);
+				if (step[1] === 'eval') yield (new Function(step[0])).bind(target)();
+			}
+		},
+		teardown: function () {
+			if (scene) this.removeChild(scene);
+			scene = undefined;
+			target = undefined;
+		}
 	}
 });
 
