@@ -17,7 +17,7 @@
 				margin: 0;
 				font-family: 'Samsung One', Helvetica, Arial, sans-serif;
 			}
-			
+
 			grid-slide {
 				background-color: darkslategray;
 				background-image: url('images/bg.png');
@@ -79,8 +79,8 @@
             </grid-notes>
 
             <grid-slide el-by-el="reveal: true;">
-				<img class="base" src="images/gearvr+controller.png" style="grid-area:1/full/-1/full; object-fit: contain; filter: drop-shadow(0 0 0.4em rgba(255,255,255,170));" />
-				<img src="images/gearvr+controller+detail.png" style="grid-area:1/full/-1/full; object-fit: contain; z-index: 1;"  />
+				<img class="base" src="images/gearvr+controller.png" style="grid-area:1/full/-1/full; filter: drop-shadow(0 0 0.4em rgba(255,255,255,170));" />
+				<img src="images/gearvr+controller+detail.png" style="grid-area:1/full/-1/full; z-index: 1;"  />
             </grid-slide>
 
             <grid-notes>
@@ -101,27 +101,27 @@
 					<a-entity obj-model="obj: #camera-obj; mtl: #camera-mtl;" scale="2 2 2" position="4 1 -5" rotation="10 -90 0"></a-entity>
 					<a-light position="1 1 1"></a-light>
 				</script>
-				<script type="text/html" action="append">	
+				<script type="text/html" action="append">
 					<a-box position="-1 0 -5" scale="2 2 2"></a-box>
 				</script>
-				<script type="text/html" action="append">	
+				<script type="text/html" action="append">
 					<a-cylinder position="-6 4 -5" light="color:#fff58b;" rotation="0 0 59.816793811657945" material="" geometry="radius:0.5;height:0.3" scale="2 2 2">
 						<a-cone position="0 -0.59 0" material="" geometry="radiusTop:0.5"></a-cone>
 						<a-cone position="0 -2 0" material="color:#fff58b;opacity:0.2;transparent:true;shader:flat" geometry="radiusBottom:2;height:5"></a-cone>
 					</a-cylinder>
 				</script>
-				<script type="text/html">	
+				<script type="text/html">
 					<a-entity obj-model="obj:models/bunny.obj" position="0 0 -3"  scale="3 3 3" material="shader:flat;color:green;wireframe:true;wireframe-linewidth: 1;"></a-entity>
 				</script>
-				<script type="text/html">	
+				<script type="text/html">
 					<a-entity obj-model="obj:models/bunny.obj" position="0 0 -3"  scale="3 3 3" material="shader:standard;color:white; roughness: 1; metalness: 0;"></a-entity>
 					<a-entity light position="1 1 1"></a-entity>
 				</script>
-				<script type="text/html">	
+				<script type="text/html">
 					<a-entity obj-model="obj:models/bunny.obj" position="0 0 -3" material="src:url(https://aframe.io/sample-assets/assets/images/wood/hardwood2_diffuse.jpg); roughness: 0.5; color: white;" scale="3 3 3"></a-entity>
 					<a-entity light position="1 1 1"></a-entity>
 				</script>
-				<script type="text/html">	
+				<script type="text/html">
 					<a-entity obj-model="obj:models/bunny.obj" position="0 0 -3" material="offset:0.2 -0.4; color: brown; roughness: 1; metalness: 0;" scale="3 3 3" ></a-entity>
 					<a-entity light position="1 1 1"></a-entity>
 				</script>
@@ -135,6 +135,16 @@
 					<li>3D Models</li>
 					<li>Lighting</li>
 				</ul>
+			<grid-slide a-frame-step-by-step id="a-frame-step-by-step">
+				<script type="text/html" action="assets">
+					<a-asset-item id="camera-obj" src="models/camera/model.obj"></a-asset-item>
+					<a-asset-item id="camera-mtl" src="models/camera/materials.mtl"></a-asset-item>
+					<a-asset-item id="bunny-obj" src="models/bunny.obj"></a-asset-item>
+				</script>
+				<script type="text/html">
+					<a-entity obj-model="obj: #camera-obj; mtl: #camera-mtl;" scale="2 2 2" position="4 1 -5" rotation="10 -90 0"></a-entity>
+					<a-light position="1 1 1"></a-light>
+				</script>
 				<p>For VR the camera represents the user's view, it's position should be where the user's eyes are. By moving the camera the user feels like they are moving.</p>
 				<p>3D models give the user something to look at, from the floor and sky to the environment, other users and animated creatures. They are all models.</p>
 				<p>Models have two main parts: Geometry and Texture. The Geometry describes the shape of the model, where all it's points in 3D space are. The texture describes how it looks in the scene. Such as it's colour and how it interacts with light sources.</p>
@@ -144,7 +154,7 @@
 			<grid-slide el-by-el>
 				<h1 class="hero">Making 3D Scenes</h1>
 				<h1 class="hero">&lt;HTML&gt;</h1>
-				<img src="images/aframevr.png" style="object-fit: contain;" />
+				<img src="images/aframevr.png" />
 				<pre><code class="html">
 &lt;html&gt;
 &lt;head&gt;
@@ -159,7 +169,7 @@
     &lt;a-sky color="skyblue"&gt;&lt;/a-sky&gt;
   &lt;/a-scene&gt;
 &lt;/body&gt;
-&lt;/html&gt;							  
+&lt;/html&gt;
 				</code></pre>
 			</grid-slide>
 			<grid-notes>
@@ -198,19 +208,48 @@
 				</ul>
 			</grid-notes>
 
-			<grid-slide></grid-slide>
+			<grid-slide el-by-el>
+				<img src="images/google-earth.jpg" />
+				<img src="images/gear360.jpg" />
+				<img src="images/metaverse.jpg" />
+				<img src="images/sky.jpg" />
+				<img src="images/template.jpg" />
+			</grid-slide>
 			<grid-notes>
 				<h1>Sky boxes</h1>
 				Sky boxes can be created in a few ways:
 				<ul>
 					<li>Photographed</li>
 					<li>Screenshots from A-Frame</li>
-					<li>Illustrated by hand</li>
+					<li>Illustrated by hand <a href="http://studiobehind90.com/2016/12/25/how-to-create-360-panorama-painting-in-photoshop/">[LINK]</a></li>
 				</ul>
 			</grid-notes>
 
 
-			<grid-slide></grid-slide>
+			<grid-slide a-frame-step-by-step id="fox-slide">
+				<script type="text/html" action="assets">
+					<a-asset-item id="bin-obj" src="models/bin/model.obj"></a-asset-item>
+					<a-asset-item id="bin-mtl" src="models/bin/materials.mtl"></a-asset-item>
+					<a-asset-item id="lamp-post-obj" src="models/lamp-post/model.obj"></a-asset-item>
+					<a-asset-item id="lamp-post-mtl" src="models/lamp-post/materials.mtl"></a-asset-item>
+					<a-asset-item id="fox-big-obj" src="models/fox-big/model.obj"></a-asset-item>
+					<a-asset-item id="fox-big-mtl" src="models/fox-big/materials.mtl"></a-asset-item>
+				</script>
+				<script type="text/html">
+					<!--<a-entity obj-model="obj: #fox-big-obj; mtl: #fox-big-mtl;" position="0 0 -5"></a-entity>-->
+					<a-entity geometry="primitive: plane; width: 30; height: 10;" rotation="-90 0 0" position="0 0 -5" material="color: grey;" shadow></a-entity>
+					<a-entity obj-model="mtl:models/fox-big/materials.mtl;obj:models/fox-big/model.obj" position="0 0.75 -5" rotation="0 -200 0" scale="0.5 0.5 0.5" shadow="receive: false;"></a-entity>
+					<a-entity obj-model="mtl:models/lamp-post/materials.mtl;obj:models/lamp-post/model.obj" position="0.427 7.048 -5.548" rotation="0 -200 0" scale="3 3 2" shadow="receive: false;"></a-entity>
+					<a-entity obj-model="mtl:models/bin/materials.mtl;obj:models/bin/model.obj" position="-0.93 1.859 -7.433" rotation="0 -200 0" scale="9.475 9.475 9.475" shadow="receive: false;"></a-entity>
+					<a-entity obj-model="mtl:models/bin/materials.mtl;obj:models/bin/model.obj" position="0.984 1.859 -7.169" rotation="0 125 0" scale="9.475 9.475 9.475" shadow="receive: false;"></a-entity>
+					<a-entity position="3.383 1.901 -10.385" scale="5.786 1 1" geometry="width:3;height:4" material="color:#333"></a-entity>
+					<a-entity position="-4.489 1.522 -10.385" rotation="0 -91.845 0" scale="5.786 1 1" geometry="height:4;width:3" material="color:#935315"></a-entity>
+					<a-light type="ambient" color="navy" intensity="0.7"></a-light>
+					<a-light type="directional" color="goldenrod" position="1 0.2 1" intensity="0.7"></a-light>
+					<a-light type="spot" color="white" position="-0.845 9.098 -6.998" intensity="1" rotation="-83 0 0" light="shadowCameraFov:30;penumbra:0.2;castShadow:true;angle:30"></a-light>
+					<a-sky src="images/city.jpg"></a-sky>
+				</script>
+			</grid-slide>
 			<grid-notes>
 				<h1>Once more with feeling</h1>
 				<ul>
@@ -219,7 +258,6 @@
 					<li>Floor</li>
 					<li>Import interesting 3D model</li>
 					<li>Spot light + shadows</li>
-					<li>Animationt</li>
 				</ul>
 			</grid-notes>
 
@@ -246,7 +284,7 @@
 				</ul>
 			</grid-notes>
 		</grid-slides-controller>
-		
+
 		<script>
 
 			window.addEventListener('DOMContentLoaded', function () {

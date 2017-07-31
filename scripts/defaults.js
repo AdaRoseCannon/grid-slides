@@ -37,7 +37,6 @@ GRIDSLIDES.registerSlideData('a-frame-step-by-step', {
 				scene = document.createElement('a-scene');
 				scene.setAttribute('embedded', '');
 				target = document.createElement('a-entity');
-				target.setAttribute('light', 'type:ambient;intensity:0;')
 				scene.appendChild(target);
 				assets = document.createElement('a-assets');
 				scene.appendChild(assets);
@@ -104,8 +103,8 @@ GRIDSLIDES.registerSlideData('video-slide', {
 });
 
 
-GRIDSLIDES.registerSlideData('el-by-el', 
-	
+GRIDSLIDES.registerSlideData('el-by-el',
+
 	{ //schema
 		preserve: {
 			default: ''
@@ -114,7 +113,7 @@ GRIDSLIDES.registerSlideData('el-by-el',
 			default: false
 		}
 	},
-	
+
 	function elByEl(options) {
 
 		options = options || {};

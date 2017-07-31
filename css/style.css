@@ -74,7 +74,7 @@ grid-slide {
 	display: grid;
 
 	max-width: 100%;
-	
+
 	grid-auto-rows: 1fr;
 	grid-template-columns: [full-start] var(--padding) [content-start] var(--padding) [content-inner-start]  1fr [one-quarter] 2fr [center] 2fr [three-quarter] 1fr [content-inner-end] var(--padding) [content-end] var(--padding) [full-end];
 }
@@ -103,14 +103,14 @@ grid-slide > *,
 grid-slide > section > * {
 	grid-area: auto/content-inner;
 	max-width: 100%;
-	
+
 }
 
 grid-slide > img,
 grid-slide > section > img {
 	grid-area: auto/full/auto/full;
 	align-self: stretch;
-	object-fit: cover;
+	object-fit: contain;
 	width: 100%;
 	height: 100%;
 }
