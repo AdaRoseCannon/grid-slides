@@ -8,6 +8,7 @@
 		<link href="https://samsunginter.net/fonts/SamsungOne/fonts.css" rel="stylesheet">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai.min.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
 		<script>hljs.initHighlightingOnLoad();</script>
 
         <style>
@@ -39,11 +40,20 @@
 				text-align: center;
 				align-self: center;
 			}
+
+			.caption {
+				grid-area: 1/content-inner;
+				align-self: flex-end;
+				background: rgba(0,0,0,0.8);
+				margin: 0;
+			}
         </style>
         <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/edf84e6e/webcomponents-sd-ce.js"></script>
         <script src="../scripts/main.js"></script>
 		<script src="../scripts/defaults.js"></script>
 		<script src="https://aframe.io/releases/0.6.1/aframe.min.js"></script>
+		<script src="https://unpkg.com/aframe-environment-component@%5E1.0.x/dist/aframe-environment-component.min.js"></script>
+		<script src="https://cdn.rawgit.com/donmccurdy/aframe-physics-system/v1.4.2/dist/aframe-physics-system.min.js"></script>
 		<script>
 			AFRAME.registerComponent('double-sided', {
 				init: function () {
@@ -135,16 +145,6 @@
 					<li>3D Models</li>
 					<li>Lighting</li>
 				</ul>
-			<grid-slide a-frame-step-by-step id="a-frame-step-by-step">
-				<script type="text/html" action="assets">
-					<a-asset-item id="camera-obj" src="models/camera/model.obj"></a-asset-item>
-					<a-asset-item id="camera-mtl" src="models/camera/materials.mtl"></a-asset-item>
-					<a-asset-item id="bunny-obj" src="models/bunny.obj"></a-asset-item>
-				</script>
-				<script type="text/html">
-					<a-entity obj-model="obj: #camera-obj; mtl: #camera-mtl;" scale="2 2 2" position="4 1 -5" rotation="10 -90 0"></a-entity>
-					<a-light position="1 1 1"></a-light>
-				</script>
 				<p>For VR the camera represents the user's view, it's position should be where the user's eyes are. By moving the camera the user feels like they are moving.</p>
 				<p>3D models give the user something to look at, from the floor and sky to the environment, other users and animated creatures. They are all models.</p>
 				<p>Models have two main parts: Geometry and Texture. The Geometry describes the shape of the model, where all it's points in 3D space are. The texture describes how it looks in the scene. Such as it's colour and how it interacts with light sources.</p>
@@ -226,7 +226,7 @@
 			</grid-notes>
 
 
-			<grid-slide a-frame-step-by-step id="fox-slide">
+			<grid-slide a-frame-step-by-step="light: false;" id="fox-slide">
 				<script type="text/html" action="assets">
 					<a-asset-item id="bin-obj" src="models/bin/model.obj"></a-asset-item>
 					<a-asset-item id="bin-mtl" src="models/bin/materials.mtl"></a-asset-item>
@@ -244,9 +244,10 @@
 					<a-entity obj-model="mtl:models/bin/materials.mtl;obj:models/bin/model.obj" position="0.984 1.859 -7.169" rotation="0 125 0" scale="9.475 9.475 9.475" shadow="receive: false;"></a-entity>
 					<a-entity position="3.383 1.901 -10.385" scale="5.786 1 1" geometry="width:3;height:4" material="color:#333"></a-entity>
 					<a-entity position="-4.489 1.522 -10.385" rotation="0 -91.845 0" scale="5.786 1 1" geometry="height:4;width:3" material="color:#935315"></a-entity>
+					<a-entity position="11.634 2.036 -7.973" rotation="0 -91.84513455947096 0" scale="5.786 2.873 5.809" geometry="height:4;width:3" material="color:#935315"></a-entity>
 					<a-light type="ambient" color="navy" intensity="0.7"></a-light>
 					<a-light type="directional" color="goldenrod" position="1 0.2 1" intensity="0.7"></a-light>
-					<a-light type="spot" color="white" position="-0.845 9.098 -6.998" intensity="1" rotation="-83 0 0" light="shadowCameraFov:30;penumbra:0.2;castShadow:true;angle:30"></a-light>
+					<a-light type="spot" color="white" position="0.053 9.098 -4.897" intensity="1" rotation="-83 0 0" light="color:#fff442;shadowCameraFov:30;penumbra:0.2;castShadow:true;angle:30"></a-light>
 					<a-sky src="images/city.jpg"></a-sky>
 				</script>
 			</grid-slide>
@@ -261,7 +262,43 @@
 				</ul>
 			</grid-notes>
 
-			<grid-slide></grid-slide>
+			<grid-slide a-frame-step-by-step="physics: true;">
+				<script type="text/html">
+					<a-camera position="3 1.4 5" rotation="0 45 0"></a-camera>
+					<a-entity environment="preset: default;"></a-entity>
+				</script>
+				<script type="text/html">
+					<a-camera position="3 1.4 5" rotation="0 45 0"></a-camera>
+					<a-entity environment="preset: osiris;"></a-entity>
+				</script>
+				<script type="text/html">
+					<a-camera position="3 1.4 5" rotation="0 45 0"></a-camera>
+					<a-entity environment="preset: poison;"></a-entity>
+				</script>
+				<script type="text/html">
+					<a-camera position="3 1.4 5" rotation="0 45 0"></a-camera>
+					<a-entity environment="preset: threetowers; seed: 1;"></a-entity>
+				</script>
+				<script type="text/html">
+					<a-camera position="3 1.4 5" rotation="0 45 0"></a-camera>
+					<a-entity environment="preset: threetowers; shadow:true; seed: 1;"></a-entity>
+					<a-entity id="floor" position="0 -0.2 0" geometry="primitive: plane; width: 20; height: 20;" visible="false" rotation="-90 0 0" position="0 -0.2 0" static-body></a-entity>
+					<a-box fast-sync shadow="receive: false;" material="color: blue;" position="0 0.4 0" dynamic-body="mass:1;"></a-box>
+					<a-box fast-sync shadow="receive: false;" material="color: green;" position="-1.2 0.4 0" dynamic-body="mass:1;"></a-box>
+					<a-box fast-sync shadow="receive: false;" material="color: yellow;" position="1.2 0.4 0" dynamic-body="mass:1;"></a-box>
+					<a-box fast-sync shadow="receive: false;" material="color: crimson;" position="-0.55 1.5 0" dynamic-body="mass:1;"></a-box>
+					<a-box fast-sync shadow="receive: false;" material="color: purple;" position="0.55 1.5 0" dynamic-body="mass:1;"></a-box>
+					<a-box fast-sync shadow="receive: false;" material="color: orange;" position="0 2.6 0" dynamic-body="mass:1;"></a-box>
+					<a-sphere fast-sync position="0 0.5 -8" radius="0.5" dynamic-body="mass: 20;" id="ball"></a-sphere>
+				</script>
+				<script type="text/eval" action="eval">
+					const el = this.querySelector('#ball');
+					el.body.applyImpulse(
+						new CANNON.Vec3(0, 60, 400),
+						new CANNON.Vec3().copy(el.getAttribute('position'))
+					);
+				</script>
+			</grid-slide>
 			<grid-notes>
 				<h1>Ada's Fave 3rd Party Components</h1>
 				<ul>
@@ -271,7 +308,10 @@
 				</ul>
 			</grid-notes>
 
-			<grid-slide></grid-slide>
+			<grid-slide>
+				<img src="images/controllers.gif" style="grid-area: 1/content-inner;">
+				<h1 class="caption">&lt;a-entity laser-controls="hand: left"&gt;&lt;/a-entity&gt;</h1>
+			</grid-slide>
 			<grid-notes>
 				<h1>Interactivity</h1>
 				<p>Introduce cursor and pointer</p>

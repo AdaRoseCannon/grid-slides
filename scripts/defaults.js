@@ -23,6 +23,12 @@ GRIDSLIDES.registerTransition('slide', {
 GRIDSLIDES.registerSlideData('a-frame-step-by-step', {
 	static: {
 		default: false
+	},
+	physics: {
+		default: false
+	},
+	light: {
+		default: true
 	}
 }, function (options) {
 
@@ -36,7 +42,9 @@ GRIDSLIDES.registerSlideData('a-frame-step-by-step', {
 			if (!scene) {
 				scene = document.createElement('a-scene');
 				scene.setAttribute('embedded', '');
+				if (options.physics) scene.setAttribute('physics', 'debug:true;');
 				target = document.createElement('a-entity');
+				if (!options.light) target.setAttribute('light', 'intensity: 0;');
 				scene.appendChild(target);
 				assets = document.createElement('a-assets');
 				scene.appendChild(assets);
