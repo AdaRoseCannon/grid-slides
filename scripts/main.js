@@ -2,6 +2,8 @@
 /* eslint no-console: 0 */
 'use strict';
 
+
+// Polyfill animation.finished
 const oldAnim = Element.prototype.animate;
 Element.prototype.animate = function () {
 	const animation = oldAnim.apply(this, arguments);

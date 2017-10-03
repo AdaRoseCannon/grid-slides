@@ -5,11 +5,11 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<script src="https://aframe.io/releases/0.6.1/aframe.min.js"></script>
+		<script src="https://unpkg.com/aframe-particle-system-component@1.0.x/dist/aframe-particle-system-component.min.js"></script>
 	</head>
 	<body>
-		<a-scene>
+		<a-scene fog="type: linear; color: black; near: 1; far: 15;">
 			<!--
-				Create a new scene
 				Skybox
 				Floor
 				Import interesting 3D model
@@ -20,8 +20,25 @@
 
 			<a-assets>
 				<!-- Assets go here -->
+				<a-asset-item id="totoro-obj" src="models/totoro/model.obj"></a-asset-item>
+				<a-asset-item id="totoro-mtl" src="models/totoro/materials.mtl"></a-asset-item>
+				<a-asset-item id="tree-obj" src="models/tree/model.obj"></a-asset-item>
+				<a-asset-item id="tree-mtl" src="models/tree/materials.mtl"></a-asset-item>
 			</a-assets>
 
+			<a-entity obj-model="obj:models/totoro/model.obj;mtl:models/totoro/materials.mtl" position="1.269 2.079 -4.447" rotation="0 147.1355617895954 0" scale="3.22 3.22 3.22"></a-entity>
+			<a-entity obj-model="mtl:models/tree/materials.mtl;obj:models/tree/model.obj" position="1.057 5.166 -6.851" rotation="0 0 43.945862886534144"></a-entity>
+			<a-entity obj-model="mtl:models/tree/materials.mtl;obj:models/tree/model.obj" position="5.466 3.659 -6.372" scale="1.632 1.632 1.632"></a-entity>
+			<a-entity obj-model="mtl:models/tree/materials.mtl;obj:models/tree/model.obj" position="-1.805 5.449 -7.157" scale="2.091 2.091 2.091"></a-entity>
+			<a-entity obj-model="obj:models/tree/model.obj;mtl:models/tree/materials.mtl" position="2.783 3.344 -7.157" scale="1.362 1.362 1.362"></a-entity>
+			<a-plane rotation="-90 0 0" scale="30 30 30" material="color: grey;	"></a-plane>
+
+			<a-entity position="0 2.25 -15" particle-system="preset: rain"></a-entity>
+
+			<a-light type="ambient" color="#5d565d"></a-light>
+			<a-light type="directional" color="#5d565d" position="3 1 3" intensity="0.230"></a-light>
+			<a-light type="spot" color="palegoldenrod" position="-1.687 3.476 3" intensity="0.230" rotation="-12.37588837482578 -20.569184845196553 4.5263665815335035" light="intensity:0.5;angle:10"></a-light>
+			<a-sky src="images/city.jpg" material="fog: false;"></a-sky>
 		</a-scene>
 	</body>
 </html>

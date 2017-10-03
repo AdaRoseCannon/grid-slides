@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Building Engaging VR</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="../css/style.css" rel="stylesheet">
+		<link href="https://samsunginter.net/fonts/SamsungOne/fonts.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+		<script>hljs.initHighlightingOnLoad();</script>
+
+        <style>
+            html, body {
+                min-height: 100vh;
+                min-width: 100vw;
+				margin: 0;
+				font-family: 'Samsung One', Helvetica, Arial, sans-serif;
+			}
+
+			grid-slide {
+				background-color: darkslategray;
+				background-image: url('images/bg.png');
+				color: white;
+				border: 1px solid grey;
+				flex-direction: column;
+				font-size: 3rem;
+				background-blend-mode: soft-light;
+				background-size: cover;
+				background-position: center center;
+			}
+
+			grid-slide code {
+				font-size: 2rem;
+			}
+
+			h1.hero {
+				font-size: 5em;
+				text-align: center;
+				align-self: center;
+			}
+
+			.caption {
+				grid-area: 1/content-inner;
+				align-self: flex-end;
+				background: rgba(0,0,0,0.8);
+				margin: 0;
+			}
+        </style>
+        <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/edf84e6e/webcomponents-sd-ce.js"></script>
+        <script src="../scripts/main.js"></script>
+		<script src="../scripts/defaults.js"></script>
+		<script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+		<script src="https://unpkg.com/aframe-environment-component@%5E1.0.x/dist/aframe-environment-component.min.js"></script>
+		<script src="https://cdn.rawgit.com/donmccurdy/aframe-physics-system/v1.4.2/dist/aframe-physics-system.min.js"></script>
+    </head>
+    <body>
+        <grid-slides-controller>
+
+			<grid-slide style="background-image: url(images/totoro.jpg); background-color: #555;">
+				<section>
+					<h1>@samsunginternet</h1>
+					<h1 style="justify-self: flex-end; align-self: flex-end;">@lady_ada_king</h1>
+				</section>
+			</grid-slide>
+
+            <grid-notes>
+				<p>Hi I am Ada from Samsung, i'm here to talk to you about Virtual Reality specifically virtual reality on the web.</p>
+				<p>The topics I hope to cover are some of the advice I have picked up by building scenes for VR</p>
+				<p>Just a warning I am not a graphical designer this is just some practical advice I picked up along the way.</p>
+				<ul>
+					<li>Building scenes with Feeling</li>
+					<li>Spaces</li>
+					<li>Colours</li>
+					<li>Lighting</li>
+					<li>Motion</li>
+				</ul>
+			</grid-notes>
+
+			<grid-slide></grid-slide>
+			<grid-notes>
+				<ul>
+					<li>Why are you building the scene</li>
+					<li>What is the user going to focus on</li>
+					<li>Realism?</li>
+				</ul>
+			</grid-notes>
+
+			<grid-slide></grid-slide>
+			<grid-notes>
+				<h1>Does VR need to be realistic?</h1>
+				<ul>
+					<li>Graphical Realism</li>
+					<li>Physical Realism</li>
+					<li>Realistic Physics</li>
+					<li>How abstract, can you be?</li>
+				</ul>
+			</grid-notes>
+
+			<grid-slide></grid-slide>
+			<grid-notes>
+				<h1>Filling your scene with stuff</h1>
+				<ul>
+					<li>Adding a floor</li>
+					<li>3D models
+						<ul>
+							<li>Inbuilt Primitives</li>
+							<li>3D models, blocks</li>
+						</ul>
+					</li>
+					<li>Obj, Gltf</li>
+					<li>Where do you put it?</li>
+					<li>User Range of Motion, comfortable place to put content</li>
+					<li>Where may you want to use all 360?</li>
+					<li>Comfortable distance from camera?</li>
+				</ul>
+			</grid-notes>
+
+			<grid-slide></grid-slide>
+			<grid-notes>
+				<h1>Lighting and Colours</h1>
+				<ul>
+					<li>Saturation in VR, feeling of leaving recroom.</li>
+					<li>Make items visually distinct</li>
+					<li>Highlight interactable elements</li>
+					<li>Give hints to how to play [this cat has a quest]</li>
+					<li>Use black and white sparingly as you cannot get brighter or darker</li>
+					<li>Gradients and textures are good</li>
+					<li>Large monotone areas can make the user get lost, as well as not being interesting</li>
+					<li>Overly detailed textures can be too noisy [where's wally]</li>
+					<li>Gradients provide a nice middle ground</li>
+					<li>Picking a skybox</li>
+				</ul>
+			</grid-notes>
+
+			<grid-slide></grid-slide>
+			<grid-notes>
+				<h1>Using motion</h1>
+				<ul>
+					<li>Moving objects</li>
+					<li>Moving things draw the eye</li>
+					<li>Even in a VR diarama some motion can bring the scene to life.</li>
+					<li>Motion in response to a user's gesture implies it is interactive</li>
+					<li>Moving the camera</li>
+					<li>Make it user triggered so they can brace them selves</li>
+					<li>Give warning, wind up the motion, shrink field of view whilst moving</li>
+					<li>Teleporting can lead to disorientation</li>
+					<li>Bobbing and shaking can induce nausea</li>
+				</ul>
+			</grid-notes>
+
+
+			<grid-slide></grid-slide>
+			<grid-notes>
+				<h1>Thank you for listening, hope it inspires you.</h1>
+			</grid-notes>
+		<script>
+
+			window.addEventListener('DOMContentLoaded', function () {
+				// document.querySelector('grid-slides-controller').startPresenting();
+			});
+
+		</script>
+    </body>
+</html>
