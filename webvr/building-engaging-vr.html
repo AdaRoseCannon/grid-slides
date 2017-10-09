@@ -8,6 +8,12 @@
 		<link href="https://samsunginter.net/fonts/SamsungOne/fonts.css" rel="stylesheet">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai.min.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/edf84e6e/webcomponents-sd-ce.js"></script>
+        <script src="../scripts/main.js"></script>
+		<script src="../scripts/defaults.js"></script>
+		<script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+		<script src="https://unpkg.com/aframe-environment-component@%5E1.0.x/dist/aframe-environment-component.min.js"></script>
+		<script src="https://cdn.rawgit.com/donmccurdy/aframe-physics-system/v1.4.2/dist/aframe-physics-system.min.js"></script>
 
 		<script>hljs.initHighlightingOnLoad();</script>
 
@@ -47,45 +53,50 @@
 				background: rgba(0,0,0,0.8);
 				margin: 0;
 			}
+
+			img {
+				max-height: 100vh;
+			}
         </style>
-        <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/edf84e6e/webcomponents-sd-ce.js"></script>
-        <script src="../scripts/main.js"></script>
-		<script src="../scripts/defaults.js"></script>
-		<script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
-		<script src="https://unpkg.com/aframe-environment-component@%5E1.0.x/dist/aframe-environment-component.min.js"></script>
-		<script src="https://cdn.rawgit.com/donmccurdy/aframe-physics-system/v1.4.2/dist/aframe-physics-system.min.js"></script>
     </head>
     <body>
         <grid-slides-controller>
 
-			<grid-slide style="background-image: url(images/totoro.jpg); background-color: #555;">
+			<grid-slide el-by-el style="background-image: url(images/totoro.jpg); background-color: #555;">
 				<section>
 					<h1>@samsunginternet</h1>
 					<h1 style="justify-self: flex-end; align-self: flex-end;">@lady_ada_king</h1>
 				</section>
+				<img src="images/illusion.jpg" alt="Snapshot from Arrested Developement of the Magician Gob">
 			</grid-slide>
 
             <grid-notes>
 				<p>Hi I am Ada from Samsung, i'm here to talk to you about Virtual Reality specifically virtual reality on the web.</p>
 				<p>The topics I hope to cover are some of the advice I have picked up by building scenes for VR</p>
 				<p>Just a warning I am not a graphical designer this is just some practical advice I picked up along the way.</p>
-				<p>The tips fit into one or more categories:</p>
-				<ul>
-					<li>Selling the illusion</li>
-					<li>Making the user comfortable</li>
-					<li>Aesthetics</li>
-				</ul>
-				<p>Often will need to trade off performance, or asset size to gain one of these features.</p>
+				<p>I recently was the judge on a VR demo competition. So I would like to highlight some of the things that can be implemented to really bring a scene together.</p>
+				<p>These tips tend to fit into one of these categories:</p>
+				<h3>Selling the illusion</h3>
+				<p>We tend to take for granted that Stereoscopic VR will feel 3D because it is stereoscopic but steroscopic vision is only one of many cues the mind uses to detect depth. By using more visual cues we can improve the illusion to help the user forget that what they're seeing is not real.
+				</p>
+				<h3>Making the user comfortable</h3>
+				<p>It is very easy for VR to make a user feel unwell. It is important that they feel comfortable in VR so they can look back on your experience with positive feelings and will want to come back.</p>
 			</grid-notes>
 
 			<grid-slide>
 				<img src="images/cat.jpg" />
 			</grid-slide>
 			<grid-notes>
-				<ul>
-					<li>Why are you building the scene</li>
-					<li>What is the user going to focus on</li>
-				</ul>
+				<h3>Why are you building the scene?</h3>
+				<p>This is potentially the biggest flaw in VR scenes.
+					What does VR offer you which a 2D screen does not, I have seen many scenes where VR was used just to be VR but would have been much better on just a normal phone screen.</p>
+					<p>If VR isn't giving you anything all you are doing is making your content harder for users to use.</p>
+				<h3>What do you want the user to do?</h3>
+				<p>Your "call to action", whether art, educational, or advertisement you are trying to get the user to *do* something. For example by giving this talk I am hoping you go out and build some cool VR.</p>
+				<p>Do you want the user to think about something inparticular? To remembmer something from your scene? To use your scene to perform an action?</p>
+				<p>Use this to determine the elements in the scene the user should be focusing on.</p>
+				<h3>What should the user be focusing on?</h3>
+				<p>A single 360 degree scene can hold vast amounts of content. But the user won't have the attention or will power to look at everything it is really important to bring attention certain elements.</p>
 			</grid-notes>
 
 			<grid-slide el-by-el>
@@ -94,7 +105,11 @@
 				<img src="images/parapa.jpg" />
 			</grid-slide>
 			<grid-notes>
-				<h1>Does VR need to be realistic?</h1>
+				<h1>Should VR need to be realistic?</h1>
+				<p>I would argue NO! A scene with a lot of graphical realism will suffer.</p>
+				<p>Difficult to do right and very hard to do performantly. The still behind me is from final fantasy spirits within, this was considered "photo realistic".</p>
+				<p>A stylistic appoach, will look good on lower end and high end devices and be a great excuse to remove lots of visual clutter allowing you to focus on delivering the message you want.</p>
+				<p>Something which is computationally expensive but can raelly make a scene feel great without cluttering it is physics. Adding physics makes a scene feel alive and engaging without too much visual clutter. But it is too expensive to add to everything to carefully choose what gets the fancy physics animation and what can fake it.</p>
 				<ul>
 					<li>Graphical Realism</li>
 					<li>Physical Realism</li>
