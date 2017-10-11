@@ -2,6 +2,40 @@
 /* eslint no-console: 0 */
 'use strict';
 
+const containerTemplate = document.createElement('template');
+const slideTemplate = document.createElement('template');
+
+containerTemplate.innerHTML = `
+	<style>
+		.slide-controls {
+			grid-column: slide;
+			margin-bottom: var(--padding);
+			justify-content: center;
+			display: var(--button-display, flex);
+		}
+	</style>
+	<div class="slide-controls grid-slides-controller">
+		<button class="start-button grid-slides-controller" ref="start">Start Presentation</button>
+	</div>
+	<slot></slot>
+`;
+
+slideTemplate.innerHTML = `
+	<style class="grid-slide">
+		.play-button {
+			color: green;
+			font-size: 1.5em;
+			position: absolute;
+			top: 0;
+			right: 0;
+			display: var(--button-display, block);
+			grid-area: 1/full;
+			z-index: 100;
+		}
+	</style>
+	<slot></slot>
+	<button class="play-button grid-slide" title="Play" ref="play">►</button>
+`;
 
 // Polyfill animation.finished
 const oldAnim = Element.prototype.animate;
@@ -137,9 +171,22 @@ const activeState = {
 
 window.GRIDSLIDES = GRIDSLIDES;
 
-class GridSlidesController extends HTMLElement {
+class HTMLElementWithRefs extends HTMLElement {
 
+	constructor () {
+		super();
+		this.refs = new Proxy({}, {
+			get: this.__getFromShadowRoot.bind(this)
+		});
+	}
 	
+	__getFromShadowRoot (target, name) {
+		return this.shadowRoot.querySelector('[ref="' + name + '"]');
+	}
+}
+
+class GridSlidesController extends HTMLElementWithRefs {
+
 	constructor() {
 		// Always call super first in constructor
 		super();
@@ -177,32 +224,9 @@ class GridSlidesController extends HTMLElement {
 		});
 		
 		this.tabIndex = 0;
-		
-		var style=document.createElement('style');
-		style.innerHTML = `
-		.slide-controls {
-			grid-column: slide;
-			margin-bottom: var(--padding);
-			justify-content: center;
-			display: var(--button-display, flex);
-		}
-		`;
-		
-		var content = document.createElement('slot');
-		
-		var startButton = document.createElement('button');
-		startButton.classList.add('start-button');
-		startButton.textContent = 'Start Presentation';
-		startButton.addEventListener('click', this.startPresenting.bind(this));
-		
-		var controls = document.createElement('div');
-		controls.classList.add('slide-controls');
-		controls.appendChild(startButton);
-		
 		this.attachShadow({mode: 'open'});
-		this.shadowRoot.appendChild(style);
-		this.shadowRoot.appendChild(controls);
-		this.shadowRoot.appendChild(content);
+		this.shadowRoot.appendChild(containerTemplate.content.cloneNode(true));
+		this.refs.start.addEventListener('click', this.startPresenting.bind(this));
 	}
 	
 	static get observedAttributes() { return ['slide', 'transition', 'presenting']; }
@@ -379,7 +403,7 @@ function parseAttr(string) {
 	return out;
 }
 
-class GridSlide extends HTMLElement {
+class GridSlide extends HTMLElementWithRefs {
 	constructor() {
 		super();
 		this.transition = GRIDSLIDES.transitions.get(this.getAttribute('transition'));
@@ -389,27 +413,9 @@ class GridSlide extends HTMLElement {
 			if (datum.init) datum.init.apply(this, []);
 		}
 
-		var style=document.createElement('style');
-		style.innerHTML = `
-
-			.play-button {
-				color: green;
-				font-size: 1.5em;
-				position: absolute;
-				top: 0;
-				right: 0;
-				display: var(--button-display, block);
-				grid-area: 1/full;
-				z-index: 100;
-			}`;
-
-		var content = document.createElement('slot');
-
-		var playButton = document.createElement('button');
-		playButton.classList.add('play-button');
-		playButton.title = 'Play';
-		playButton.textContent = '►';
-		playButton.addEventListener('click', function () {
+		this.attachShadow({mode: 'open'});
+		this.shadowRoot.appendChild(slideTemplate.content.cloneNode(true));
+		this.refs.play.addEventListener('click', function () {
 			if (!this.__isSetup) {
 				this.setup();
 			}
@@ -421,10 +427,6 @@ class GridSlide extends HTMLElement {
 			}
 		}.bind(this));
 
-		this.attachShadow({mode: 'open'});
-		this.shadowRoot.appendChild(style);
-		this.shadowRoot.appendChild(content);
-		this.shadowRoot.appendChild(playButton);
 	}
 	
 	update() {

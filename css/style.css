@@ -75,7 +75,7 @@ grid-slide {
 
 	max-width: 100%;
 
-	grid-auto-rows: 1fr;
+	grid-auto-rows: max-content;
 	grid-template-columns: [full-start] var(--padding) [content-start] var(--padding) [content-inner-start]  1fr [one-quarter] 2fr [center] 2fr [three-quarter] 1fr [content-inner-end] var(--padding) [content-end] var(--padding) [full-end];
 }
 

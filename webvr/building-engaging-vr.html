@@ -103,6 +103,8 @@
 				<img src="images/spirits-within.jpg" />
 				<img src="images/zelda.jpg" />
 				<img src="images/parapa.jpg" />
+				<img src="images/falling-apples.jpg" alt="Newton with Apple to represent physics">
+				<img src="images/rez.jpg" alt="Rez game">
 			</grid-slide>
 			<grid-notes>
 				<h1>Should VR need to be realistic?</h1>
@@ -118,11 +120,34 @@
 				</ul>
 			</grid-notes>
 
-			<grid-slide></grid-slide>
+			<grid-slide el-by-el style="background-image: url(images/go-fast.jpg);">
+				<h1 class="hero">Making a scene look okay quickly</h1>
+				<img src="images/skybox.jpg" alt="An example skybox">
+				<img src="images/bad-skybox.jpg" atl="A bad example of a skybox">
+				<div style="height: 100vh; background: linear-gradient(to bottom, #4a4969 0%, #7072ab 50%, #cd82a0 100%)"></div>
+				<img src="images/oasis.jpg" alt="A skybox">
+				<img src="images/floor.jpg" alt="The floor, what it does.">
+				<img src="images/floor-comparison.jpg" alt="Comparing no texture to texture">
+			</grid-slide>
+
 			<grid-notes>
-				<h1>Filling your scene with stuff</h1>
+					<h1>Filling your scene with stuff</h1>
+					<p>Reently I have judged a few hackathons where first time VR developers have submitted an entry. This is advice I would love to give them to make their scenes more comfortable to use or feel 500% better with a shorter amount of work.</p>
+					<p>The skybox</p>
+					<p>The floor provides several key pieces of subconcious information to the user, how tall they are in the scene, how far away stuff is.</p>
+					<p>I often see scenes with no concept of floor just floating in space, that is a valid creative choice but you sacrifice a lot of readibility by doing that.</p>
+					<p>Another mistake is to just do a single coloured floor. With no texture this unfortunately breaks the stereoscopic effect as often it is one colour and ends up being visually confusing. A texture will give the user scale and help the stereoscopic effect</p>
+			</grid-notes>
+	
+			<grid-slide>
+				<h1 class="hero">Adding Stuff</h1>
+				<img src="images/shapes.jpg" alt="3D models">
+				<img src="images/blocks.jpg" alt="3D models from blocks">
+				<img src="" alt="range of human motion">
+				<img src="" alt="Good use cases for 360">
+			</grid-slide>
+			<grid-notes>
 				<ul>
-					<li>Adding a floor, (solid, grid, texture)</li>
 					<li>3D models
 						<ul>
 							<li>Inbuilt Primitives</li>
@@ -130,7 +155,7 @@
 						</ul>
 					</li>
 					<li>Obj, Gltf</li>
-					<li>Where do you put it?</li>
+					<li>Where do you put it? Make most of 360 but still be comfortable.</li>
 					<li>User Range of Motion, comfortable place to put content</li>
 					<li>Where may you want to use all 360?</li>
 					<li>Comfortable distance from camera?</li>
@@ -176,6 +201,7 @@
 			<grid-slide></grid-slide>
 			<grid-notes>
 				<h1>Thank you for listening, hope it inspires you.</h1>
+				<h3>Further Reading: http://o.ada.is/practical-vr-ryan-betts</h3>
 			</grid-notes>
 		<script>
 
