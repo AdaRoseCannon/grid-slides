@@ -75,7 +75,7 @@ grid-slide {
 
 	max-width: 100%;
 
-	grid-auto-rows: max-content;
+	grid-auto-rows: 1fr;
 	grid-template-columns: [full-start] var(--padding) [content-start] var(--padding) [content-inner-start]  1fr [one-quarter] 2fr [center] 2fr [three-quarter] 1fr [content-inner-end] var(--padding) [content-end] var(--padding) [full-end];
 }
 
@@ -96,14 +96,16 @@ grid-slides-controller[presenting] > grid-notes {
 }
 
 grid-slide > section {
-	display: contents;
+	/* display: contents; */
+	display: flex;
+	flex-direction: column;
 }
 
 grid-slide > *,
 grid-slide > section > * {
 	grid-area: auto/content-inner;
 	max-width: 100%;
-
+	max-height: 100vh;
 }
 
 grid-slide > img,

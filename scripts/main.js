@@ -122,6 +122,9 @@ const GRIDSLIDES = {
 		events: {
 			nextSlide: 'GRIDSLIDES_NEXT_SLIDE',
 			finished: 'GRIDSLIDES_FINISHED'
+		},
+		activeState: {
+			transform: 'none'
 		}
 	},
 
@@ -165,10 +168,6 @@ const GRIDSLIDES = {
 	registeredSlideDataKeys: undefined
 }
 
-const activeState = {
-	transform: 'none'
-};
-
 window.GRIDSLIDES = GRIDSLIDES;
 
 class HTMLElementWithRefs extends HTMLElement {
@@ -188,7 +187,6 @@ class HTMLElementWithRefs extends HTMLElement {
 class GridSlidesController extends HTMLElementWithRefs {
 
 	constructor() {
-		// Always call super first in constructor
 		super();
 		this.transition = GRIDSLIDES.transitions.get(this.getAttribute('transition') || 'slide');
 		GRIDSLIDES.registeredSlideDataKeys = Array.from(GRIDSLIDES.slideData.keys());
@@ -261,9 +259,9 @@ class GridSlidesController extends HTMLElementWithRefs {
 				oldSlideTransitionSettings.direction = direction;
 				oldSlideTransitionSettings.fill = 'forwards';
 				if (direction === 'normal') {
-					animOut.unshift(activeState);
+					animOut.unshift(GRIDSLIDES.constants.activeState);
 				} else {
-					animOut.push(activeState);
+					animOut.push(GRIDSLIDES.constants.activeState);
 				}
 				oldSlide.animate(animOut, oldSlideTransitionSettings)
 				.finished.then(function () {
@@ -279,9 +277,9 @@ class GridSlidesController extends HTMLElementWithRefs {
 			newSlideTransitionSettings.direction = direction;
 			newSlideTransitionSettings.fill = 'forwards';
 			if (direction === 'normal') {
-				animIn.push(activeState);
+				animIn.push(GRIDSLIDES.constants.activeState);
 			} else {
-				animIn.unshift(activeState);
+				animIn.unshift(GRIDSLIDES.constants.activeState);
 			}
 			newSlide.animate(animIn, newSlideTransitionSettings)
 			.finished.then(() => {
@@ -313,7 +311,7 @@ class GridSlidesController extends HTMLElementWithRefs {
 				const anim = this.transition.inState.slice(0).reverse();
 				const settings = this.transition.inSettings || this.transition.settings;
 				settings.fill = 'forwards';
-				anim.unshift(activeState);
+				anim.unshift(GRIDSLIDES.constants.activeState);
 				slide.animate(anim, this.transition.inSettings || this.transition.settings);
 			}
 		}
@@ -396,13 +394,6 @@ class GridSlidesController extends HTMLElementWithRefs {
 	}
 }
 
-function parseAttr(string) {
-	const out = {};
-	const l = string.split(';').map(p => p.split(':'));
-	l.forEach(p => p[0] && (out[p[0].trim()] = p[1].trim()));
-	return out;
-}
-
 class GridSlide extends HTMLElementWithRefs {
 	constructor() {
 		super();
@@ -428,12 +419,19 @@ class GridSlide extends HTMLElementWithRefs {
 		}.bind(this));
 
 	}
+
+	__parseAttr(string) {
+		const out = {};
+		const l = string.split(';').map(p => p.split(':'));
+		l.forEach(p => p[0] && (out[p[0].trim()] = p[1].trim()));
+		return out;
+	}
 	
 	update() {
 		this.__data.splice(0);
 		for (const attr of this.attributes) {
 			if (GRIDSLIDES.registeredSlideDataKeys.includes(attr.name)) {
-				this.__data.push(GRIDSLIDES.getSlideData(attr.name, this, parseAttr(attr.value)));
+				this.__data.push(GRIDSLIDES.getSlideData(attr.name, this, this.__parseAttr(attr.value)));
 			}
 		}
 	}
