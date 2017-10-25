@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Grid Slides</title>
+        <title>WebVR Intro</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="../css/style.css" rel="stylesheet">
@@ -55,22 +55,24 @@
 		<script src="https://unpkg.com/aframe-environment-component@%5E1.0.x/dist/aframe-environment-component.min.js"></script>
 		<script src="https://cdn.rawgit.com/donmccurdy/aframe-physics-system/v1.4.2/dist/aframe-physics-system.min.js"></script>
 		<script>
-			AFRAME.registerComponent('double-sided', {
-				init: function () {
-					this.el.addEventListener('model-loaded', function () {
-						this.object3D.traverse( function( node ) {
-							if( node.material ) {
-								node.material.side = THREE.DoubleSide;
-								if (node.material.materials) {
-									for (const mat of node.material.materials) {
-										mat.side = THREE.DoubleSide;
-									}
-								}
-							}
-						});
+
+		var purple = new THREE.MeshBasicMaterial();
+		purple.color = new THREE.Color('#706CF5');
+		var white = new THREE.MeshBasicMaterial();
+		white.color = new THREE.Color('#ffffff');
+
+
+		AFRAME.registerComponent('samsung-logo', {
+			init: function () {
+				var el = this.el;
+				el.addEventListener('model-loaded', function () {
+					el.object3D.traverse(function (o) {
+						if (o.material) o.material = o.material.name === 'Purple' ? purple : white;
 					});
-				}
-			});
+				});
+			}
+		});
+
 		</script>
     </head>
     <body>
@@ -88,8 +90,22 @@
                 Hi I am Ada from Samsung, i'm here to talk to you about Virtual Reality.
 			</grid-notes>
 			
+			<grid-slide a-frame-step-by-step id="samsing-internet-logo">
+				<script type="text/html" action="assets">
+					<a-asset-item src="models/si/silogo_small.mtl" id="samsung-internet-mtl"></a-asset-item>
+					<a-asset-item src="models/si/silogo_small.obj" id="samsung-internet-obj"></a-asset-item>
+				</script>
+				<script type="text/html">
+					<a-entity position="0 1 -5" rotation="0 90 5" scale="2 2 2"><a-entity obj-model="obj: #samsung-internet-obj;mtl: #samsung-internet-mtl" samsung-logo>
+						<a-animation from="0 -360 45" to="0 0 0" easing="ease-out-back" begin="model-loaded" dur="3000"></a-animation>
+						<a-animation from="0 0 0" to="1 1 1" easing="ease-out-back" begin="model-loaded" dur="2000" attribute="scale"></a-animation>
+						<a-animation from="0 -1 0" to="0 0 0" easing="ease-out-back" begin="model-loaded" dur="1000" attribute="position"></a-animation>
+					</a-entity></a-entity>
+				</script>
+			</grid-slide>
+
 			<grid-slide>
-				<h1 class="hero" style="font-size: 3em;">https://o.ada.is/nw-rocket</h1>
+				<h1 class="hero" style="font-size: 3em;">http://o.ada.is/rocket-vr</h1>
 			</grid-slide>
 
             <grid-slide el-by-el="reveal: true;">
@@ -320,7 +336,7 @@
 			</grid-notes>
 
 			<grid-slide iframe-slide>
-				<iframe src="https://haydenlee.io/networked-aframe/a-painter/multiuser-iframes.html" frameborder="0"></iframe>
+				<iframe src="https://haydenlee.io/networked-aframe/basic-4.html" frameborder="0"></iframe>
 			</grid-slide>
 
 			<grid-slide>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>WebVR Intro</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="../css/style.css" rel="stylesheet">
+		<link href="https://samsunginter.net/fonts/SamsungOne/fonts.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai.min.css">
+
+        <style>
+            html, body {
+                min-height: 100vh;
+                min-width: 100vw;
+				margin: 0;
+				font-family: 'Samsung One', Helvetica, Arial, sans-serif;
+			}
+
+			grid-slide {
+				background-color: darkslategray;
+				background-image: url('images/bg.png');
+				color: white;
+				border: 1px solid grey;
+				flex-direction: column;
+				font-size: 3rem;
+				background-blend-mode: soft-light;
+				background-size: cover;
+				background-position: center center;
+			}
+
+			grid-slide code {
+				font-size: 2rem;
+			}
+
+			h1.hero {
+				font-size: 5em;
+				text-align: center;
+				align-self: center;
+			}
+
+			.caption {
+				grid-area: 1/content-inner;
+				align-self: flex-end;
+				background: rgba(0,0,0,0.8);
+				margin: 0;
+			}
+        </style>
+        <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/edf84e6e/webcomponents-sd-ce.js"></script>
+        <script src="../scripts/main.js"></script>
+		<script src="../scripts/defaults.js"></script>
+		<script src="https://aframe.io/releases/0.6.1/aframe.min.js"></script>
+		<script src="https://unpkg.com/aframe-environment-component@%5E1.0.x/dist/aframe-environment-component.min.js"></script>
+		<script src="https://cdn.rawgit.com/donmccurdy/aframe-physics-system/v1.4.2/dist/aframe-physics-system.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+		<script>hljs.initHighlightingOnLoad();</script>
+		<script>
+
+		var purple = new THREE.MeshBasicMaterial();
+		purple.color = new THREE.Color('#706CF5');
+		var white = new THREE.MeshBasicMaterial();
+		white.color = new THREE.Color('#ffffff');
+
+
+		AFRAME.registerComponent('samsung-logo', {
+			init: function () {
+				var el = this.el;
+				el.addEventListener('model-loaded', function () {
+					el.object3D.traverse(function (o) {
+						if (o.material) o.material = o.material.name === 'Purple' ? purple : white;
+					});
+				});
+			}
+		});
+
+		</script>
+    </head>
+    <body>
+        <grid-slides-controller>
+
+			<grid-slide style="background-image: url(images/me-and-dan.jpg); background-color: #555;">
+				<section>
+					<h1>@samsunginternet</h1>
+					<h1 style="margin-top: auto; align-self: flex-end;">@lady_ada_king</h1>
+				</section>
+				<!-- <img src="images/StatCounter-browser-GB-monthly-201606-201706.png" style="object-fit: contain; background: white;" /> -->
+			</grid-slide>
+
+            <grid-notes>
+				<p>I am Ada Rose Cannon, I really like making VR demos.</p>
+				<p>Who here has used VR before?</p>
+				<p>Who here has made some VR before?</p>
+			</grid-notes>
+			
+			<grid-slide a-frame-step-by-step id="samsing-internet-logo">
+				<script type="text/html" action="assets">
+					<a-asset-item src="models/si/silogo_small.mtl" id="samsung-internet-mtl"></a-asset-item>
+					<a-asset-item src="models/si/silogo_small.obj" id="samsung-internet-obj"></a-asset-item>
+				</script>
+				<script type="text/html">
+					<a-entity position="0 1 -5" rotation="0 90 5" scale="2 2 2"><a-entity obj-model="obj: #samsung-internet-obj;mtl: #samsung-internet-mtl" samsung-logo>
+						<a-animation from="0 -200 0" to="0 -30 0" easing="ease-out-back" begin="model-loaded" dur="3000"></a-animation>
+						<a-animation from="0 0 0" to="1 1 1" easing="ease-out-back" begin="model-loaded" dur="2000" attribute="scale"></a-animation>
+						<a-animation from="0 -1 0" to="0 0 0" easing="ease-out-back" begin="model-loaded" dur="1000" attribute="position"></a-animation>
+					</a-entity></a-entity>
+				</script>
+			</grid-slide>
+
+			<grid-notes>
+				<p>I work for Samsung Internet, Samsung's Web Browser.</p>
+			</grid-notes>
+
+			<grid-slide>
+				<div style="display: flex; flex-direction: row; grid-column: full; align-items: center; justify-items: space-around; justify-self: center;">
+					<img src="images/si.png" alt="Samsung Internet Logo" style="flex-shrink: 1; padding: 1em;">
+					<img src="images/si4gvr.png" alt="Samsung Internet for GearVR Logo" style="flex-shrink: 1; padding: 1em;">
+				</div>
+			</grid-slide>
+
+			<grid-slide video-slide>
+				<video src="images/si4gvr.m4v"></video>
+			</grid-slide>
+
+			<grid-slide>
+				<h1 class="hero" style="font-size: 3em;">http://o.ada.is/rocket-vr</h1>
+			</grid-slide>
+
+            <grid-slide el-by-el="reveal: true;">
+				<img class="base" src="images/gearvr+controller.png" style="grid-area:1/full/-1/full; filter: drop-shadow(0 0 0.4em rgba(255,255,255,170));" />
+				<img src="images/gearvr+controller+detail.png" style="grid-area:1/full/-1/full; z-index: 1;"  />
+            </grid-slide>
+
+            <grid-notes>
+                <h1>How VR works,</h1>
+				<p>It works by sending your position and rotation in real space to the headset.</P>
+				<p>We can then use this information to render a scene from the users point of view.</p>
+				<p>We can also render the users hands and use any other information to give the user more agency i nthe scene.</p>
+				<p>Once we have rendered an image we send it to the headset to be displayed to the user.</p>
+            </grid-notes>
+
+			<grid-slide el-by-el>
+				<h1 class="hero">WebGL</h1>
+				<h1 class="hero" style="font-size: 20vh;">Three.js / Babylon.js</h1>
+				<h1 class="hero">&lt;HTML&gt;</h1>
+				<span class="hero" style="display: flex; flex-direction: column; text-align: center; font-size: 20vh;"><span>Custom Elements</span><span>👭</span><span>WebGL</span></span>
+				<img src="images/aframevr.png" />
+				<pre><code class="html">
+&lt;html&gt;
+&lt;head&gt;
+  &lt;script src="https://aframe.io/releases/0.6.1/aframe.min.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;a-scene&gt;
+    &lt;a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"&gt;&lt;/a-box&gt;
+    &lt;a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"&gt;&lt;/a-sphere&gt;
+    &lt;a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"&gt;&lt;/a-cylinder&gt;
+    &lt;a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"&gt;&lt;/a-plane&gt;
+    &lt;a-sky color="skyblue"&gt;&lt;/a-sky&gt;
+  &lt;/a-scene&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+				</code></pre>
+			</grid-slide>
+			<grid-notes>
+				<h1>A-Frame, Web friendly VR!</h1>
+				<p>Who here as done HTML before?</p>
+				<p>A-Frame is html for virtual reality.</p>
+				<p>It kinds looks like <i>this</i> and hopefully will make some sense when being read through.</p>
+				<p>It takes care of a lot of for you, so you can get on with defining some 3D models and it will take care of the camera and lighting until you want to customise it yourself.</p>
+			</grid-notes>
+
+			<grid-slide a-frame-step-by-step>
+				<script type="text/html">
+					<a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
+					<a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
+					<a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+					<a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
+					<a-sky color="skyblue"></a-sky>
+					<a-entity light="intensity:0.5;" position="1 1 1"></a-entity>
+					<a-entity light="intensity:0.5; type: ambient;" position="1 1 1"></a-entity>
+				</script>
+			</grid-slide>
+
+			<grid-slide>
+				<h1 class="hero">Live Coding Time! 😨</h1>
+			</grid-slide>
+		</grid-slides-controller>
+
+		<script>
+
+			window.addEventListener('DOMContentLoaded', function () {
+				// document.querySelector('grid-slides-controller').startPresenting();
+			});
+
+		</script>
+    </body>
+</html>

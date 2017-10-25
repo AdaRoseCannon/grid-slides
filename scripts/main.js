@@ -37,16 +37,30 @@ slideTemplate.innerHTML = `
 	<button class="play-button grid-slide" title="Play" ref="play">►</button>
 `;
 
-// Polyfill animation.finished
-const oldAnim = Element.prototype.animate;
-Element.prototype.animate = function () {
-	const animation = oldAnim.apply(this, arguments);
-	if (animation.finished === undefined) {
-		animation.finished = new Promise(function (resolve) {
-			animation.addEventListener('finish', resolve);
+
+// only polyfill .finished in browsers that already support animate()
+if (Element.prototype.animate) {
+
+	// Chrome does not seem to expose the Animation constructor globally
+	if (typeof Animation === 'undefined') {
+		window.Animation = Element.prototype.animate;
+	}
+
+	if (Animation.prototype.finished === undefined) {
+		Object.defineProperty(Animation.prototype, 'finished', {
+			get() {
+				if (!this._finished) {
+				this._finished = this.playState === 'finished' ? 
+					Promise.resolve() :
+					new Promise((resolve, reject) => {
+						this.addEventListener('finish', resolve, {once: true});
+						this.addEventListener('cancel', reject, {once: true});
+					});
+				}
+				return this._finished;
+			}
 		});
 	}
-	return animation;
 }
 
 function processSchema(schema, data) {
@@ -122,9 +136,6 @@ const GRIDSLIDES = {
 		events: {
 			nextSlide: 'GRIDSLIDES_NEXT_SLIDE',
 			finished: 'GRIDSLIDES_FINISHED'
-		},
-		activeState: {
-			transform: 'none'
 		}
 	},
 
@@ -259,9 +270,9 @@ class GridSlidesController extends HTMLElementWithRefs {
 				oldSlideTransitionSettings.direction = direction;
 				oldSlideTransitionSettings.fill = 'forwards';
 				if (direction === 'normal') {
-					animOut.unshift(GRIDSLIDES.constants.activeState);
+					animOut.unshift(oldSlideTransition.activeState);
 				} else {
-					animOut.push(GRIDSLIDES.constants.activeState);
+					animOut.push(oldSlideTransition.activeState);
 				}
 				oldSlide.animate(animOut, oldSlideTransitionSettings)
 				.finished.then(function () {
@@ -277,9 +288,9 @@ class GridSlidesController extends HTMLElementWithRefs {
 			newSlideTransitionSettings.direction = direction;
 			newSlideTransitionSettings.fill = 'forwards';
 			if (direction === 'normal') {
-				animIn.push(GRIDSLIDES.constants.activeState);
+				animIn.push(newSlideTransition.activeState);
 			} else {
-				animIn.unshift(GRIDSLIDES.constants.activeState);
+				animIn.unshift(newSlideTransition.activeState);
 			}
 			newSlide.animate(animIn, newSlideTransitionSettings)
 			.finished.then(() => {
@@ -311,7 +322,7 @@ class GridSlidesController extends HTMLElementWithRefs {
 				const anim = this.transition.inState.slice(0).reverse();
 				const settings = this.transition.inSettings || this.transition.settings;
 				settings.fill = 'forwards';
-				anim.unshift(GRIDSLIDES.constants.activeState);
+				anim.unshift(this.transition.activeState);
 				slide.animate(anim, this.transition.inSettings || this.transition.settings);
 			}
 		}

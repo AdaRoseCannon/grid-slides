@@ -9,6 +9,9 @@ GRIDSLIDES.registerTransition('slide', {
 	outState: [{
 		transform: 'translateX(-100vw)'
 	}],
+	activeState: {
+		transform: 'none'
+	},
 	inSettings: {
 		duration: 500,
 		easing: getComputedStyle(document.documentElement).getPropertyValue('--easeInOutQuart')
@@ -19,6 +22,25 @@ GRIDSLIDES.registerTransition('slide', {
 	}
 });
 
+GRIDSLIDES.registerTransition('fade', {
+	inState: [{
+		opacity: 0
+	}],
+	outState: [{
+		opacity: 0
+	}],
+	activeState: {
+		opacity: 1
+	},
+	inSettings: {
+		duration: 500,
+		easing: 'linear'
+	},
+	outSettings: {
+		duration: 500,
+		easing: 'linear'
+	}
+});
 
 GRIDSLIDES.registerSlideData('a-frame-step-by-step', {
 	static: {

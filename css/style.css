@@ -109,7 +109,9 @@ grid-slide > section > * {
 }
 
 grid-slide > img,
-grid-slide > section > img {
+grid-slide > video,
+grid-slide > section > img,
+grid-slide > section > video {
 	grid-area: auto/full/auto/full;
 	align-self: stretch;
 	object-fit: contain;
@@ -118,6 +120,12 @@ grid-slide > section > img {
 }
 
 grid-slides-controller[presenting] > grid-slide > img,
-grid-slides-controller[presenting] > grid-slide > section > img {
+grid-slides-controller[presenting] > grid-slide > section > img,
+grid-slides-controller[presenting] > grid-slide > video,
+grid-slides-controller[presenting] > grid-slide > section > video {
 	grid-area: 1/full/-1/full;
+}
+
+grid-slides-controller[presenting] > grid-slide:not([pending]):not([active]):not([teardown-pending]) {
+	display: none;
 }
