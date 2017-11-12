@@ -64,6 +64,7 @@ GRIDSLIDES.registerSlideData('a-frame-step-by-step', {
 			if (!scene) {
 				scene = document.createElement('a-scene');
 				scene.setAttribute('embedded', '');
+				scene.setAttribute('vr-mode-ui', "enabled: false");
 				if (options.physics) scene.setAttribute('physics', 'debug:true;');
 				target = document.createElement('a-entity');
 				if (!options.light) target.setAttribute('light', 'intensity: 0;');

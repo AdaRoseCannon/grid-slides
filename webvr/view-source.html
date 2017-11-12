@@ -75,9 +75,43 @@
 		</script>
     </head>
     <body>
-        <grid-slides-controller>
+		<template id="custom-slide-template">
+			<style class="grid-slide">
+				.play-button {
+					color: green;
+					font-size: 1.5em;
+					position: absolute;
+					top: 0;
+					right: 0;
+					display: var(--button-display, block);
+					grid-area: 1/full;
+					z-index: 100;
+				}
 
-			<grid-slide style="background-image: url(images/me-and-dan.jpg); background-color: #555;">
+				footer {
+					position: absolute;
+					bottom: 0;
+					left: 0;
+					right: 0;
+					padding: 0.5em 1em;
+					background: rgba(0,0,0,0.5);
+					color: white;
+					display: flex;
+					justify-content: space-between;
+					grid-column: full;
+					font-size: 1.5rem;
+				}
+			</style>
+			<button class="play-button grid-slide" title="Play" ref="play">►</button>
+			<footer>
+				<span>@lady_ada_king</span>
+				<span>Samsung Internet</span>
+			</footer>
+			<slot></slot>
+		</template>
+        <grid-slides-controller template="#custom-slide-template">
+
+			<grid-slide template="default" style="background-image: url(images/me-and-dan.jpg); background-color: #555;">
 				<section>
 					<h1>@samsunginternet</h1>
 					<h1 style="margin-top: auto; align-self: flex-end;">@lady_ada_king</h1>

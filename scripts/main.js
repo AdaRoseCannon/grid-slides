@@ -238,10 +238,13 @@ class GridSlidesController extends HTMLElementWithRefs {
 		this.refs.start.addEventListener('click', this.startPresenting.bind(this));
 	}
 	
-	static get observedAttributes() { return ['slide', 'transition', 'presenting']; }
+	static get observedAttributes() { return ['slide', 'transition', 'presenting', 'template']; }
 	attributeChangedCallback(attr, oldValue, newValue) {
 		if (attr === 'transition') {
 			this.transition = GRIDSLIDES.transitions.get(newValue || 'slide');
+		}
+		if (attr === 'template') {
+			this.template = newValue === 'default' ? slideTemplate : document.querySelector(newValue);
 		}
 		if (attr === 'presenting') {
 			if (newValue === null) return;
@@ -408,6 +411,8 @@ class GridSlidesController extends HTMLElementWithRefs {
 class GridSlide extends HTMLElementWithRefs {
 	constructor() {
 		super();
+
+
 		this.transition = GRIDSLIDES.transitions.get(this.getAttribute('transition'));
 		this.__data = [];
 		this.update();
@@ -416,7 +421,13 @@ class GridSlide extends HTMLElementWithRefs {
 		}
 
 		this.attachShadow({mode: 'open'});
-		this.shadowRoot.appendChild(slideTemplate.content.cloneNode(true));
+		this.__buildDom();
+	}
+
+	__buildDom() {
+		const template = this.template || this.parentNode.template || slideTemplate;
+		this.shadowRoot.innerHTML = '';
+		this.shadowRoot.appendChild(template.content.cloneNode(true));
 		this.refs.play.addEventListener('click', function () {
 			if (!this.__isSetup) {
 				this.setup();
@@ -496,7 +507,7 @@ class GridSlide extends HTMLElementWithRefs {
 	}
 	
 	static get observedAttributes() {
-		return ['pending', 'active', 'data', 'transition', 'teardown-pending'].concat(Array.from(GRIDSLIDES.registeredSlideDataKeys));
+		return ['pending', 'active', 'data', 'transition', 'teardown-pending', 'template'].concat(Array.from(GRIDSLIDES.registeredSlideDataKeys));
 	}
 	
 	attributeChangedCallback(attr, oldValue, newValue) {
@@ -539,6 +550,11 @@ class GridSlide extends HTMLElementWithRefs {
 
 		if (attr === 'transition') {
 			this.transition = GRIDSLIDES.transitions.get(newValue);
+		}
+
+		if (attr === 'template') {
+			this.template = newValue === 'default' ? slideTemplate : document.querySelector(newValue);
+			this.__buildDom();
 		}
 
 		if (GRIDSLIDES.registeredSlideDataKeys.includes(attr)) {
