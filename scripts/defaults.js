@@ -93,9 +93,11 @@ GRIDSLIDES.registerSlideData('a-frame-step-by-step', {
 		action: function *() {
 			target.innerHTML = '';
 			for (const step of steps) {
-				if (step[1] === 'replace') yield target.innerHTML = step[0];
-				if (step[1] === 'append') yield target.insertAdjacentHTML('afterbegin', step[0]);
-				if (step[1] === 'eval') yield (new Function(step[0])).bind(target)();
+				if (step[1] === 'replace') target.innerHTML = step[0];
+				if (step[1] === 'append') target.insertAdjacentHTML('afterbegin', step[0]);
+				if (step[1] === 'eval') (new Function(step[0])).bind(target)();
+				if (step === steps.slice(-1)[0]) return;
+				yield;
 			}
 		},
 		teardown: function () {
@@ -115,21 +117,27 @@ GRIDSLIDES.registerSlideData('iframe-slide', {
 		this.querySelector('iframe').src = 'about:blank';
 	},
 	action: function * () {
-		yield this.querySelector('iframe').src = this.querySelector('iframe').dataset.src;
+		this.querySelector('iframe').src = this.querySelector('iframe').dataset.src;
 	},
 	teardown: function () { this.querySelector('iframe').src = 'about:blank'; }
 });
 
 GRIDSLIDES.registerSlideData('video-slide', {
 	setup: function () {
-		this.querySelector('video').currentTime = 0;
-		this.querySelector('video').pause();
+		const video = this.querySelector('video');
+		if (!video) return;
+		video.currentTime = 0;
+		video.pause();
 	},
 	action:function *() {
-		yield this.querySelector('video').play();
+		const video = this.querySelector('video');
+		video.currentTime = 0;
+		video.play();
 	},
 	teardown: function () {
-		this.querySelector('video').pause();
+		const video = this.querySelector('video');
+		if (!video) return;
+		video.pause();
 	}
 });
 
@@ -192,7 +200,10 @@ GRIDSLIDES.registerSlideData('el-by-el',
 
 			out.action = (function * () {
 				yield;
-				for (const el of children) yield run(el);
+				for (const el of children) {
+					if (el === children.slice(-1)[0]) return run(el); 
+					yield run(el);
+				}
 			}).bind(this);
 		}
 
@@ -245,6 +256,13 @@ function renderContent(el, data) {
 	}
 }
 
+GRIDSLIDES.registerSlideData('wait', {
+	action: function * () {
+		yield;
+	}
+});
+
+
 // Uses ES2015 Generators
 GRIDSLIDES.registerSlideData('content-slide', function contentSlide(slides) {
 	let oldContent;
@@ -263,14 +281,13 @@ GRIDSLIDES.registerSlideData('content-slide', function contentSlide(slides) {
 			const t = slides.slice();
 
 			if (t.length === 0) {
-				yield;
 				return;
 			}
 
 			while (t.length) {
 				this.innerHTML = '';
 				renderContent(this, t.shift());
-				yield;
+				if (t.length !== 0) yield;
 			}
 		},
 		teardown() {

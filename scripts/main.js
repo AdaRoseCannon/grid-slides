@@ -475,12 +475,10 @@ class GridSlide extends HTMLElementWithRefs {
 			if (datum.action) actions.push(datum.action.bind(this)(datum.data));
 		}
 		this.__actions = (function *() {
-			if (actions.length === 0) {
-				yield;
-			}
 			for (const action of actions) {
 				yield* action;
 			}
+			yield;
 		}());
 		this.__isSetup = true;
 		this.__dirty = false;

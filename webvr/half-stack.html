@@ -140,37 +140,6 @@
 				</script>
 			</grid-slide>
 
-			<script>
-				GRIDSLIDES.registerSlideData('fast-sync-demo', {
-					setup: function () {
-						var iframe = this.querySelector('iframe');
-						this.comlinkPromise = new Promise(function (resolve) {
-							iframe.addEventListener('load', function iframeLoaded() {
-								resolve(Comlink.proxy(iframe.contentWindow));
-							}, {
-								once: true
-							});
-						});
-					},
-					action: function * () {
-						this.comlinkPromise.then(l => l.update('<a-box color="red" scale="4 4 4"></a-box>'));
-						yield;
-
-						this.comlinkPromise.then(l => l.update('<a-sphere color="blue" scale="4 4 4"></a-box>'));
-						yield;
-
-						this.comlinkPromise.then(l => l.update('<a-cylinder color="green" scale="4 4 4"></a-box>'));
-						yield;
-
-						this.comlinkPromise.then(l => l.update('<a-rectangle color="yellow" scale="4 4 4"></a-box>'));
-						yield;
-					}
-				});
-			</script>
-			<grid-slide iframe-slide fast-sync-demo>
-				<iframe src="https://fast-sync.glitch.me"></iframe>
-			</grid-slide>
-
 			<grid-notes>
 				<p>I work for Samsung Internet, Samsung's Web Browser.</p>
 			</grid-notes>
@@ -201,10 +170,15 @@
 				<p>We can then use this information to render a scene from the users point of view.</p>
 				<p>We can also render the users hands and use any other information to give the user more agency i nthe scene.</p>
 				<p>Once we have rendered an image we send it to the headset to be displayed to the user.</p>
-            </grid-notes>
+			</grid-notes>
+			
+			<grid-slide el-by-el video-slide>
+				<h1 class="hero">WebGL</h1>
+				<img src="images/chocolate.jpg" />
+				<video src="images/williewonka-short.webm" autoplay loop muted controls></video>
+			</grid-slide>
 
 			<grid-slide el-by-el>
-				<h1 class="hero">WebGL</h1>
 				<h1 class="hero" style="font-size: 20vh;">Three.js / Babylon.js</h1>
 				<h1 class="hero">&lt;HTML&gt;</h1>
 				<span class="hero" style="display: flex; flex-direction: column; text-align: center; font-size: 20vh;"><span>Custom Elements</span><span>👭</span><span>WebGL</span></span>
@@ -249,9 +223,37 @@
 			<grid-slide>
 				<h1 class="hero">Live Coding Time! 😨</h1>
 			</grid-slide>
+			
+			<grid-slide iframe-slide fast-sync-demo>
+				<iframe src="https://fast-sync.glitch.me"></iframe>
+			</grid-slide>
 		</grid-slides-controller>
 
 		<script>
+			GRIDSLIDES.registerSlideData('fast-sync-demo', {
+				setup: function () {
+					var iframe = this.querySelector('iframe');
+					this.comlinkPromise = new Promise(function (resolve) {
+						iframe.addEventListener('load', function iframeLoaded() {
+							resolve(Comlink.proxy(iframe.contentWindow));
+						}, {
+							once: true
+						});
+					});
+				},
+				action: function * () {
+					this.comlinkPromise.then(l => l.update('<a-box color="red" scale="4 4 4"></a-box>'));
+					yield;
+
+					this.comlinkPromise.then(l => l.update('<a-sphere color="blue" scale="4 4 4"></a-box>'));
+					yield;
+
+					this.comlinkPromise.then(l => l.update('<a-cylinder color="green" scale="4 4 4"></a-box>'));
+					yield;
+
+					this.comlinkPromise.then(l => l.update('<a-torus color="yellow" scale="4 4 4"></a-box>'));
+				}
+			});
 
 			window.addEventListener('DOMContentLoaded', function () {
 				// document.querySelector('grid-slides-controller').startPresenting();
