@@ -51,44 +51,62 @@ GRIDSLIDES.registerSlideData('a-frame-step-by-step', {
 	},
 	light: {
 		default: true
+	},
+	target: {
+		type: 'selector'
 	}
 }, function (options) {
 
-	let steps;
+	const steps = [];
+	const assets = [];
+
+	for (const el of this.children) {
+		if (el.tagName === 'SCRIPT') {
+			const step = [el.textContent, el.getAttribute('action') || 'replace'];
+			if (step[1] === 'assets') {
+				assets.push(step);
+			} else {
+				steps.push(step);
+			}
+			this.removeChild(el);
+		}
+	}
+
+	console.log(this, steps);
+	if (!steps.length) throw Error('No steps to run');
+
 	let scene;
 	let target;
+	let renderStartCallback;
+	let domLocation = options.target || this;
 
 	return {
 		setup: function () {
-			let assets;
+
 			if (!scene) {
 				scene = document.createElement('a-scene');
 				scene.setAttribute('embedded', '');
 				scene.setAttribute('vr-mode-ui', "enabled: false");
 				if (options.physics) scene.setAttribute('physics', 'debug:true;');
+
+				const assetsEl = document.createElement('a-assets');
+				assets.forEach(function (step) {
+					assetsEl.insertAdjacentHTML('afterbegin', step[0]);
+				});
+				scene.appendChild(assetsEl);
+	
 				target = document.createElement('a-entity');
-				if (!options.light) target.setAttribute('light', 'intensity: 0;');
+				const step = steps[0];
+				if (step[1] === 'replace' || step[1] === 'append') {
+					target.innerHTML = step[0];
+				}
+				if (!options.light) {
+					target.setAttribute('light', 'intensity: 0;');
+				}
 				scene.appendChild(target);
-				assets = document.createElement('a-assets');
-				scene.appendChild(assets);
+	
+				domLocation.appendChild(scene);
 			}
-			if (!steps) {
-				steps = [];
-				for (const el of this.children) {
-					if (el.tagName === 'SCRIPT') {
-						steps.push([el.textContent, el.getAttribute('action') || 'replace']);
-						this.removeChild(el)
-					}
-				}
-			}
-
-			steps.forEach(function (step) {
-				if (step[1] === 'assets') {
-					assets.insertAdjacentHTML('afterbegin', step[0]);
-				}
-			});
-
-			this.appendChild(scene);
 		},
 		action: function *() {
 			target.innerHTML = '';
@@ -101,7 +119,7 @@ GRIDSLIDES.registerSlideData('a-frame-step-by-step', {
 			}
 		},
 		teardown: function () {
-			if (scene) this.removeChild(scene);
+			if (scene) domLocation.removeChild(scene);
 			scene = undefined;
 			target = undefined;
 		}
@@ -155,7 +173,6 @@ GRIDSLIDES.registerSlideData('el-by-el',
 
 	function elByEl(options) {
 
-		options = options || {};
 		const selector = options.preserve || false;
 		const preserve = [];
 		const reveal = options.reveal || false;

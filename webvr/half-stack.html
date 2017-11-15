@@ -48,7 +48,7 @@
         <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/edf84e6e/webcomponents-sd-ce.js"></script>
         <script src="../scripts/main.js"></script>
 		<script src="../scripts/defaults.js"></script>
-		<script src="https://aframe.io/releases/0.6.1/aframe.min.js"></script>
+		<script src="https://aframe.io/releases/0.7.1/aframe.min.js"></script>
 		<script src="https://unpkg.com/aframe-environment-component@%5E1.0.x/dist/aframe-environment-component.min.js"></script>
 		<script src="https://cdn.rawgit.com/donmccurdy/aframe-physics-system/v1.4.2/dist/aframe-physics-system.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
@@ -103,7 +103,7 @@
 					font-size: 1.5rem;
 				}
 			</style>
-			<button class="play-button grid-slide" title="Play" ref="play">►</button>
+			<button class="play-button grid-slide" style="display: none;" title="Play" ref="play">►</button>
 			<footer>
 				<span>@lady_ada_king</span>
 				<span>Samsung Internet</span>
@@ -132,11 +132,13 @@
 					<a-asset-item src="models/si/silogo_small.obj" id="samsung-internet-obj"></a-asset-item>
 				</script>
 				<script type="text/html">
-					<a-entity position="0 1 -5" rotation="0 90 5" scale="2 2 2"><a-entity obj-model="obj: #samsung-internet-obj;mtl: #samsung-internet-mtl" samsung-logo>
-						<a-animation from="0 -200 0" to="0 -30 0" easing="ease-out-back" begin="model-loaded" dur="3000"></a-animation>
-						<a-animation from="0 0 0" to="1 1 1" easing="ease-out-back" begin="model-loaded" dur="2000" attribute="scale"></a-animation>
-						<a-animation from="0 -1 0" to="0 0 0" easing="ease-out-back" begin="model-loaded" dur="1000" attribute="position"></a-animation>
-					</a-entity></a-entity>
+					<a-entity position="0 1 -5" rotation="0 90 5" scale="2 2 2">
+						<a-entity obj-model="obj: #samsung-internet-obj;mtl: #samsung-internet-mtl" samsung-logo>
+							<a-animation from="0 -200 0" to="0 -30 0" easing="ease-out-back" begin="model-loaded" dur="3000"></a-animation>
+							<a-animation from="0 0 0" to="1 1 1" easing="ease-out-back" begin="model-loaded" dur="2000" attribute="scale"></a-animation>
+							<a-animation from="0 -1 0" to="0 0 0" easing="ease-out-back" begin="model-loaded" dur="1000" attribute="position"></a-animation>
+						</a-entity>
+					</a-entity>
 				</script>
 			</grid-slide>
 
@@ -174,12 +176,69 @@
 			
 			<grid-slide el-by-el video-slide>
 				<h1 class="hero">WebGL</h1>
+				<h1 class="hero" style="word-break: break-all;font-size: 10rem;">&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;</h1>
 				<img src="images/chocolate.jpg" />
 				<video src="images/williewonka-short.webm" autoplay loop muted controls></video>
 			</grid-slide>
 
+			<grid-slide el-by-el  scroll="el:code; duration: 10000;">
+				<h1 class="hero">Showing a Cube</h1>
+				<pre><code class="js">
+					<script>
+						const target = document.currentScript.parentNode;
+						fetch('images/webgl-demo.txt')
+						.then(r => r.text())
+						.then(body => target.insertAdjacentHTML('afterbegin', body))
+						.then(() => hljs.highlightBlock(target));
+					</script>
+				</code></pre>
+			</grid-slide>
+			
+			<grid-slide el-by-el="preserve: script;" a-frame-step-by-step="target: #a-frame; light: false;">
+				<h1 class="hero">WebGL is not Smart</h1>
+				<h1 class="hero">It's an API for drawing &#9651;</h1>
+				<img src="images/rosie.jpg" />
+				<h1 class="hero" style="font-size: 20vh;">Three.js!!</h1>
+				<div id="a-frame"></div>
+
+				<script type="text/html" action="assets">
+					<a-asset-item id="camera-obj" src="models/camera/model.obj"></a-asset-item>
+					<a-asset-item id="camera-mtl" src="models/camera/materials.mtl"></a-asset-item>
+					<a-asset-item id="bunny-obj" src="models/bunny.obj"></a-asset-item>
+					<img id="wood" src="https://aframe.io/sample-assets/assets/images/wood/hardwood2_diffuse.jpg" />
+				</script>
+				<script type="text/html">
+					<a-entity obj-model="obj: #camera-obj; mtl: #camera-mtl;" scale="2 2 2" position="4 1 -5" rotation="10 -90 0"></a-entity>
+					<a-light position="1 1 1"></a-light>
+				</script>
+				<script type="text/html" action="append">
+					<a-torus position="-1 0 -5"></a-torus>
+				</script>
+				<script type="text/html" action="append">
+					<a-cylinder position="-6 4 -5" light="color:#fff58b;" rotation="0 0 59.816793811657945" material="" geometry="radius:0.5;height:0.3" scale="2 2 2">
+						<a-cone position="0 -0.59 0" material="" geometry="radiusTop:0.5"></a-cone>
+						<a-cone position="0 -2 0" material="color:#fff58b;opacity:0.2;transparent:true;shader:flat" geometry="radiusBottom:2;height:5"></a-cone>
+					</a-cylinder>
+				</script>
+				<script type="text/html">
+					<a-entity obj-model="obj:#bunny-obj;" position="0 0 -3"  scale="3 3 3" material="shader:standard;color:white; roughness: 1; metalness: 0;"></a-entity>
+					<a-entity light position="1 1 1"></a-entity>
+				</script>
+				<script type="text/html">
+					<a-entity obj-model="obj:#bunny-obj;" position="0 0 -3" material="src:#wood; roughness: 0.5; color: white;" scale="3 3 3"></a-entity>
+					<a-entity light position="1 1 1"></a-entity>
+				</script>
+				<script type="text/html">
+					<a-entity obj-model="obj:#bunny-obj;" position="0 0 -3" material="offset:0.2 -0.4; color: brown; roughness: 1; metalness: 0;" scale="3 3 3" ></a-entity>
+					<a-entity light position="1 1 1"></a-entity>
+				</script>
+			</grid-slide>
+
+			<grid-slide>
+				<h1>Set aside 3D stuff now.</h1>
+			</grid-slide>
+
 			<grid-slide el-by-el>
-				<h1 class="hero" style="font-size: 20vh;">Three.js / Babylon.js</h1>
 				<h1 class="hero">&lt;HTML&gt;</h1>
 				<span class="hero" style="display: flex; flex-direction: column; text-align: center; font-size: 20vh;"><span>Custom Elements</span><span>👭</span><span>WebGL</span></span>
 				<img src="images/aframevr.png" />
@@ -208,7 +267,7 @@
 				<p>It takes care of a lot of for you, so you can get on with defining some 3D models and it will take care of the camera and lighting until you want to customise it yourself.</p>
 			</grid-notes>
 
-			<grid-slide a-frame-step-by-step>
+			<grid-slide a-frame-step-by-step="light: false;">
 				<script type="text/html">
 					<a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
 					<a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
@@ -225,11 +284,41 @@
 			</grid-slide>
 			
 			<grid-slide iframe-slide fast-sync-demo>
-				<iframe src="https://fast-sync.glitch.me"></iframe>
+				<iframe src="https://fast-sync.glitch.me/?controller"></iframe>
 			</grid-slide>
 		</grid-slides-controller>
 
 		<script>
+			GRIDSLIDES.registerSlideData('scroll', {
+				el: {
+					type: 'selector',
+					default: ''
+				},
+				duration: {
+					default: 1000
+				},
+				fill: {
+					default: 'forwards'
+				}
+			}, function (options) {
+				return {
+					setup: function () {
+						options.el.style.transform = '';
+					},
+					action: function * () {
+						options.el.animate({
+							transform: [
+								'translateY(0%)',
+								'translateY(calc(-100% + 80vh))'
+							]
+						}, {
+							duration: options.duration,
+							easing: GRIDSLIDES.utils.getRootProperty('--easeInOutQuart'),
+							fill: options.fill
+						});
+					}
+				}
+			});
 			GRIDSLIDES.registerSlideData('fast-sync-demo', {
 				setup: function () {
 					var iframe = this.querySelector('iframe');

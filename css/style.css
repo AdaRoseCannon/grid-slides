@@ -72,6 +72,7 @@ grid-slide {
 	min-height: calc(100vh - var(--padding) * 2);
 	position: relative;
 	display: grid;
+	overflow: hidden;
 
 	max-width: 100%;
 

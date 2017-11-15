@@ -34,7 +34,7 @@ slideTemplate.innerHTML = `
 		}
 	</style>
 	<slot></slot>
-	<button class="play-button grid-slide" title="Play" ref="play">►</button>
+	<button class="play-button grid-slide" style="display: none;" title="Play" ref="play">►</button>
 `;
 
 
@@ -63,7 +63,7 @@ if (Element.prototype.animate) {
 	}
 }
 
-function processSchema(schema, data) {
+function processSchema(schema, data, el) {
 	let out = {};
 	if (schema.type !== undefined || schema.default !== undefined) {
 		const type = schema.type || typeof schema.default;
@@ -73,10 +73,12 @@ function processSchema(schema, data) {
 		if (type === "number") return Number(data);
 		if (type === "string") return String(data);
 		if (type === "boolean") return data === "true";
+		if (type === "selector") return el.querySelector(data);
+		if (type === "selectorAll") return el.querySelectorAll(data);
 	} else {
 		for (const key of Object.keys(schema)) {
 			if (typeof schema[key] === 'object') {
-				out[key] = processSchema(schema[key], data[key]);
+				out[key] = processSchema(schema[key], data[key], el);
 			}
 		}
 	}
@@ -118,7 +120,7 @@ const GRIDSLIDES = {
 			fire(node, name, detail = {}) {
 				node.dispatchEvent(new CustomEvent(name, { detail, bubbles: true }));
 				return node;
-			},
+			}
 		},
 		priorSiblings(el) {
 			const nodes = Array.from(el.parentNode.children);
@@ -129,6 +131,9 @@ const GRIDSLIDES = {
 			const nodes = Array.from(el.parentNode.children);
 			const pos = nodes.indexOf(el);
 			return nodes.slice(pos + 1);
+		},
+		getRootProperty(str) {
+			return getComputedStyle(document.documentElement).getPropertyValue(str);
 		}
 	},
 
@@ -136,6 +141,10 @@ const GRIDSLIDES = {
 		events: {
 			nextSlide: 'GRIDSLIDES_NEXT_SLIDE',
 			finished: 'GRIDSLIDES_FINISHED'
+		},
+		templates: {
+			slideTemplate: slideTemplate,
+			containerTemplate: containerTemplate
 		}
 	},
 
@@ -144,7 +153,6 @@ const GRIDSLIDES = {
 	registerTransition(name, obj) {
 		GRIDSLIDES.transitions.set(name, obj);
 	},
-
 
 	slideData: new Map(),
 
@@ -164,7 +172,7 @@ const GRIDSLIDES = {
 		const data = GRIDSLIDES.slideData.get(name);
 		let out;
 		if (data.schema) {
-			options = processSchema(data.schema, options);
+			options = processSchema(data.schema, options, el);
 		}
 		if (typeof data === 'object') {
 			out = data;
@@ -415,13 +423,13 @@ class GridSlide extends HTMLElementWithRefs {
 
 		this.transition = GRIDSLIDES.transitions.get(this.getAttribute('transition'));
 		this.__data = [];
-		this.update();
-		for (const datum of this.__data) {
-			if (datum.init) datum.init.apply(this, []);
-		}
 
 		this.attachShadow({mode: 'open'});
 		this.__buildDom();
+
+		for (const datum of this.__data) {
+			if (datum.init) datum.init.apply(this, []);
+		}
 	}
 
 	__buildDom() {
@@ -440,6 +448,11 @@ class GridSlide extends HTMLElementWithRefs {
 			}
 		}.bind(this));
 
+
+		requestAnimationFrame(() => {
+			this.teardown();
+			this.setup();
+		});
 	}
 
 	__parseAttr(string) {
@@ -449,12 +462,14 @@ class GridSlide extends HTMLElementWithRefs {
 		return out;
 	}
 	
-	update() {
-		this.__data.splice(0);
-		for (const attr of this.attributes) {
-			if (GRIDSLIDES.registeredSlideDataKeys.includes(attr.name)) {
-				this.__data.push(GRIDSLIDES.getSlideData(attr.name, this, this.__parseAttr(attr.value)));
-			}
+	update(attr, newValue) {
+		const attrs = Array.from(this.attributes)
+		.filter(a => GRIDSLIDES.registeredSlideDataKeys.includes(a.name))
+		.map(a => a.name);
+		if (GRIDSLIDES.registeredSlideDataKeys.includes(attr)) {
+			// Forces order of attributes
+			this.__data[attrs.indexOf(attr)] = GRIDSLIDES.getSlideData(attr, this, this.__parseAttr(newValue));
+			this.refs.play.style.display = '';
 		}
 	}
 	
@@ -556,7 +571,7 @@ class GridSlide extends HTMLElementWithRefs {
 		}
 
 		if (GRIDSLIDES.registeredSlideDataKeys.includes(attr)) {
-			this.update();
+			this.update(attr, newValue);
 		}
 	}
 }
