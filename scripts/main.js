@@ -447,12 +447,6 @@ class GridSlide extends HTMLElementWithRefs {
 				return this.reset();
 			}
 		}.bind(this));
-
-
-		requestAnimationFrame(() => {
-			this.teardown();
-			this.setup();
-		});
 	}
 
 	__parseAttr(string) {

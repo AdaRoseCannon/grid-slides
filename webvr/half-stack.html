@@ -48,7 +48,7 @@
         <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/edf84e6e/webcomponents-sd-ce.js"></script>
         <script src="../scripts/main.js"></script>
 		<script src="../scripts/defaults.js"></script>
-		<script src="https://aframe.io/releases/0.7.1/aframe.min.js"></script>
+		<script src="https://aframe.io/releases/0.6.1/aframe.min.js"></script>
 		<script src="https://unpkg.com/aframe-environment-component@%5E1.0.x/dist/aframe-environment-component.min.js"></script>
 		<script src="https://cdn.rawgit.com/donmccurdy/aframe-physics-system/v1.4.2/dist/aframe-physics-system.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
@@ -178,7 +178,7 @@
 				<h1 class="hero">WebGL</h1>
 				<h1 class="hero" style="word-break: break-all;font-size: 10rem;">&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;&#9651;</h1>
 				<img src="images/chocolate.jpg" />
-				<video src="images/williewonka-short.webm" autoplay loop muted controls></video>
+				<video src="images/williewonka-short.webm" loop muted></video>
 			</grid-slide>
 
 			<grid-slide el-by-el  scroll="el:code; duration: 10000;">
@@ -235,7 +235,7 @@
 			</grid-slide>
 
 			<grid-slide el-by-el>
-				<h1 class="hero">We can still do better...</h1>
+				<h1 class="hero">Imperative vs Declarative</h1>
 				<img style="filter: invert(1);" src="images/binarytree.png" />
 				<h1 class="hero" style="font-size: 7rem;"><span style="opacity: 0;">Hypertext</span> Markup Language?</h1>
 				<h1 class="hero" style="font-size: 7rem;"><span style="opacity: 1;">Hypertext</span> Markup Language?</h1>
@@ -243,16 +243,18 @@
 				<h1 class="hero">WEB COMPONENTS!!</h1>
 			</grid-slide>
 			<grid-notes>
+				<p>We have our abstraction now but, it is perhaps not ideal.</p>
 				<p>Scripting languages are good for describing how things interact but we can do better for describing things.</p>
 				<p>Stuff which is descriptive should be declarative not imperative. What not how.</p>
 				<p>We need to see the relationships and heirarchcies of objects.</p>
 				<p>Which can be parsed in the browser.</p>
 				<p>Provide lifecycle methods for responding to changes in the tree</p>
 				<p>What about some kind of markup language? A Hypertext Markup Language?!</p>
+				<p>It may seem odd exposing a JavaScript API via Web Components.</p>
+				<p>You end up with components which don't add anything to the DOM so nothing to render. But you have access hooks into attributes and life cycle.</p>
 			</grid-notes>
 
-			<grid-slide el-by-el>
-				<h1 class="hero">&lt;HTML&gt;</h1>
+			<grid-slide el-by-el="preserve: script;" a-frame-step-by-step="light: false;target:#basic-demo;">
 				<span class="hero" style="display: flex; flex-direction: column; text-align: center; font-size: 20vh;"><span>Custom Elements</span><span>👭</span><span>WebGL</span></span>
 				<img src="images/aframevr.png" />
 				<pre><code class="html">
@@ -271,16 +273,8 @@
 &lt;/body&gt;
 &lt;/html&gt;
 				</code></pre>
-			</grid-slide>
-			<grid-notes>
-				<h1>A-Frame, Web friendly VR!</h1>
-				<p>Who here as done HTML before?</p>
-				<p>A-Frame is html for virtual reality.</p>
-				<p>It kinds looks like <i>this</i> and hopefully will make some sense when being read through.</p>
-				<p>It takes care of a lot of for you, so you can get on with defining some 3D models and it will take care of the camera and lighting until you want to customise it yourself.</p>
-			</grid-notes>
 
-			<grid-slide a-frame-step-by-step="light: false;">
+				<div id="basic-demo"></div>
 				<script type="text/html">
 					<a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
 					<a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
@@ -291,6 +285,14 @@
 					<a-entity light="intensity:0.5; type: ambient;" position="1 1 1"></a-entity>
 				</script>
 			</grid-slide>
+
+			<grid-notes>
+				<h1>A-Frame, Web friendly VR!</h1>
+				<p>Who here as done HTML before?</p>
+				<p>A-Frame is html for virtual reality.</p>
+				<p>It kinds looks like <i>this</i> and hopefully will make some sense when being read through.</p>
+				<p>It takes care of a lot of for you, so you can get on with defining some 3D models and it will take care of the camera and lighting until you want to customise it yourself.</p>
+			</grid-notes>
 
 			<grid-slide>
 				<h1 class="hero">Live Coding Time! 😨</h1>

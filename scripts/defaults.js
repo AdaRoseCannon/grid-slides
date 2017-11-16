@@ -72,7 +72,6 @@ GRIDSLIDES.registerSlideData('a-frame-step-by-step', {
 		}
 	}
 
-	console.log(this, steps);
 	if (!steps.length) throw Error('No steps to run');
 
 	let scene;
@@ -96,12 +95,12 @@ GRIDSLIDES.registerSlideData('a-frame-step-by-step', {
 				scene.appendChild(assetsEl);
 	
 				target = document.createElement('a-entity');
+				if (!options.light) {
+					target.setAttribute('light', 'intensity: 0;');
+				}
 				const step = steps[0];
 				if (step[1] === 'replace' || step[1] === 'append') {
 					target.innerHTML = step[0];
-				}
-				if (!options.light) {
-					target.setAttribute('light', 'intensity: 0;');
 				}
 				scene.appendChild(target);
 	
