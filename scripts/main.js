@@ -43,7 +43,7 @@ if (Element.prototype.animate) {
 
 	// Chrome does not seem to expose the Animation constructor globally
 	if (typeof Animation === 'undefined') {
-		window.Animation = Element.prototype.animate;
+		window.Animation = document.firstElementChild.animate([]).constructor;
 	}
 
 	if (Animation.prototype.finished === undefined) {
@@ -70,11 +70,11 @@ function processSchema(schema, data, el) {
 		if (data === undefined && schema.default !== undefined) {
 			return schema.default;
 		}
-		if (type === "number") return Number(data);
-		if (type === "string") return String(data);
-		if (type === "boolean") return data === "true";
-		if (type === "selector") return el.querySelector(data);
-		if (type === "selectorAll") return el.querySelectorAll(data);
+		if (type === 'number') return Number(data);
+		if (type === 'string') return String(data);
+		if (type === 'boolean') return data === 'true';
+		if (type === 'selector') return el.querySelector(data);
+		if (type === 'selectorAll') return el.querySelectorAll(data);
 	} else {
 		for (const key of Object.keys(schema)) {
 			if (typeof schema[key] === 'object') {
@@ -189,21 +189,78 @@ const GRIDSLIDES = {
 
 window.GRIDSLIDES = GRIDSLIDES;
 
-class HTMLElementWithRefs extends HTMLElement {
+class HTMLElementPlus extends HTMLElement {
 
-	constructor () {
-		super();
-		this.refs = new Proxy({}, {
-			get: this.__getFromShadowRoot.bind(this)
-		});
+	static defaultAttributeValue() {
+		/* the name of the attribute is parsed in as a parameter */
+		return;
 	}
-	
-	__getFromShadowRoot (target, name) {
+
+	static parseAttributeValue(name, value) {
+		return value;
+	}
+
+	constructor() {
+		super();
+		this.refs = new Proxy(
+			{},
+			{
+				get: this.__getFromShadowRoot.bind(this)
+			}
+		);
+
+		// Gets populated by attributeChangedCallback
+		this.__attributesMap = {};
+
+		this.__waitingOnAttr = (this.constructor.observedAttributes
+			? this.constructor.observedAttributes
+			: []
+		).filter(name => {
+			if (!this.attributes.getNamedItem(name)) {
+				this.__attributesMap[name] = this.constructor.defaultAttributeValue(name);
+			}
+			return !!this.attributes.getNamedItem(name);
+		});
+
+		// No attributes so update attribute never called.
+		// So fire this anyway.
+		if (this.__waitingOnAttr.length === 0) {
+			this.allAttributesChangedCallback(this.__attributesMap);
+		}
+	}
+
+	__getFromShadowRoot(target, name) {
 		return this.shadowRoot.querySelector('[ref="' + name + '"]');
 	}
+
+	attributeChangedCallback(attr, oldValue, newValue) {
+		this.__attributesMap[attr] = this.constructor.parseAttributeValue.call(this,
+			attr,
+			newValue
+		);
+
+		if (this.__waitingOnAttr.length) {
+			const index = this.__waitingOnAttr.indexOf(attr);
+			if (index !== -1) {
+				// Remove it from array.
+				this.__waitingOnAttr.splice(index, 1);
+			}
+		}
+
+		// All attributes parsed
+		if (this.__waitingOnAttr.length === 0) {
+			this.allAttributesChangedCallback(this.__attributesMap);
+		}
+	}
+
+	emitEvent(name, detail) {
+		this.dispatchEvent(new CustomEvent(name, { detail, bubbles: true }));
+	}
+
+	allAttributesChangedCallback() {}
 }
 
-class GridSlidesController extends HTMLElementWithRefs {
+class GridSlidesController extends HTMLElementPlus {
 
 	constructor() {
 		super();
@@ -363,9 +420,9 @@ class GridSlidesController extends HTMLElementWithRefs {
 			return;
 		}
 
-		let slide = Number(slideVal);
-		// compare string to int
-		if (slide !== NaN && slide == slideVal) {
+		let slide = String(Number(slideVal));
+		// compare string to int 
+		if (slide !== NaN && slide === slideVal.trim()) {
 			slide = this.children[slide];
 			if (slide && slide.tagName === 'GRID-SLIDE') return slide;
 			throw Error('Number given (' + slideVal + ') but it doesn\'t correspond to a slide', Number(slideVal));
@@ -416,7 +473,7 @@ class GridSlidesController extends HTMLElementWithRefs {
 	}
 }
 
-class GridSlide extends HTMLElementWithRefs {
+class GridSlide extends HTMLElementPlus {
 	constructor() {
 		super();
 
@@ -426,10 +483,15 @@ class GridSlide extends HTMLElementWithRefs {
 
 		this.attachShadow({mode: 'open'});
 		this.__buildDom();
+	}
 
-		for (const datum of this.__data) {
-			if (datum.init) datum.init.apply(this, []);
-		}
+
+	allAttributesChangedCallback() {
+		if (this.firstSetup) return;
+		if (!this.__data) return;
+		this.firstSetup = true;
+		this.setup();
+		this.run();
 	}
 
 	__buildDom() {
@@ -462,7 +524,9 @@ class GridSlide extends HTMLElementWithRefs {
 		.map(a => a.name);
 		if (GRIDSLIDES.registeredSlideDataKeys.includes(attr)) {
 			// Forces order of attributes
-			this.__data[attrs.indexOf(attr)] = GRIDSLIDES.getSlideData(attr, this, this.__parseAttr(newValue));
+			const datum = GRIDSLIDES.getSlideData(attr, this, this.__parseAttr(newValue));
+			this.__data[attrs.indexOf(attr)] = datum;
+			if (datum.init) datum.init.apply(this, []);
 			this.refs.play.style.display = '';
 		}
 	}
@@ -567,6 +631,8 @@ class GridSlide extends HTMLElementWithRefs {
 		if (GRIDSLIDES.registeredSlideDataKeys.includes(attr)) {
 			this.update(attr, newValue);
 		}
+
+		super.attributeChangedCallback(attr, oldValue, newValue);
 	}
 }
 

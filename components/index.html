@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Yay, Web Components</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="../css/style.css" rel="stylesheet">
+		<link href="https://samsunginter.net/fonts/SamsungOne/fonts.css" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai.min.css" rel="stylesheet" >
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+		<script>hljs.initHighlightingOnLoad();</script>
+
+        <style>
+            html, body {
+                min-height: 100vh;
+                min-width: 100vw;
+				margin: 0;
+				font-family: 'Samsung One', Helvetica, Arial, sans-serif;
+				font-weight: 200;
+			}
+
+			h1 {
+				font-weight: 200;
+			}
+
+			h2 {
+				font-size: 0.8em;
+				font-weight: 200;
+			}
+
+			grid-slide {
+				background-color: #ccc;
+				background-image: url('images/pattern.svg');
+				color: #333;
+				flex-direction: column;
+				font-size: 3rem;
+				background-size: cover;
+				background-position: center center;
+			}
+
+			grid-slide code {
+				font-size: 2rem;
+			}
+
+			h1.hero {
+				font-size: 5em;
+				text-align: center;
+				align-self: center;
+			}
+
+			.caption {
+				grid-area: 1/content-inner;
+				align-self: flex-end;
+				background: rgba(0,0,0,0.8);
+				margin: 0;
+			}
+        </style>
+        <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/edf84e6e/webcomponents-sd-ce.js"></script>
+        <script src="../scripts/main.js"></script>
+		<script src="../scripts/defaults.js"></script>
+		<script src="../scripts/web-components.js"></script>
+    </head>
+    <body>
+        <grid-slides-controller>
+
+			<grid-slide el-by-el>
+				<section style="justify-content:flex-end;">
+					<h1 style="text-align: center; margin: auto;">&lt;web-components&gt;</h1>
+					<h2>@samsunginternet<br />@lady_ada_king</h2>
+				</section>
+				<img src="../webvr/images/StatCounter-browser-GB-monthly-201606-201706.png" style="object-fit: contain; background: white;" />
+			</grid-slide>
+
+            <grid-notes>
+				Hi I am Ada from Samsung, i'm here to talk to you about Web Components
+				<html-encode><script type="text/html">
+				<p>lolol</p>
+				<hello-world example>lolol</hello-world>
+				</script></html-encode>
+				<html-encode lang="javascript"><script type="no-execute">
+				console.log('hi')
+				document.getElementById('lol');
+				</script></html-encode>
+			</grid-notes>
+
+			<grid-slide el-by-el>
+				<h1>What are Web Components?</h1>
+				<section>
+					<h1>Shadow DOM</h1>
+				</section>
+				<section>
+					<h1>Scoped css</h1>
+				</section>
+				<section>
+					<h1>JS Callbacks</h1>
+				</section>
+			</grid-slide>
+			<grid-notes>
+				<p>Web Components are a way of encapsulating logic and style into components you can author with HTML.</p>
+				<p>You can tell them apart from normal HTML elements because they have a dash in the name.</p>
+				<p>They provide 3 useful powers for seperating your concerns.</p>
+				<ul>
+					<li>Shadow DOM for encapsulating HTML</li>
+					<li>Scoped CSS for encapsulating CSS</li>
+					<li>Callbacks for element life cycle to control JS</li>
+				</ul>
+			</grid-notes>
+
+			<grid-slide>
+				<h1>Advantages of Web Component</h1>
+			</grid-slide>
+			<grid-notes>
+				<ul>
+					<li>Easily reusable bites of software</li>
+					<li>Hide implementation complexity, uniform interface.</li>
+					<li>Integrate into any website</li>
+					<li>Frontend Framework or backend it's agnostic. Just HTML.</li>
+					<li>Reuse HTML authoring tools</li>
+					<li>Emmet syntax. (grid-slides>h1)+(grid-notes>ul>li*3)</li>
+					<li>CSS Grid</li>
+				</ul>
+			</grid-notes>
+
+			<grid-slide>
+				<h1>Building components</h1>
+			</grid-slide>
+			<grid-notes>
+				<ul>
+					<li>Make a class</li>
+					<li>Show html`` trick</li>
+					<li>Add some Shadow DOM</li>
+					<li>Add some scoped styles</li>
+					<li>React to attribute changes</li>
+				</ul>
+			</grid-notes>
+
+			<grid-slide>
+				<h1>Using the Polyfill</h1>
+			</grid-slide>
+			<grid-notes>
+				<ul>
+					<li>Find the script from the site</li>
+					<li>I use the custom elements and shady dom polyfill</li>
+					<li>Shady DOM simulates encapsulation by writing element specific CSS</li>
+				</ul>
+			</grid-notes>
+
+			<grid-slide>
+				<h1>Case study, VJ-OTG</h1>
+			</grid-slide>
+			<grid-notes>
+				<ul>
+					<li>App to make visualisations for parties.</li>
+					<li>Components for WebGL Visuals</li>
+					<li>Components for interfacing with Web Midi</li>
+					<li>Communicate with each other via messaging</li>
+					<li>Helper class HTMLElementPlus</li>
+				</ul>
+			</grid-notes>
+
+			<grid-slide>
+				<h1>Building a whole app using just components</h1>
+			</grid-slide>
+			<grid-notes>
+				<ul>
+					<li>Traditional View point, HTML as render target.</li>
+					<li>HTML is currently just a render target, probably has some minimal bootstrap script maybe some serve side rendered HTML. Which gets rehydrated with JavaScript. Web components allow us to move large chunks of our JS and Style into components. The HTML then becomes the configuration layer.
+
+					Seperation of concerns graph changes. From JS/CSS/HTML to Component/Component/Component each with their own JS/CSS &amp; HTML.
+
+					If your CMS has the capability of authoring HTML it becomes a lot more powerful.</li>
+					<li>Use the HTML to set the initial state of the app.</li>
+					<li>Elements signal changes by firing events.</li>
+					<li>Elements listen for changes using addEventListener</li>
+					<li>Elements are updated with el.setAttribute</li>
+					<li>Elements can expose values to the attributes on the element e.g. el.foo</li>
+
+					<li>Elements can be made to watch other elements. E.g.</li>
+					<html-encode><script type="text/html">
+					<hello-world listen-to="#someEl"></hello-world>
+					</script></html-encode>
+
+					<li>Elements not designed to listen to changes in each other can be patched with JavaScript.</li>
+					<html-encode lang="javascript"><script type="no-execute">
+					document.getElementById('someEl').addEventListener('myevent', function (e) {
+						document.getElementById('someOtherEl').setAttribute('foo', e.detail.value);
+					});
+					</script></html-encode>
+
+				</ul>
+			</grid-notes>
+
+            <grid-notes>
+				<dl>
+					<dt>What are web components</dt>
+					<dd>Encapsulate logic, tied to DOM life cycle</dd>
+					
+					<dt>What advantages do they provide</dt>
+					<dd>Emmet Code `ul>li*3`, Logic Encapsulation, Style Encapsulation, When used one off, when used together</dd>
+					
+					<dt>Using them today</dt>
+					<dd>Polyfill, Shady Dom</dd>
+					
+					<dt>A case study, VJ-OTG</dt>
+					<dd>What did we learn from this?</dd>
+					
+					<dt>How I use Web Components</dt>
+					<dd>HTMLElementPlus</dd>
+					
+					<dt>Building components that work together</dt>
+					<dd></dd>
+					
+					<dt>Using HTML as the configuration layer</dt>
+					<dd></dd>
+					
+					<dt>Migrating to using web components</dt>
+					<dd>Web Components work within existing frame works because they are just HTML.</dd>
+					
+					<dt>A final case study, look ma no DOM</dt>
+					<dd>Using Web Components to wrap three.js</dd>
+				</dl>
+			</grid-notes>
+
+		</grid-slides-controller>
+    </body>
+</html>

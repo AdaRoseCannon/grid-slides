@@ -76,7 +76,6 @@ GRIDSLIDES.registerSlideData('a-frame-step-by-step', {
 
 	let scene;
 	let target;
-	let renderStartCallback;
 	let domLocation = options.target || this;
 
 	return {
@@ -85,7 +84,7 @@ GRIDSLIDES.registerSlideData('a-frame-step-by-step', {
 			if (!scene) {
 				scene = document.createElement('a-scene');
 				scene.setAttribute('embedded', '');
-				scene.setAttribute('vr-mode-ui', "enabled: false");
+				scene.setAttribute('vr-mode-ui', 'enabled: false');
 				if (options.physics) scene.setAttribute('physics', 'debug:true;');
 
 				const assetsEl = document.createElement('a-assets');

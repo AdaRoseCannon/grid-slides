@@ -40,6 +40,10 @@
     --easeInOutBack  : cubic-bezier(0.680, -0.550, 0.265, 1.550);
 }
 
+* {
+	box-sizing: border-box;
+}
+
 html,body {
 	width: 100%;
 	height: 100%;

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Fast-Sync</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="../css/style.css" rel="stylesheet">
+		<link href="https://samsunginter.net/fonts/SamsungOne/fonts.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai.min.css">
+
+        <style>
+            html, body {
+                min-height: 100vh;
+                min-width: 100vw;
+				margin: 0;
+				font-family: 'Samsung One', Helvetica, Arial, sans-serif;
+			}
+
+			grid-slide {
+				background-color: darkslategray;
+				background-image: url('images/bg.png');
+				color: white;
+				border: 1px solid grey;
+				flex-direction: column;
+				font-size: 3rem;
+				background-blend-mode: soft-light;
+				background-size: cover;
+				background-position: center center;
+			}
+
+			grid-slide code {
+				font-size: 2rem;
+			}
+
+			h1.hero {
+				font-size: 5em;
+				text-align: center;
+				align-self: center;
+			}
+
+			.caption {
+				grid-area: 1/content-inner;
+				align-self: flex-end;
+				background: rgba(0,0,0,0.8);
+				margin: 0;
+			}
+        </style>
+        <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/edf84e6e/webcomponents-sd-ce.js"></script>
+        <script src="../scripts/main.js"></script>
+		<script src="../scripts/defaults.js"></script>
+		<script src="https://aframe.io/releases/0.6.1/aframe.min.js"></script>
+		<script src="https://unpkg.com/aframe-environment-component@%5E1.0.x/dist/aframe-environment-component.min.js"></script>
+		<script src="https://cdn.rawgit.com/donmccurdy/aframe-physics-system/v1.4.2/dist/aframe-physics-system.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/comlinkjs@2.3.0/comlink.global.min.js"></script>
+		<script>hljs.initHighlightingOnLoad();</script>
+		<script>
+
+		var purple = new THREE.MeshBasicMaterial();
+		purple.color = new THREE.Color('#706CF5');
+		var white = new THREE.MeshBasicMaterial();
+		white.color = new THREE.Color('#ffffff');
+
+
+		AFRAME.registerComponent('samsung-logo', {
+			init: function () {
+				var el = this.el;
+				el.addEventListener('model-loaded', function () {
+					el.object3D.traverse(function (o) {
+						if (o.material) o.material = o.material.name === 'Purple' ? purple : white;
+					});
+				});
+			}
+		});
+
+		</script>
+    </head>
+    <body>
+		<template id="custom-slide-template">
+			<style class="grid-slide">
+				.play-button {
+					color: green;
+					font-size: 1.5em;
+					position: absolute;
+					top: 0;
+					right: 0;
+					display: var(--button-display, block);
+					grid-area: 1/full;
+					z-index: 100;
+				}
+
+				footer {
+					position: absolute;
+					bottom: 0;
+					left: 0;
+					right: 0;
+					padding: 0.5em 1em;
+					background: rgba(0,0,0,0.5);
+					color: white;
+					display: flex;
+					justify-content: space-between;
+					grid-column: full;
+					font-size: 1.5rem;
+				}
+			</style>
+			<button class="play-button grid-slide" style="display: none;" title="Play" ref="play">►</button>
+			<footer>
+				<span>@lady_ada_king</span>
+				<span>Samsung Internet</span>
+			</footer>
+			<slot></slot>
+		</template>
+
+        <grid-slides-controller template="#custom-slide-template">
+
+			<grid-slide template="default" style="background-image: url(images/me-and-dan.jpg); background-color: #555;">
+				<section>
+					<h1>@samsunginternet</h1>
+					<h1 style="margin-top: auto; align-self: flex-end;">@lady_ada_king</h1>
+				</section>
+			</grid-slide>
+			
+			<grid-slide a-frame-step-by-step id="samsing-internet-logo">
+				<script type="text/html" action="assets">
+					<a-asset-item src="models/si/silogo_small.mtl" id="samsung-internet-mtl"></a-asset-item>
+					<a-asset-item src="models/si/silogo_small.obj" id="samsung-internet-obj"></a-asset-item>
+				</script>
+				<script type="text/html">
+					<a-entity position="0 1 -5" rotation="0 90 5" scale="2 2 2">
+						<a-entity obj-model="obj: #samsung-internet-obj;mtl: #samsung-internet-mtl" samsung-logo>
+							<a-animation from="0 -200 0" to="0 -30 0" easing="ease-out-back" begin="model-loaded" dur="3000"></a-animation>
+							<a-animation from="0 0 0" to="1 1 1" easing="ease-out-back" begin="model-loaded" dur="2000" attribute="scale"></a-animation>
+							<a-animation from="0 -1 0" to="0 0 0" easing="ease-out-back" begin="model-loaded" dur="1000" attribute="position"></a-animation>
+						</a-entity>
+					</a-entity>
+				</script>
+			</grid-slide>
+
+			<grid-slide>
+				<h1 class="hero">The nuts and bolts of social VR</h1>	
+			</grid-slide>
+
+			<grid-slide>
+				<h1 class="hero">https://fast-sync.glitch.me</h1>
+			</grid-slide>
+			
+			<grid-slide iframe-slide fast-sync-demo>
+				<iframe src="https://fast-sync.glitch.me/?controller"></iframe>
+			</grid-slide>
+			
+			<grid-slide el-by-el>
+				<h1 class="hero">Tested up to 170 people...</h1>
+				<img src="images/177.png" />
+				<img src="images/demo.jpg" />
+			</grid-slide>
+			
+			<grid-slide el-by-el>
+				<h1 class="hero">Goals of Social VR</h1>
+				<img src="images/avatar_sagar.jpg" />
+				<img src="images/sims.jpg" />
+				<img src="images/shadowrun.png" />
+			</grid-slide>
+
+			<grid-notes>
+				<ul>
+					<li>Represent user's state for other users</li>
+					<li>Enable communication <ul>
+						<li>Vocal</li>
+						<li>Body Language</li>
+						<li>Personal Space</li>
+					</ul></li>
+					<li>Self expression</li>
+				</ul>
+				<p>What can the browser do to enable these better?</p>
+			</grid-notes>
+
+			<grid-slide el-by-el>
+				<h1 class="hero">How does this work in the web?</h1>
+				<h1 class="hero" style="text-align: center;">Realtime Networking: <br /> 👍👍👍</h1>
+				<h1 class="hero" style="text-align: center;">User tracking: 👍</h1>
+				<h1 class="hero" style="text-align: center;">Binding to Avatar: 😐</h1>
+			</grid-slide>
+
+			<grid-notes>
+				<ul>
+					<li>Real time streaming tech, WebSockets and WebRTC</li>
+					<li>Mocap from VR equipment</li>
+					<li>Skinned 3D models</li>
+					<li>Attaching data to a skeleton</li>
+				</ul>
+			</grid-notes>
+
+			
+			<grid-slide>
+				<h1 class="hero" style="font-size: 4em;">What can the web provide to aid these efforts?</h1>
+			</grid-slide>
+
+		</grid-slides-controller>
+
+		<script>
+			GRIDSLIDES.registerSlideData('fast-sync-demo', {
+				setup: function () {
+					var iframe = this.querySelector('iframe');
+					this.comlinkPromise = new Promise(function (resolve) {
+						iframe.addEventListener('load', function iframeLoaded() {
+							resolve(Comlink.proxy(iframe.contentWindow));
+						}, {
+							once: true
+						});
+					});
+				},
+				action: function * () {
+					this.comlinkPromise.then(l => l.update('<a-box color="red" scale="4 4 4"></a-box>'));
+					yield;
+
+					this.comlinkPromise.then(l => l.update('<a-sphere color="blue" scale="4 4 4"></a-box>'));
+					yield;
+
+					this.comlinkPromise.then(l => l.update('<a-cylinder color="green" scale="4 4 4"></a-box>'));
+					yield;
+
+					this.comlinkPromise.then(l => l.update('<a-torus color="yellow" scale="4 4 4"></a-box>'));
+					yield;
+
+					this.comlinkPromise.then(l => l.update(document.getElementById('bunny-code').textContent));
+					yield;
+
+					this.comlinkPromise.then(l => l.update(document.getElementById('ship-code').textContent));
+					yield;
+
+					this.comlinkPromise.then(l => l.update(document.getElementById('two-boxes-code').textContent));
+				}
+			});
+
+		</script>
+
+		<script id="bunny-code" type="text/html">
+			<a-entity scale="2 2 2" position="0 0 3">
+				<a-entity obj-model="obj: url(/models/bunny.obj);" scale="10 10 10" position="0 -0.4 0">
+					<a-animation attribute="scale" from="0 0 0" fill="backwards" to="10 10 10" dur="6600" easing="ease-out-elastic"></a-animation>
+					<a-animation attribute="rotation" from="0 0 0" to="0 360 0" dur="44000" easing="linear" repeat="indefinite"></a-animation>
+				</a-entity>
+			</a-entity>
+		</script>
+
+		<script id="ship-code" type="text/html">
+			<a-entity position="0 0 -5">
+			<a-animation from="4 -40 0" to="1 35 0" dur="3200"></a-animation>
+			<a-entity obj-model="obj: #ship-obj; mtl: #ship-mtl;">
+				<a-animation attribute="position" from="0 3 -100" fill="backwards" to="0 0 0" dur="3200" easing="ease-out"></a-animation>
+			</a-entity>
+			</a-entity>
+		</script>
+
+		<script id="two-boxes-code" type="text/html">
+			<a-box position="0 2 0" width="2" height="2" depth="2" color="red">
+				<a-box position = "1 1 1" color="blue"></a-box>
+				<a-box position = "-1 1 -1" color="yellow"></a-box>
+				<a-animation repeat="indefinite" attribute="rotation" easing="linear" to="0 360 0" dur="2000"></a-animation>
+			</a-box>
+		</script>
+    </body>
+</html>

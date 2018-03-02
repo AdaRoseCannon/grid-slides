@@ -297,6 +297,10 @@
 			<grid-slide>
 				<h1 class="hero">Live Coding Time! 😨</h1>
 			</grid-slide>
+
+			<grid-slide>
+				<h1 class="hero">https://fast-sync.glitch.me</h1>
+			</grid-slide>
 			
 			<grid-slide iframe-slide fast-sync-demo>
 				<iframe src="https://fast-sync.glitch.me/?controller"></iframe>
@@ -356,6 +360,17 @@
 					yield;
 
 					this.comlinkPromise.then(l => l.update('<a-torus color="yellow" scale="4 4 4"></a-box>'));
+					yield;
+
+					this.comlinkPromise.then(l => l.update(document.getElementById('bunny-code').textContent));
+					yield;
+
+					this.comlinkPromise.then(l => l.update(document.getElementById('ship-code').textContent));
+					yield;
+
+					this.comlinkPromise.then(l => l.update(document.getElementById('two-boxes-code').textContent));
+					
+
 				}
 			});
 
@@ -363,6 +378,31 @@
 				// document.querySelector('grid-slides-controller').startPresenting();
 			});
 
+		</script>
+		<script id="bunny-code" type="text/html">
+		<a-entity scale="2 2 2" position="0 0 3">
+			<a-entity obj-model="obj: url(/models/bunny.obj);" scale="10 10 10" position="0 -0.4 0">
+				<a-animation attribute="scale" from="0 0 0" fill="backwards" to="10 10 10" dur="6600" easing="ease-out-elastic"></a-animation>
+				<a-animation attribute="rotation" from="0 0 0" to="0 360 0" dur="44000" easing="linear" repeat="indefinite"></a-animation>
+			</a-entity>
+		</a-entity>
+		</script>
+
+		<script id="ship-code" type="text/html">
+		<a-entity position="0 0 -5">
+		<a-animation from="4 -40 0" to="1 35 0" dur="3200"></a-animation>
+		<a-entity obj-model="obj: #ship-obj; mtl: #ship-mtl;">
+			<a-animation attribute="position" from="0 3 -100" fill="backwards" to="0 0 0" dur="3200" easing="ease-out"></a-animation>
+		</a-entity>
+		</a-entity>
+		</script>
+
+		<script id="two-boxes-code" type="text/html">
+		<a-box position="0 2 0" width="2" height="2" depth="2" color="red">
+			<a-box position = "1 1 1" color="blue"></a-box>
+			<a-box position = "-1 1 -1" color="yellow"></a-box>
+			<a-animation repeat="indefinite" attribute="rotation" easing="linear" to="0 360 0" dur="2000"></a-animation>
+		</a-box>
 		</script>
     </body>
 </html>
