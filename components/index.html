@@ -55,6 +55,34 @@
 				background: rgba(0,0,0,0.8);
 				margin: 0;
 			}
+
+			.jail {
+				font-size: 1em;
+				line-height: 1em;
+				position: relative;
+			}
+
+			.jail:after {
+				content: '🔒';
+				font-size: 5em;
+				opacity: 0.8;
+				position: absolute;
+				left:50%;
+				top:50%;
+				transform: translate(-50%, -50%);
+			}
+
+			.noodle {
+				display: inline-block;
+				position: absolute;
+				right: 40%;
+				top: 20%;
+				font-weight: 800;
+				font-family: monospace;
+				font-size: 4rem;
+				color: transparent;
+				text-shadow: 0 0 0.2rem yellow, 0 0 0.1rem yellow, 0 0 red;
+			}
         </style>
         <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/edf84e6e/webcomponents-sd-ce.js"></script>
         <script src="../scripts/main.js"></script>
@@ -87,13 +115,25 @@
 			<grid-slide el-by-el>
 				<h1>What are Web Components?</h1>
 				<section>
-					<h1>Shadow DOM</h1>
+					<h1 style="font-size: 2em;
+					text-shadow: -0.15em 0.15em yellow, 0em 0.15em magenta, 0.15em -0.15em cyan; margin: auto;font-weight: 800; mix-blend-mode: multiply;">Shadow DOM</h1>
 				</section>
 				<section>
 					<h1>Scoped css</h1>
+					<html-encode lang="css" class="jail"><script type="text/css">
+						div {
+							background-color: blue;
+							font-family: papyrus;
+						}
+						span {
+							font-family: comic-sans;
+							color: pink;
+						}
+					</script></html-encode>
 				</section>
 				<section>
 					<h1>JS Callbacks</h1>
+					<img src="images/shoe-phone.jpg">
 				</section>
 			</grid-slide>
 			<grid-notes>
@@ -107,18 +147,31 @@
 				</ul>
 			</grid-notes>
 
-			<grid-slide>
+			<grid-slide el-by-el>
 				<h1>Advantages of Web Component</h1>
+				<img src="images/lego.png" />
+				<h1 class="hero">&lt;html&gt;</h1>
+				<h1 class="hero">Emmet Demo</h1>
+				<h1 class="hero" style="font-size: 3em; line-height:30vh; margin:0;">Webcomponents<br/>❤<br/>CSS Grid</h1>
+				<section style="background: url('images/soup.jpg'); background-repeat: no-repeat; background-size: cover; background-position: 70% top;">
+					<span class="noodle" style="transform: translate(0, 45vh) rotate(10deg) ;">&lt;div&gt;</span>
+					<span class="noodle" style="transform: translate(20vw, 5vh) rotate(-10deg) ;">&lt;div&gt;</span>
+					<span class="noodle" style="transform: translate(-5vw, 5vh) rotate(40deg) ;">&lt;div&gt;</span>
+					<span class="noodle" style="transform: translate(20vw, 25vh) rotate(-30deg) ;">&lt;div&gt;</span>
+				</section>
 			</grid-slide>
 			<grid-notes>
 				<ul>
 					<li>Easily reusable bites of software</li>
 					<li>Hide implementation complexity, uniform interface.</li>
+
 					<li>Integrate into any website</li>
 					<li>Frontend Framework or backend it's agnostic. Just HTML.</li>
 					<li>Reuse HTML authoring tools</li>
+
 					<li>Emmet syntax. (grid-slides>h1)+(grid-notes>ul>li*3)</li>
-					<li>CSS Grid</li>
+
+					<li>CSS Grid, no DIV soup</li>
 				</ul>
 			</grid-notes>
 
@@ -190,6 +243,8 @@
 
 				</ul>
 			</grid-notes>
+
+
 
             <grid-notes>
 				<dl>
