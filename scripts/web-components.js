@@ -23,37 +23,52 @@ class HTMLEncode extends HTMLElementPlus {
 		super();
 	}
 
+	// Set the HTML for the template
 	static get templateHTML() {
 		return html`<style>
 			:host pre {
 				background-color: #333;
 				color: white;
 				padding: 0.5em;
+				margin: 0;
+				display: inline-block;
+				width: 100%;
+				tab-size: 2;
+				-moz-tab-size: 2;
+				-webkit-tab-size: 2;
 			}
-		</style><pre><code ref="code"><slot></slot></code></pre>`;
-	}
-
-	static get template() {
-		if (this.__templateEl) return document.importNode(this.__templateEl.content,true);
-		this.__templateEl = document.createElement('template');
-		this.__templateEl.innerHTML = this.templateHTML;
-		if (window.ShadyCSS) window.ShadyCSS.prepareTemplate(this.__templateEl, 'html-encode');
-		return document.importNode(this.__templateEl.content, true);
+		</style>
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai.min.css" rel="stylesheet" >
+		<slot></slot><pre><code ref="code"></code></pre>`;
 	}
 
 	allAttributesChangedCallback(data) {
 		if (!this.shadowRoot) {
 			this.attachShadow({mode: 'open'});
-			this.shadowRoot.appendChild(this.constructor.template);
-			requestAnimationFrame(function updateHTML() {
-				if (!this.firstElementChild) {
-					return requestAnimationFrame(updateHTML);
+			this.shadowRoot.appendChild(this.template);
+			requestAnimationFrame(function updateHTML(count) {
+				if (count === undefined) count = 0;
+				count++;
+				if (count === 10) return;
+				let script = this.querySelector('script,template');
+				if (!script) {
+					return requestAnimationFrame(() => updateHTML.bind(this)(count));
 				}
-				const a = this.firstElementChild.innerHTML;
+				if (script.tagName === 'TEMPLATE' && script.innerHTML === '') {
+					return requestAnimationFrame(() => updateHTML.bind(this)(count));
+				}
+				if (script.tagName === 'TEMPLATE' && script.content.firstElementChild.tagName === 'SCRIPT') {
+					script = script.content.firstElementChild;
+				}
+				if (script.tagName === 'TEMPLATE' && script.content.firstElementChild.tagName === 'STYLE') {
+					script = script.content.firstElementChild;
+				}
+				const a = script.innerHTML;
 				const ws = a.split('\n');
 				const firstLine = ws[1] || ws[0];
 				let len = (firstLine.match(/\s+/) || [''])[0].length;
 				if (ws.slice(1,-1).length) ws.slice(1,-1).reduce((a,b) => {
+					if (a === '' || b === '') return a;
 					len = similarStart(a,b,len);
 					return (a || '').slice(0, len);
 				});
@@ -62,9 +77,9 @@ class HTMLEncode extends HTMLElementPlus {
 				}
 				const str = ws.map(a => a.slice(len)).join('\n');
 				if (window.hljs) {
-					this.innerHTML = window.hljs.highlight(data.lang, str).value;
+					this.refs.code.innerHTML = window.hljs.highlight(data.lang, str).value;
 				} else {
-					this.textContent = str;
+					this.refs.code.textContent = str;
 				}
 			}.bind(this));
 		}

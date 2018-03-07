@@ -6,7 +6,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="../css/style.css" rel="stylesheet">
 		<link href="https://samsunginter.net/fonts/SamsungOne/fonts.css" rel="stylesheet">
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai.min.css" rel="stylesheet" >
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
 
 		<script>hljs.initHighlightingOnLoad();</script>
@@ -22,6 +21,7 @@
 
 			h1 {
 				font-weight: 200;
+				color: black;
 			}
 
 			h2 {
@@ -85,16 +85,55 @@
 			}
         </style>
         <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/edf84e6e/webcomponents-sd-ce.js"></script>
+        <script src="../scripts/HTMLElementPlus.js"></script>
         <script src="../scripts/main.js"></script>
 		<script src="../scripts/defaults.js"></script>
 		<script src="../scripts/web-components.js"></script>
+		<script>
+			class MyElement extends HTMLElement {
+				constructor () {
+					super();
+
+					this.attachShadow({mode: 'open'});
+					this.shadowRoot.innerHTML = '<style></style><h1>My Element is Great!</h1>';
+				}
+			}
+
+			customElements.define('my-element', MyElement);
+
+			const template = document.createElement('template');
+			template.innerHTML = html`
+				<style>
+					:host {
+						border: 1px solid black;
+					}
+					:host > h1 {
+						color: green;
+					}
+				</style>
+				<h1>My Element is Great!</h1>
+			`;
+
+			class MyElement2 extends HTMLElement {
+				constructor () {
+					super();
+
+					this.attachShadow({mode: 'open'});
+					this.shadowRoot.appendChild(document.importNode(template.content, true));
+				}
+			}
+
+
+			customElements.define('my-element-two', MyElement2);
+
+		</script>
     </head>
     <body>
         <grid-slides-controller>
 
 			<grid-slide el-by-el>
 				<section style="justify-content:flex-end;">
-					<h1 style="text-align: center; margin: auto;">&lt;web-components&gt;</h1>
+					<h1 style="text-align: center; margin: auto;font-size: calc(8vw + 0.2rem);">&lt;web-components&gt;</h1>
 					<h2>@samsunginternet<br />@lady_ada_king</h2>
 				</section>
 				<img src="../webvr/images/StatCounter-browser-GB-monthly-201606-201706.png" style="object-fit: contain; background: white;" />
@@ -102,25 +141,35 @@
 
             <grid-notes>
 				Hi I am Ada from Samsung, i'm here to talk to you about Web Components
-				<html-encode><script type="text/html">
-				<p>lolol</p>
-				<hello-world example>lolol</hello-world>
-				</script></html-encode>
-				<html-encode lang="javascript"><script type="no-execute">
-				console.log('hi')
-				document.getElementById('lol');
-				</script></html-encode>
+
+				<html-encode><template>
+					<p>lolol</p>
+					<hello-world example>lolol</hello-world>
+				</template></html-encode>
+			
+				<html-encode lang="javascript"><template><script>
+					console.log('hi')
+					document.getElementById('lol');
+				</script></template></html-encode>
+
 			</grid-notes>
 
 			<grid-slide el-by-el>
 				<h1>What are Web Components?</h1>
+				<section>
+					<h1>Custom Elements</h1>
+					<h1 style="text-align:center;margin: 0;"><html-encode><script type="text/html">
+						<my-car style="homer"></my-car>
+					</script></html-encode></h1>
+					<img src="images/mycar.jpg">
+				</section>
 				<section>
 					<h1 style="font-size: 2em;
 					text-shadow: -0.15em 0.15em yellow, 0em 0.15em magenta, 0.15em -0.15em cyan; margin: auto;font-weight: 800; mix-blend-mode: multiply;">Shadow DOM</h1>
 				</section>
 				<section>
 					<h1>Scoped css</h1>
-					<html-encode lang="css" class="jail"><script type="text/css">
+					<html-encode lang="css" class="jail"><template><style>
 						div {
 							background-color: blue;
 							font-family: papyrus;
@@ -129,7 +178,7 @@
 							font-family: comic-sans;
 							color: pink;
 						}
-					</script></html-encode>
+					</style></template></html-encode>
 				</section>
 				<section>
 					<h1>JS Callbacks</h1>
@@ -141,6 +190,7 @@
 				<p>You can tell them apart from normal HTML elements because they have a dash in the name.</p>
 				<p>They provide 3 useful powers for seperating your concerns.</p>
 				<ul>
+					<li>Custom Elements</li>
 					<li>Shadow DOM for encapsulating HTML</li>
 					<li>Scoped CSS for encapsulating CSS</li>
 					<li>Callbacks for element life cycle to control JS</li>
@@ -151,14 +201,14 @@
 				<h1>Advantages of Web Component</h1>
 				<img src="images/lego.png" />
 				<h1 class="hero">&lt;html&gt;</h1>
-				<h1 class="hero">Emmet Demo</h1>
-				<h1 class="hero" style="font-size: 3em; line-height:30vh; margin:0;">Webcomponents<br/>❤<br/>CSS Grid</h1>
 				<section style="background: url('images/soup.jpg'); background-repeat: no-repeat; background-size: cover; background-position: 70% top;">
 					<span class="noodle" style="transform: translate(0, 45vh) rotate(10deg) ;">&lt;div&gt;</span>
 					<span class="noodle" style="transform: translate(20vw, 5vh) rotate(-10deg) ;">&lt;div&gt;</span>
 					<span class="noodle" style="transform: translate(-5vw, 5vh) rotate(40deg) ;">&lt;div&gt;</span>
 					<span class="noodle" style="transform: translate(20vw, 25vh) rotate(-30deg) ;">&lt;div&gt;</span>
 				</section>
+				<h1 class="hero">Emmet Demo</h1>
+				<h1 class="hero" style="font-size: 3em; line-height:30vh; margin:0;">Webcomponents<br/>❤<br/>CSS Grid</h1>
 			</grid-slide>
 			<grid-notes>
 				<ul>
@@ -169,44 +219,225 @@
 					<li>Frontend Framework or backend it's agnostic. Just HTML.</li>
 					<li>Reuse HTML authoring tools</li>
 
-					<li>Emmet syntax. (grid-slides>h1)+(grid-notes>ul>li*3)</li>
-
 					<li>CSS Grid, no DIV soup</li>
+					<li>When your HTML makes sense you can do cool stuff with it.</li>
+					<li>Emmet syntax. (grid-slides>h1)+(grid-notes>ul>li*3)</li>
 				</ul>
 			</grid-notes>
 
-			<grid-slide>
+			<grid-slide el-by-el>
 				<h1>Building components</h1>
+
+				<html-encode lang="javascript"><template><script>
+					class MyElement extends HTMLElement {
+						constructor () {
+							super();
+
+							// Do some stuff!!
+						}
+					}
+
+					customElements.define('my-element', MyElement);
+				</script></template></html-encode>
+
+				<html-encode lang="javascript"><template><script>
+					class MyElement extends HTMLElement {
+						constructor () {
+							super();
+
+							this.attachShadow({mode: 'open'});
+							this.shadowRoot.innerHTML = '<h1>My Element is Great!</h1>';
+						}
+					}
+				</script></template></html-encode>
+				<section>
+					<h1>Live Demo of &lt;my-element&gt;</h1>
+					<my-element></my-element>
+					<h2>Note: Style scoping not possible with polyfill.</h2>
+				</section>
+				<html-encode lang="javascript"><template><script>
+					const template = document.createElement('template');
+					template.innerHTML = '<h1>My Element is Great!</h1>';
+
+					class MyElement extends HTMLElement {
+						constructor () {
+							super();
+
+							this.attachShadow({mode: 'open'});
+							this.shadowRoot.appendChild(document.importNode(template.content, true));
+						}
+					}
+				</script></template></html-encode>
+				<html-encode lang="javascript"><template><script>
+					const template = document.createElement('template');
+					template.innerHTML = html`
+						<style>
+							:host {
+								border: 1px solid black;
+							}
+							:host > h1 {
+								color: green;
+							}
+						</style>
+						<h1>My Element is Great!</h1>
+
+						// MyElement etc
+					`;
+				</script></template></html-encode>
+				<section>
+					<h1>Live Demo of &lt;my-element&gt;</h1>
+					<my-element-two></my-element-two>
+				</section>
+				<html-encode lang="javascript"><template><script>
+					class MyElement extends HTMLElement {
+						constructor () {
+							super();
+							this.attachShadow({mode: 'open'});
+							this.shadowRoot.appendChild(document.importNode(template.content, true));
+						}
+
+						// Array of attributes to listen for, all others are ignored.
+						static get observedAttributes() {
+							return ['for'];
+						}
+
+						// Gets called for each attribute on start and change
+						attributeChangedCallback(attr, oldValue, newValue) {
+							this[attr] = newValue;
+						}
+					}
+				</script></template></html-encode>
 			</grid-slide>
 			<grid-notes>
 				<ul>
 					<li>Make a class</li>
-					<li>Show html`` trick</li>
+					<li>Register component</li>
 					<li>Add some Shadow DOM</li>
+					<li>Why mode 'open'? closed prevents it from being accessed from external javascript no real need for this. No additional encapsulation.</li>
+					<li>Use template elements</li>
+					<li>Show html`` trick</li>
 					<li>Add some scoped styles</li>
 					<li>React to attribute changes</li>
 				</ul>
 			</grid-notes>
 
-			<grid-slide>
+			<grid-slide el-by-el>
 				<h1>Using the Polyfill</h1>
+				<img src="images/support.png" />
+				<img src="images/polyfill.jpg" />
+				<section>
+					<h1>https://github.com/webcomponents/webcomponentsjs</h1>
+					<img src="images/polyfill.png" />
+				</section>
+				<section>
+					<ul style="font-size:1.5em;">
+						<li>Shadow DOM</li>
+						<li>Custom Elements</li>
+						<li>Scoped CSS (Needs some user work)</li>
+					</ul>
+				</section>
+				<section>
+					<h1>Handling the CSS Scoping</h1>
+					<html-encode lang="javascript"><template><script>
+						class MyElement extends HTMLElement {
+							constructor () {
+								super();
+								this.attachShadow({mode: 'open'});
+
+								// HANDLE SHADY CSS
+								if (window.ShadyCSS) window.ShadyCSS.prepareTemplate(template, 'my-element');
+
+								this.shadowRoot.appendChild(document.importNode(template.content, true));
+							}
+						}
+					</script></template></html-encode>
+				</section>
+				<section>
+					<h1>Completed example component.</h1>
+					<h2>by  Monica Dinculescu (@notwaldorf)</h2>
+					<h1 style="font-size:1.3em; margin:auto;">https://goo.gl/m5gdrq</h1>
+				</section>
 			</grid-slide>
 			<grid-notes>
 				<ul>
 					<li>Find the script from the site</li>
 					<li>I use the custom elements and shady dom polyfill</li>
 					<li>Shady DOM simulates encapsulation by writing element specific CSS</li>
+					<li>Shady DOM stops CSS escapting but does not stop external powers affecting it.</li>
 				</ul>
 			</grid-notes>
 
-			<grid-slide>
-				<h1>Case study, VJ-OTG</h1>
+			<grid-slide el-by-el>
+				<section>
+					<h1>Case study, VJ-OTG</h1>
+					<h1 style="font-size: 1.4em; margin: auto;">https://samsunginter.net/vj-otg/</h1>
+					<img src="images/vj-otg.png">
+				</section>
+				<section>
+					<h1>Case study, VJ-OTG</h1>
+					<p style="font-style:italic;">"VJ-OTG, is a Web App to use WebAudio, WebMidi &amp; WebGL to produce visualisations for night clubs."</p>
+				</section>
+				<section>
+					<h1>The Challenge:</h1>
+					<ul>
+						<li>Connect together very different pieces of technology</li>
+						<li>Be highly configurable in how they interact</li>
+						<li>Be simple to configure.</li>
+					</ul>
+				</section>
+				<img src="images/vj-otg.png">
+				<html-encode>
+					<template>
+						<midi-controller>
+							<midi-pad></midi-pad>
+							<midi-cc></midi-cc>
+						</midi-controller>
+
+						<vj-otg-visuals>
+							<vj-otg-assets>
+								<video id="minnie" src="./assets/minnie-512.webm" width="512" height="512" autoplay="true" loop="true"></video>
+							</vj-otg-assets>
+							<vj-otg-static-texture source-name="minnie"></vj-otg-static-texture>
+						</vj-otg-visuals>
+					</template>
+				</html-encode>
+				<html-encode lang="javascript"><template><script>
+					// Reading data from element
+					el.foo;
+
+					// Updating data in element
+					el.setAttribute('foo', 'bar');
+
+					// Announcing somthing has changed
+					this.dispatchEvent(new CustomEvent('myevent', { detail: {foo: 'bar'}, bubbles: true }));
+
+					// Listening for changes
+					el.addEventListener('myevent', function (e) {
+						console.log(e.detail.foo);
+					});
+				</script></template></html-encode>
 			</grid-slide>
 			<grid-notes>
 				<ul>
 					<li>App to make visualisations for parties.</li>
+					<li>HTML provides a single point where we can describe the relationships between the technology.</li>
+					<li>By providing a common language these disparate technology can communicate without needing to know how they work.</li>
+					
 					<li>Components for WebGL Visuals</li>
 					<li>Components for interfacing with Web Midi</li>
+
+					<li>Notice both sets of components have a wrapper component, this is the main element it maintains any group state sets up any shared resources.</li>
+
+					<li>The midi-controller sets up the WebMidi listener and fires events on the respective midi-pad or midi-cc</li>
+					<li>The individual components provide the dummy elements and let the parent know if they are clicked.</li>
+
+					<li>The viusaliser has a canvas and renderer, the elements inside are used to write the shader which is run to generate the graphics.</li>
+					<li>The children nodes don't actually have any DOM but the element was too complex to configure as a single element</li>
+					<li>Each element represents small snippets of GLSL and dynamically update the parent if they get changed.</li>
+
+					<li>The midi elements announce changes by emiting events.</li>
+					<li>This lets us to use addEventListener to respond to these changes.</li>
+
 					<li>Communicate with each other via messaging</li>
 					<li>Helper class HTMLElementPlus</li>
 				</ul>
@@ -230,16 +461,16 @@
 					<li>Elements can expose values to the attributes on the element e.g. el.foo</li>
 
 					<li>Elements can be made to watch other elements. E.g.</li>
-					<html-encode><script type="text/html">
-					<hello-world listen-to="#someEl"></hello-world>
-					</script></html-encode>
+					<html-encode><template>
+						<hello-world listen-to="#someEl"></hello-world>
+					</template></html-encode>
 
 					<li>Elements not designed to listen to changes in each other can be patched with JavaScript.</li>
-					<html-encode lang="javascript"><script type="no-execute">
+					<html-encode lang="javascript"><template><script>
 					document.getElementById('someEl').addEventListener('myevent', function (e) {
 						document.getElementById('someOtherEl').setAttribute('foo', e.detail.value);
 					});
-					</script></html-encode>
+					</script></template></html-encode>
 
 				</ul>
 			</grid-notes>
