@@ -95,7 +95,7 @@
 					super();
 
 					this.attachShadow({mode: 'open'});
-					this.shadowRoot.innerHTML = '<style></style><h1>My Element is Great!</h1>';
+					this.shadowRoot.innerHTML = '<style></style><h1>My Element is Great!</h1><slot></slot>';
 				}
 			}
 
@@ -110,8 +110,11 @@
 					:host > h1 {
 						color: green;
 					}
+					::slotted(p) {
+						color: red;
+					}
 				</style>
-				<h1>My Element is Great!</h1>
+				<h1>My Element is Great!</h1><slot></slot>
 			`;
 
 			class MyElement2 extends HTMLElement {
@@ -141,6 +144,12 @@
 
             <grid-notes>
 				Hi I am Ada from Samsung, i'm here to talk to you about Web Components
+
+				<p>My goals today are 3 fold: <ul>
+					<li>Help you to understand web components</li>
+					<li>Get you to start using Web Components</li>
+					<li>Introduce a new way of thinking about bulding Web Apps</li>
+				</ul></p>
 
 				<html-encode><template>
 					<p>lolol</p>
@@ -209,6 +218,7 @@
 				</section>
 				<h1 class="hero">Emmet Demo</h1>
 				<h1 class="hero" style="font-size: 3em; line-height:30vh; margin:0;">Webcomponents<br/>❤<br/>CSS Grid</h1>
+				<img src="images/Layouts.svg" alt="Simpler layouts enabled with Web Components.">
 			</grid-slide>
 			<grid-notes>
 				<ul>
@@ -246,18 +256,25 @@
 							super();
 
 							this.attachShadow({mode: 'open'});
-							this.shadowRoot.innerHTML = '<h1>My Element is Great!</h1>';
+							this.shadowRoot.innerHTML =
+								'<h1>My Element is Great!</h1><slot></slot>';
 						}
 					}
 				</script></template></html-encode>
 				<section>
-					<h1>Live Demo of &lt;my-element&gt;</h1>
-					<my-element></my-element>
+					<h1>Live Demo of:
+					<html-encode><template>
+							<my-element><p>Hello World</p></my-element>
+					</template></html-encode></h1>
+
+					<my-element><p>Hello World</p></my-element>
+					
 					<h2>Note: Style scoping not possible with polyfill.</h2>
 				</section>
 				<html-encode lang="javascript"><template><script>
 					const template = document.createElement('template');
-					template.innerHTML = '<h1>My Element is Great!</h1>';
+					template.innerHTML =
+						'<h1>My Element is Great!</h1><slot></slot>';
 
 					class MyElement extends HTMLElement {
 						constructor () {
@@ -278,17 +295,23 @@
 							:host > h1 {
 								color: green;
 							}
+							::slotted(p) {
+								color: red;
+							}
 						</style>
-						<h1>My Element is Great!</h1>
+						<h1>My Element is Great!</h1><slot></slot>
 
 						// MyElement etc
 					`;
 				</script></template></html-encode>
 				<section>
-					<h1>Live Demo of &lt;my-element&gt;</h1>
-					<my-element-two></my-element-two>
+					<h1>Live Demo of:
+					<html-encode><template>
+							<my-element><p>Hello World</p></my-element>
+					</template></html-encode></h1>
+					<my-element-two><p>Hello World</p></my-element-two>
 				</section>
-				<html-encode lang="javascript"><template><script>
+				<html-encode lang="javascript" style="bottom:0;"><template><script>
 					class MyElement extends HTMLElement {
 						constructor () {
 							super();
@@ -304,6 +327,10 @@
 						// Gets called for each attribute on start and change
 						attributeChangedCallback(attr, oldValue, newValue) {
 							this[attr] = newValue;
+						}
+
+						disconnectedCallback() {
+							// Clean up component.
 						}
 					}
 				</script></template></html-encode>
@@ -401,6 +428,49 @@
 						</vj-otg-visuals>
 					</template>
 				</html-encode>
+			</grid-slide>
+			<grid-notes>
+				<ul>
+					<li>App to make visualisations for parties.</li>
+					<li>HTML provides a single point where we can describe the relationships between the technology.</li>
+					<li>By providing a common language these disparate technology can communicate without needing to know how they work.</li>
+					
+					<li>Components for WebGL Visuals</li>
+					<li>Components for interfacing with Web Midi</li>
+
+					<li>Coming up with these elements was messy, they did not leap fully grown from my forehead.</li>
+					<li>First we built demos</li>
+					<li>Then we encapsulated chunks of functionality in components</li>
+					<li>We then interacted with them with further logic.</li>
+					<li>Which we then collected into compoents</li>
+
+					<li>If components do too much or grow too large the refactor them into smaller components.</li>
+
+					<li>In the case of the visual components, I refactored it twice.</li>
+					<li>Too much configuration on the elements so I made each one seperate</li>
+					<li>All of the children only configure the parent, they do very little themselves.</li>
+
+					<li>Notice both sets of components have a wrapper component, this is the main element it maintains any group state sets up any shared resources.</li>
+
+					<li>The midi-controller sets up the WebMidi listener and fires events on the respective midi-pad or midi-cc</li>
+					<li>The individual components provide the dummy elements and let the parent know if they are clicked.</li>
+
+					<li>The viusaliser has a canvas and renderer, the elements inside are used to write the shader which is run to generate the graphics.</li>
+					<li>The children nodes don't actually have any DOM but the element was too complex to configure as a single element</li>
+					<li>Each element represents small snippets of GLSL and dynamically update the parent if they get changed.</li>
+
+
+					<li>Communicate with each other via messaging</li>
+					<li>Helper class HTMLElementPlus</li>
+				</ul>
+			</grid-notes>
+
+			<grid-slide el-by-el>
+				<h1>Building a whole app using just components</h1>
+				<img src="images/Step1.svg" alt="">
+				<img src="images/Step2.svg" alt="">
+				<h1>HTML holds the initial app state.</h1>
+				<h1>Static or rendered on the server.</h1>
 				<html-encode lang="javascript"><template><script>
 					// Reading data from element
 					el.foo;
@@ -416,35 +486,14 @@
 						console.log(e.detail.foo);
 					});
 				</script></template></html-encode>
-			</grid-slide>
-			<grid-notes>
-				<ul>
-					<li>App to make visualisations for parties.</li>
-					<li>HTML provides a single point where we can describe the relationships between the technology.</li>
-					<li>By providing a common language these disparate technology can communicate without needing to know how they work.</li>
-					
-					<li>Components for WebGL Visuals</li>
-					<li>Components for interfacing with Web Midi</li>
 
-					<li>Notice both sets of components have a wrapper component, this is the main element it maintains any group state sets up any shared resources.</li>
+				<html-encode><template>
+					<hello-world listen-to="#someEl"></hello-world>
+				</template></html-encode>
 
-					<li>The midi-controller sets up the WebMidi listener and fires events on the respective midi-pad or midi-cc</li>
-					<li>The individual components provide the dummy elements and let the parent know if they are clicked.</li>
+				<img src="images/Seperation of Concerns.svg" alt="Old school seperation of concerns html/css/js">
+				<img src="images/Seperation of Concerns Two.svg" alt="Modern speration of concerns is component based.">
 
-					<li>The viusaliser has a canvas and renderer, the elements inside are used to write the shader which is run to generate the graphics.</li>
-					<li>The children nodes don't actually have any DOM but the element was too complex to configure as a single element</li>
-					<li>Each element represents small snippets of GLSL and dynamically update the parent if they get changed.</li>
-
-					<li>The midi elements announce changes by emiting events.</li>
-					<li>This lets us to use addEventListener to respond to these changes.</li>
-
-					<li>Communicate with each other via messaging</li>
-					<li>Helper class HTMLElementPlus</li>
-				</ul>
-			</grid-notes>
-
-			<grid-slide>
-				<h1>Building a whole app using just components</h1>
 			</grid-slide>
 			<grid-notes>
 				<ul>
@@ -474,6 +523,14 @@
 
 				</ul>
 			</grid-notes>
+
+			<grid-slide el-by-el>
+				<h1>Migrating an Existing App</h1>
+				<section>
+					<img src="images/lego-repair.jpg" alt="Lego Repair by Jan Vormann">
+					<h3>Lego Street Repairs by Jan Vormann</h3>
+				</section>
+			</grid-slide>
 
 
 
