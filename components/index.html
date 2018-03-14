@@ -299,10 +299,9 @@
 								color: red;
 							}
 						</style>
-						<h1>My Element is Great!</h1><slot></slot>
+						<h1>My Element is Great!</h1><slot></slot>`;
 
 						// MyElement etc
-					`;
 				</script></template></html-encode>
 				<section>
 					<h1>Live Demo of:
@@ -311,7 +310,7 @@
 					</template></html-encode></h1>
 					<my-element-two><p>Hello World</p></my-element-two>
 				</section>
-				<html-encode lang="javascript" style="bottom:0;"><template><script>
+				<html-encode lang="javascript" style="bottom:0; font-size: 0.7em;"><template><script>
 					class MyElement extends HTMLElement {
 						constructor () {
 							super();
@@ -366,13 +365,14 @@
 				<section>
 					<h1>Handling the CSS Scoping</h1>
 					<html-encode lang="javascript"><template><script>
+
+						// TWEAK THE CSS IN THE TEMPLATE USING THE POLYFILL
+						if (window.ShadyCSS) window.ShadyCSS.prepareTemplate(template, 'my-element');
+
 						class MyElement extends HTMLElement {
 							constructor () {
 								super();
 								this.attachShadow({mode: 'open'});
-
-								// HANDLE SHADY CSS
-								if (window.ShadyCSS) window.ShadyCSS.prepareTemplate(template, 'my-element');
 
 								this.shadowRoot.appendChild(document.importNode(template.content, true));
 							}
