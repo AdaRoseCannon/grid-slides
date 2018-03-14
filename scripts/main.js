@@ -7,22 +7,26 @@ const slideTemplate = document.createElement('template');
 
 containerTemplate.innerHTML = `
 	<style>
-		.slide-controls {
+		:host .slide-controls {
 			grid-column: slide;
 			margin-bottom: var(--padding);
 			justify-content: center;
 			display: var(--button-display, flex);
 		}
+		:host {
+			background: white;
+		}
 	</style>
 	<div class="slide-controls grid-slides-controller">
 		<button class="start-button grid-slides-controller" ref="start">Start Presentation</button>
+		<button class="start-button grid-slides-controller" ref="fullscreen">Full Screen</button>
 	</div>
 	<slot></slot>
 `;
 
 slideTemplate.innerHTML = `
 	<style class="grid-slide">
-		.play-button {
+		:host .play-button {
 			color: green;
 			font-size: 1.5em;
 			position: absolute;
@@ -36,6 +40,11 @@ slideTemplate.innerHTML = `
 	<slot></slot>
 	<button class="play-button grid-slide" style="display: none;" title="Play" ref="play">►</button>
 `;
+
+if (window.ShadyCSS) {
+	window.ShadyCSS.prepareTemplate(slideTemplate, 'grid-slide');
+	window.ShadyCSS.prepareTemplate(containerTemplate, 'grid-slides-controller');
+}
 
 
 // only polyfill .finished in browsers that already support animate()
@@ -230,6 +239,35 @@ class GridSlidesController extends HTMLElementPlus {
 		this.attachShadow({mode: 'open'});
 		this.shadowRoot.appendChild(containerTemplate.content.cloneNode(true));
 		this.refs.start.addEventListener('click', this.startPresenting.bind(this));
+		this.refs.fullscreen.addEventListener('click', function () {
+			const isInFullScreen = (document.fullscreenElement && document.fullscreenElement !== null) ||
+			(document.webkitFullscreenElement && document.webkitFullscreenElement !== null) ||
+			(document.mozFullScreenElement && document.mozFullScreenElement !== null) ||
+			(document.msFullscreenElement && document.msFullscreenElement !== null);
+
+			if (isInFullScreen) {
+				// cancel
+				if (document.exitFullscreen) {
+					document.exitFullscreen();
+				} else if (document.webkitExitFullscreen) {
+					document.webkitExitFullscreen();
+				} else if (document.mozCancelFullScreen) {
+					document.mozCancelFullScreen();
+				} else if (document.msExitFullscreen) {
+					document.msExitFullscreen();
+				}
+			} else {
+				if (this.requestFullscreen) {
+					this.requestFullscreen();
+				} else if (this.msRequestFullscreen) {
+					this.msRequestFullscreen();
+				} else if (this.mozRequestFullScreen) {
+					this.mozRequestFullScreen();
+				} else if (this.webkitRequestFullscreen) {
+					this.webkitRequestFullscreen();
+				}
+			}
+		}.bind(this));
 	}
 	
 	static get observedAttributes() { return ['slide', 'transition', 'presenting', 'template']; }
