@@ -39,8 +39,26 @@
 				background-position: center center;
 			}
 
+			@media screen and (max-width: 100rem) {
+				grid-slides-controller {
+					--padding: 0.4rem;
+				}
+				grid-slide {
+					font-size:2rem;
+				}
+			}
+
+			@media screen and (max-width: 50rem) {
+				grid-slides-controller {
+					--padding: 0.2rem;
+				}
+				grid-slide {
+					font-size:1rem;
+				}
+			}
+
 			grid-slide code {
-				font-size: 2rem;
+				font-size: 0.8em;
 			}
 
 			h1.hero {
@@ -365,7 +383,6 @@
 				<section>
 					<h1>Handling the CSS Scoping</h1>
 					<html-encode lang="javascript"><template><script>
-
 						// TWEAK THE CSS IN THE TEMPLATE USING THE POLYFILL
 						if (window.ShadyCSS) window.ShadyCSS.prepareTemplate(template, 'my-element');
 
