@@ -362,6 +362,8 @@ class GridSlidesController extends HTMLElementPlus {
 			}
 		}
 
+		this.focus();
+
 		this.setSlide(firstSlide);
 	}
 

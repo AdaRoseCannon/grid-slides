@@ -476,7 +476,6 @@
 					<li>The children nodes don't actually have any DOM but the element was too complex to configure as a single element</li>
 					<li>Each element represents small snippets of GLSL and dynamically update the parent if they get changed.</li>
 
-
 					<li>Communicate with each other via messaging</li>
 					<li>Helper class HTMLElementPlus</li>
 				</ul>
@@ -496,7 +495,10 @@
 					el.setAttribute('foo', 'bar');
 
 					// Announcing somthing has changed
-					this.dispatchEvent(new CustomEvent('myevent', { detail: {foo: 'bar'}, bubbles: true }));
+					this.dispatchEvent(new CustomEvent('myevent', {
+						detail: {foo: 'bar'},
+						bubbles: true
+					}));
 
 					// Listening for changes
 					el.addEventListener('myevent', function (e) {
@@ -547,6 +549,11 @@
 					<img src="images/lego-repair.jpg" alt="Lego Repair by Jan Vormann">
 					<h3>Lego Street Repairs by Jan Vormann</h3>
 				</section>
+			</grid-slide>
+
+			<grid-slide>
+				<h1>Article: https://goo.gl/N8J58i</h1>
+				<h1>Slide Deck: https://ada.is/grid-slides/components/</h1>
 			</grid-slide>
 
 
