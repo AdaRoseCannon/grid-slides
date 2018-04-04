@@ -2,8 +2,6 @@
 /* global HTMLElementPlus */
 'use strict';
 
-const html = a => a;
-
 function similarStart(a,b,l) {
 	if (!a || !b) return 0;
 	for (let i=0;i<l;i++) {
@@ -45,7 +43,7 @@ class HTMLEncode extends HTMLElementPlus {
 	allAttributesChangedCallback(data) {
 		if (!this.shadowRoot) {
 			this.attachShadow({mode: 'open'});
-			this.shadowRoot.appendChild(this.template);
+			this.shadowRoot.appendChild(this.templateContent);
 			requestAnimationFrame(function updateHTML(count) {
 				if (count === undefined) count = 0;
 				count++;

@@ -65,7 +65,8 @@ grid-slides-controller {
 }
 
 grid-slides-controller[presenting] {
-	--button-display: none;
+    --button-display: none;
+    overflow-y: hidden;
 }
 
 grid-slide {

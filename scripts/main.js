@@ -2,51 +2,6 @@
 /* eslint no-console: 0 */
 'use strict';
 
-const containerTemplate = document.createElement('template');
-const slideTemplate = document.createElement('template');
-
-containerTemplate.innerHTML = `
-	<style>
-		:host .slide-controls {
-			grid-column: slide;
-			margin-bottom: var(--padding);
-			justify-content: center;
-			display: var(--button-display, flex);
-		}
-		:host {
-			background: white;
-		}
-	</style>
-	<div class="slide-controls grid-slides-controller">
-		<button class="start-button grid-slides-controller" ref="start">Start Presentation</button>
-		<button class="start-button grid-slides-controller" ref="fullscreen">Full Screen</button>
-	</div>
-	<slot></slot>
-`;
-
-slideTemplate.innerHTML = `
-	<style class="grid-slide">
-		:host .play-button {
-			color: green;
-			font-size: 1.5em;
-			position: absolute;
-			top: 0;
-			right: 0;
-			display: var(--button-display, block);
-			grid-area: 1/full;
-			z-index: 100;
-		}
-	</style>
-	<slot></slot>
-	<button class="play-button grid-slide" style="display: none;" title="Play" ref="play">►</button>
-`;
-
-if (window.ShadyCSS) {
-	window.ShadyCSS.prepareTemplate(slideTemplate, 'grid-slide');
-	window.ShadyCSS.prepareTemplate(containerTemplate, 'grid-slides-controller');
-}
-
-
 // only polyfill .finished in browsers that already support animate()
 if (Element.prototype.animate) {
 
@@ -150,10 +105,6 @@ const GRIDSLIDES = {
 		events: {
 			nextSlide: 'GRIDSLIDES_NEXT_SLIDE',
 			finished: 'GRIDSLIDES_FINISHED'
-		},
-		templates: {
-			slideTemplate: slideTemplate,
-			containerTemplate: containerTemplate
 		}
 	},
 
@@ -237,7 +188,7 @@ class GridSlidesController extends HTMLElementPlus {
 		
 		this.tabIndex = 0;
 		this.attachShadow({mode: 'open'});
-		this.shadowRoot.appendChild(containerTemplate.content.cloneNode(true));
+		this.shadowRoot.appendChild(this.templateContent);
 		this.refs.start.addEventListener('click', this.startPresenting.bind(this));
 		this.refs.fullscreen.addEventListener('click', function () {
 			const isInFullScreen = (document.fullscreenElement && document.fullscreenElement !== null) ||
@@ -269,8 +220,29 @@ class GridSlidesController extends HTMLElementPlus {
 			}
 		}.bind(this));
 	}
+
+	static get templateHTML() {
+		return html`
+			<style>
+				:host .slide-controls {
+					grid-column: slide;
+					margin-bottom: var(--padding);
+					justify-content: center;
+					display: var(--button-display, flex);
+				}
+				:host {
+					background: white;
+				}
+			</style>
+			<div class="slide-controls grid-slides-controller">
+				<button class="start-button grid-slides-controller" ref="start">Start Presentation</button>
+				<button class="start-button grid-slides-controller" ref="fullscreen">Full Screen</button>
+			</div>
+			<slot></slot>
+		`;
+	}
 	
-	static get observedAttributes() { return ['slide', 'transition', 'presenting', 'template']; }
+	static get observedAttributes() { return ['slide', 'transition', 'presenting', 'slide-template']; }
 	attributeChangedCallback(attr, oldValue, newValue) {
 		if (attr === 'transition') {
 			this.transition = GRIDSLIDES.transitions.get(newValue || 'slide');
@@ -446,7 +418,6 @@ class GridSlide extends HTMLElementPlus {
 	constructor() {
 		super();
 
-
 		this.transition = GRIDSLIDES.transitions.get(this.getAttribute('transition'));
 		this.__data = [];
 
@@ -454,6 +425,24 @@ class GridSlide extends HTMLElementPlus {
 		this.__buildDom();
 	}
 
+	static get templateHTML() {
+		return html`
+			<style>
+				.play-button {
+					color: green;
+					font-size: 1.5em;
+					position: absolute;
+					top: 0;
+					right: 0;
+					display: var(--button-display, block);
+					grid-area: 1/full;
+					z-index: 100;
+				}
+			</style>
+			<button class="play-button grid-slide" style="display: none;" title="Play" ref="play">►</button>
+			<slot></slot>
+		`;
+	}
 
 	allAttributesChangedCallback() {
 		if (this.firstSetup) return;
@@ -464,9 +453,9 @@ class GridSlide extends HTMLElementPlus {
 	}
 
 	__buildDom() {
-		const template = this['slide-template'] || this.parentNode['slide-template'] || slideTemplate;
+		const template = this['slide-template'] || this.parentNode['slide-template'];
 		this.shadowRoot.innerHTML = '';
-		this.shadowRoot.appendChild(template.content.cloneNode(true));
+		this.shadowRoot.appendChild(template ? document.importNode(template.content, true) : this.templateContent);
 		this.refs.play.addEventListener('click', function () {
 			if (!this.__isSetup) {
 				this.setup();
@@ -493,7 +482,7 @@ class GridSlide extends HTMLElementPlus {
 		.map(a => a.name);
 		if (GRIDSLIDES.registeredSlideDataKeys.includes(attr)) {
 			// Forces order of attributes
-			const datum = GRIDSLIDES.getSlideData(attr, this, this.__parseAttr(newValue));
+			const datum = GRIDSLIDES.getSlideData(attr, this, this.__parseAttr(newValue || ''));
 			this.__data[attrs.indexOf(attr)] = datum;
 			if (datum.init) datum.init.apply(this, []);
 			this.refs.play.style.display = '';
@@ -592,7 +581,7 @@ class GridSlide extends HTMLElementPlus {
 			this.transition = GRIDSLIDES.transitions.get(newValue);
 		}
 
-		if (attr === 'template') {
+		if (attr === 'slide-template') {
 			this['slide-template'] = newValue === 'default' ? slideTemplate : document.querySelector(newValue);
 			this.__buildDom();
 		}

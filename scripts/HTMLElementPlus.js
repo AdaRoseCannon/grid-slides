@@ -1,3 +1,10 @@
+const html = function taggedTemplateNoop(strings, ...keys) {
+	const lastIndex = strings.length - 1;
+	return strings
+		.slice(0, lastIndex)
+		.reduce((p, s, i) => p + s + keys[i], '')
+		+ strings[lastIndex];
+};
 
 class HTMLElementPlus extends HTMLElement {
 
@@ -43,12 +50,16 @@ class HTMLElementPlus extends HTMLElement {
 		return '';
 	}
 
-	get template() {
-		if (this.constructor.__templateEl) return document.importNode(this.constructor.__templateEl.content,true);
-		this.constructor.__templateEl = document.createElement('template');
-		this.constructor.__templateEl.innerHTML = this.constructor.templateHTML;
-		if (window.ShadyCSS) window.ShadyCSS.prepareTemplate(this.constructor.__templateEl, this.tagName);
-		return document.importNode(this.constructor.__templateEl.content, true);
+	static get template() {
+		if (this.__templateEl) return this.__templateEl;
+		this.__templateEl = document.createElement('template');
+		this.__templateEl.innerHTML = this.templateHTML;
+		return this.__templateEl;
+	}
+
+	get templateContent() {
+		if (window.ShadyCSS) window.ShadyCSS.prepareTemplate(this.constructor.template, this.tagName.toLocaleLowerCase());
+		return document.importNode(this.constructor.template.content ,true);
 	}
 
 	__getFromShadowRoot(target, name) {
