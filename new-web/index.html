@@ -11,6 +11,15 @@
     <style>
         @import url('https://fonts.googleapis.com/css?family=Lily+Script+One');
 
+        :root {
+            --color-dark: #474143;
+            --color-light: #FFFFFF;
+            --color-yellow: #FFC636;
+            --color-cyan: #00ADA9;
+            --color-cyan-dark: #107D7A;
+            --color-red: #FF6444;
+        }
+
         html, body {
             min-height: 100vh;
             min-width: 100vw;
@@ -30,7 +39,8 @@
         }
 
         grid-slide {
-            color: #333;
+            color: var(--color-light);
+            background-color: var(--color-cyan-dark);
             flex-direction: column;
             font-size: 3rem;
             background-size: cover;
@@ -66,10 +76,22 @@
             align-self: center;
         }
 
+        .type-art {
+            align-self: stretch;
+            line-height: 0.9;
+            --vertical-align: center;
+            grid-column: full;
+            margin: 0.4em 0;
+        }
+
+        .type-art.small {
+            grid-column: one-quarter/three-quarter;
+        }
+
         .caption {
             grid-area: 1/content-inner;
             align-self: flex-end;
-            background: rgba(0,0,0,0.8);
+            background: var(--color-dark);
             margin: 0;
         }
     </style>
@@ -89,12 +111,15 @@
                 left: 0;
                 right: 0;
                 padding: 0.5em 1em;
-                background: rgba(0,0,0,0.5);
+                background: var(--color-dark);
                 color: white;
                 display: flex;
                 justify-content: space-between;
                 grid-column: full;
                 font-size: 1.5rem;
+            }
+            :host {
+                padding-bottom: 2em !important;
             }
         </style>
         <footer>
@@ -110,8 +135,8 @@
 
     <grid-slides-controller>
         <grid-slide>
-            <fitty-text class="hero" style="width: auto; height: calc(100% - 8rem); line-height: 0.9;">
-                A Rube Goldberg<br /><span style="color: green;">Machine</span><br />New <span style="color: red;">Web</span> Technology
+            <fitty-text class="hero type-art">
+                A <span style="color: var(--color-yellow);">Rube Goldberg</span><br /><span style="color: var(--color-yellow);">Machine</span><br /><span style="font-size: 1.5em; color: var(--color-cyan);margin-top: -0.333em; transform:translateY(0.1em);">&amp;</span>New <span style="color: var(--color-red);">Web</span> Technology
             </fitty-text>
         </grid-slide>
         <grid-notes></grid-notes>
