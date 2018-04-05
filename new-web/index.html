@@ -59,7 +59,7 @@
             font-size: 0.8em;
         }
 
-        h1.hero {
+        .hero {
             font-family: 'lily script one';
             font-size: 3em;
             text-align: center;
@@ -78,6 +78,7 @@
     <script src="../scripts/main.js"></script>
     <script src="../scripts/defaults.js"></script>
     <script src="../scripts/web-components.js"></script>
+    <script src="http://fitty-component.glitch.me/bundle.js"></script>
 </head>
 <body>
     <template id="custom-slide-template">
@@ -108,7 +109,11 @@
     </script>
 
     <grid-slides-controller>
-        <grid-slide><h1 class="hero">A Rube Goldberg Machine</h1></grid-slide>
+        <grid-slide>
+            <fitty-text class="hero" style="width: auto; height: calc(100% - 8rem); line-height: 0.9;">
+                A Rube Goldberg<br /><span style="color: green;">Machine</span><br />New <span style="color: red;">Web</span> Technology
+            </fitty-text>
+        </grid-slide>
         <grid-notes></grid-notes>
     </grid-slides-controller>
 </body>
