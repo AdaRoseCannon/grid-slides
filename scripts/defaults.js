@@ -221,8 +221,9 @@ GRIDSLIDES.registerSlideData('el-by-el',
 					const nextEl = children[i];
 					if (el.tagName === 'SCRIPT' && el.actions) {
 						yield * el.actions();
-						if (el.teardown) {
-							el.teardown();
+						if (nextEl) {
+							yield;
+							if (el.teardown) el.teardown();
 						}
 						continue;
 					}

@@ -163,13 +163,11 @@
                         document.getElementById('log-left').animate({'transform': ['rotate(20deg)','rotate(80deg)']}, {duration: 1000, fill: 'forwards', easing: docStyle.getPropertyValue('--easeOutBack')}),
                         document.getElementById('log-right').animate({'transform': ['rotate(-20deg)','rotate(-80deg)']}, {duration: 1000, fill: 'forwards', easing: docStyle.getPropertyValue('--easeOutBack')})
                     );
-                    yield;
                 }
                 document.currentScript.teardown = function () {
                     animations.splice(0).map(a => a.cancel());
                 }
             </script>
-            <h1>lol</h1>
         </grid-slide>
         <grid-notes></grid-notes>
     </grid-slides-controller>
