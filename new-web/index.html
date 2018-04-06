@@ -104,6 +104,44 @@
         #animation-demo-1 .wood {
             background-image: url(images/light-wood-texture.jpg);
         }
+
+        #animation-demo-1 .domino {
+            background: var(--color-dark);
+            width: 2em;
+            height: 5em;
+            display: inline-block;
+            transform-origin: bottom right;
+            border-radius: 0.5em;
+        }
+
+        #animation-demo-1 .remote {
+            background: var(--color-dark);
+            width: 8em;
+            height: 4em;
+            display: inline-block;
+            transform-origin: bottom right;
+            border-radius: 0.5em;
+            left: 100em;
+            top: 32em;
+        }
+
+        #animation-demo-1 .button {
+            background: var(--color-red);
+            width: 4em;
+            height: 3em;
+            display: inline-block;
+            transform-origin: bottom right;
+            border-radius: 0.5em;
+            left: 102em;
+            top: 30em;
+        }
+
+        #animation-demo-1 #bulb {
+            color: yellow;
+            font-size: 18em;
+            left: calc(50% - 0.5em);
+            filter: grayscale(100%);
+        }
     </style>
     <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/edf84e6e/webcomponents-sd-ce.js"></script>
     <script src="../scripts/HTMLElementPlus.js"></script>
@@ -149,20 +187,85 @@
             <fitty-text class="hero type-art">
                 A <span style="color: var(--color-yellow);">Rube Goldberg</span><br /><span style="color: var(--color-yellow);">Machine</span><br /><span style="font-size: 1.5em; color: var(--color-cyan);margin-top: -0.333em; transform:translate(-0.1em, 0.1em);">&amp;</span>New <span style="color: var(--color-red);">Web</span> Technology
             </fitty-text>
-            <div id="animation-demo-1" style="position: relative; --door-hinge: 1;">
-                <span style="transform: translate(8rem, 0);font-size: 12rem;">⚽</span>
-                <span id="log-left" style="transform-origin: top left; top: 15rem; transform: rotate(20deg);width: 12rem; height: 3rem;" class="wood"></span>
-                <span id="log-right" style="transform-origin: top right; top: 15rem; left: 15rem; transform: rotate(-20deg);width: 12rem; height: 3rem;" class="wood"></span>
+            <div id="animation-demo-1" style="position: relative; --door-hinge: 1; font-size: 0.8rem;">
+                <span id="anim-ball"><span style="font-size: 10rem;position: static;">⚽</span></span>
+                <span id="log-left" style="transform-origin: top left; top: 15em; width: 12em; height: 3em;" class="wood"></span>
+                <span id="log-right" style="transform-origin: top right; top: 15em; left: 15em; width: 12em; height: 3em;" class="wood"></span>
+                <span style="transform-origin: top left; top: 36em; left: 0em; width: 40em; height: 3em;transform: rotate(10deg);" class="wood"></span>
+                <span style="transform-origin: top left; top: 36em; left: 44em; width: 70em; height: 3em;" class="wood"></span>
+                <span class="domino" style="left: 43.5em;top: 31em;"></span>
+                <span class="domino" style="left: 47em;top: 31em;"></span>
+                <span class="domino" style="left: 51em;top: 31em;"></span>
+                <span class="domino" style="left: 55em;top: 31em;"></span>
+                <span class="domino" style="left: 59em;top: 31em;"></span>
+                <span class="domino" style="left: 63.25em;top: 24.75em; width: 4.5em; height: 11.25em;"></span>
+                <span class="domino" style="left: 70.75em;top: 19.125em; width: 6.75em; height: 16.875em;"></span>
+                <span class="domino" style="left: 80.1875em;top: 10.6875em; width: 10.125em; height: 25.3125em;"></span>
+                <span class="remote"></span>
+                <span id="button" class="button"></span>
+                <span id="bulb">💡</span>
             </div>
             <script>
+                const $ = sel => document.getElementById(sel);
+                const getRootVar = name => getComputedStyle(document.documentElement).getPropertyValue(name);
                 const animations = [];
+                const animate = function (el, a, b) {
+                    const anim = el.animate(a,b);
+                    animations.push(anim);
+                    return anim;
+                }
                 document.currentScript.actions = function * () {
-                    const docStyle = getComputedStyle(document.documentElement);
+                    (async function () {
+                        animate( $('log-left'),
+                            {'transform': ['rotate(20deg)','rotate(80deg)']},
+                            {easing: getRootVar('--easeOutBack'), duration: 500, fill: 'forwards'}
+                        );
+                        animate( $('log-right'),
+                            {'transform': ['rotate(-20deg)','rotate(-80deg)']},
+                            {easing: getRootVar('--easeOutBack'), duration: 500, fill: 'forwards'}
+                        );
+                        await animate( $('anim-ball'),
+                            {'transform': ['translate(8em, 6em)','translate(8em, 26em)']},
+                            {easing: getRootVar('--easeInQuad'), duration: 500, fill: 'forwards'}
+                        ).finished;
+                        await animate( $('anim-ball'),
+                            {'transform': ['translate(8em, 26em)', 'translate(8em, 16em)']},
+                            {easing: getRootVar('--easeOutQuad'), duration: 500, fill: 'forwards', direction: 'alternate', iterations: 2}
+                        ).finished;
+                        await animate( $('anim-ball'),
+                            {'transform': ['translate(8em, 26em) rotate(0deg)', 'translate(32em, 29em) rotate(270deg)']},
+                            {easing: getRootVar('--easeInQuad'), duration: 1000, fill: 'forwards'}
+                        ).finished;
+                        const dominoes = Array.from(document.querySelectorAll('.domino'));
+                        let lastDomino = dominoes[dominoes.length - 1];
+                        for (const el of dominoes) {
+                            const anim = animate( el,
+                                {'transform': ['rotate(0deg)', 'rotate(30deg)']},
+                                {easing: getRootVar('--easeInQuad'), duration: 300, fill: 'forwards'}
+                            ).finished;
+                            const anim2 = anim.then(() => animate( el,
+                                {'transform': ['rotate(30deg)', 'rotate(60deg)']},
+                                {easing: getRootVar('--easeInQuad'), duration: 300, fill: 'forwards'}
+                            ).finished);
+                            await anim;
+                            if (el === lastDomino) await anim2;
+                        }
+                        animate(lastDomino,
+                            {'transform': ['rotate(60deg)', 'rotate(70deg)']},
+                            {easing: getRootVar('--easeInQuad'), duration: 300, fill: 'forwards'}
+                        ).finished;
+                        await animate($('button'),
+                            {'transform': ['translateY(0)', 'translateY(1.9em)']},
+                            {easing: getRootVar('--easeInQuad'), duration: 300, fill: 'forwards'}
+                        ).finished;
+                        animate($('bulb'),
+                            {filter: ['grayscale(100%)', 'grayscale(0%) drop-shadow(0px 0px 20px yellow)']},
+                            {easing: 'ease', duration: 300, fill: 'forwards'}
+                        )
+                    }());
+                    animations.forEach(a=>a.pause());
                     yield;
-                    animations.push(
-                        document.getElementById('log-left').animate({'transform': ['rotate(20deg)','rotate(80deg)']}, {duration: 1000, fill: 'forwards', easing: docStyle.getPropertyValue('--easeOutBack')}),
-                        document.getElementById('log-right').animate({'transform': ['rotate(-20deg)','rotate(-80deg)']}, {duration: 1000, fill: 'forwards', easing: docStyle.getPropertyValue('--easeOutBack')})
-                    );
+                    animations.forEach(a=>a.play());
                 }
                 document.currentScript.teardown = function () {
                     animations.splice(0).map(a => a.cancel());
