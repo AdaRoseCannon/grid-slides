@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Yay, Web Components</title>
+    <title>Woah, New Web stuff!</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="../css/style.css" rel="stylesheet">
@@ -94,12 +94,23 @@
             background: var(--color-dark);
             margin: 0;
         }
+
+        #animation-demo-1 span {
+            position: absolute;
+            top:0;
+            left: 0;
+        }
+
+        #animation-demo-1 .wood {
+            background-image: url(images/light-wood-texture.jpg);
+        }
     </style>
     <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/edf84e6e/webcomponents-sd-ce.js"></script>
     <script src="../scripts/HTMLElementPlus.js"></script>
     <script src="../scripts/main.js"></script>
     <script src="../scripts/defaults.js"></script>
     <script src="../scripts/web-components.js"></script>
+    <!-- <script src="https://fitty-component.glitch.me/bundle.js"></script> -->
     <script src="../scripts/fitty-component.min.js"></script>
 </head>
 <body>
@@ -124,7 +135,7 @@
         </style>
         <footer>
             <span>@lady_ada_king</span>
-            <span>Samsung Internet</span>
+            <span style="text-align: right;">Samsung Internet</span>
         </footer>
     </template>
     <script>
@@ -134,10 +145,31 @@
     </script>
 
     <grid-slides-controller>
-        <grid-slide>
+        <grid-slide el-by-el>
             <fitty-text class="hero type-art">
                 A <span style="color: var(--color-yellow);">Rube Goldberg</span><br /><span style="color: var(--color-yellow);">Machine</span><br /><span style="font-size: 1.5em; color: var(--color-cyan);margin-top: -0.333em; transform:translate(-0.1em, 0.1em);">&amp;</span>New <span style="color: var(--color-red);">Web</span> Technology
             </fitty-text>
+            <div id="animation-demo-1" style="position: relative; --door-hinge: 1;">
+                <span style="transform: translate(8rem, 0);font-size: 12rem;">⚽</span>
+                <span id="log-left" style="transform-origin: top left; top: 15rem; transform: rotate(20deg);width: 12rem; height: 3rem;" class="wood"></span>
+                <span id="log-right" style="transform-origin: top right; top: 15rem; left: 15rem; transform: rotate(-20deg);width: 12rem; height: 3rem;" class="wood"></span>
+            </div>
+            <script>
+                const animations = [];
+                document.currentScript.actions = function * () {
+                    const docStyle = getComputedStyle(document.documentElement);
+                    yield;
+                    animations.push(
+                        document.getElementById('log-left').animate({'transform': ['rotate(20deg)','rotate(80deg)']}, {duration: 1000, fill: 'forwards', easing: docStyle.getPropertyValue('--easeOutBack')}),
+                        document.getElementById('log-right').animate({'transform': ['rotate(-20deg)','rotate(-80deg)']}, {duration: 1000, fill: 'forwards', easing: docStyle.getPropertyValue('--easeOutBack')})
+                    );
+                    yield;
+                }
+                document.currentScript.teardown = function () {
+                    animations.splice(0).map(a => a.cancel());
+                }
+            </script>
+            <h1>lol</h1>
         </grid-slide>
         <grid-notes></grid-notes>
     </grid-slides-controller>

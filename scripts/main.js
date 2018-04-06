@@ -392,6 +392,9 @@ class GridSlidesController extends HTMLElementPlus {
 
 	prevSlide() {
 		const currentSlide = this.getCurrentSlide();
+		if (!currentSlide) {
+			return;
+		}
 		if (currentSlide.__dirty) {
 			currentSlide.reset();
 			return;

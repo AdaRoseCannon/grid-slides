@@ -215,15 +215,37 @@ GRIDSLIDES.registerSlideData('el-by-el',
 
 			out.action = (function * () {
 				yield;
+				let i = 0;
 				for (const el of children) {
-					if (el === children.slice(-1)[0]) return run(el); 
-					yield run(el);
+					i++;
+					const nextEl = children[i];
+					if (el.tagName === 'SCRIPT' && el.actions) {
+						yield * el.actions();
+						if (el.teardown) {
+							el.teardown();
+						}
+						continue;
+					}
+					if (!nextEl) {
+						return run(el); 
+					}
+					if (nextEl.tagName === 'SCRIPT' && nextEl.actions) {
+						// in the case of a script run and then jump straight into the script.
+						run(el);
+					} else {
+						yield run(el);
+					}
 				}
 			}).bind(this);
 		}
 
 		out.teardown = out.setup = function () {
 			if (!children) init.bind(this)();
+			for (const el of children) {
+				if (el.tagName === 'SCRIPT' && el.teardown) {
+					el.teardown();
+				}
+			}
 			this.innerHTML = '';
 			showFirstChild();
 		};
