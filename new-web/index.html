@@ -141,6 +141,7 @@
             color: yellow;
             font-size: 18em;
             left: 70%;
+            top: 0.5em;
             filter: grayscale(100%);
         }
 
@@ -153,14 +154,26 @@
             font-weight: bold;
             font-size: 5vw;
         }
+
+        .filler {
+            grid-column: 1/-1;
+            text-align: center;
+            width: auto;
+            height: auto;
+            line-height: 1;
+        }
+
+        fitty-text {
+            line-height: 0.8;
+        }
     </style>
     <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/edf84e6e/webcomponents-sd-ce.js"></script>
     <script src="../scripts/HTMLElementPlus.js"></script>
     <script src="../scripts/main.js"></script>
     <script src="../scripts/defaults.js"></script>
     <script src="../scripts/web-components.js"></script>
-    <!-- <script src="https://fitty-component.glitch.me/bundle.js"></script> -->
-    <script src="../scripts/fitty-component.min.js"></script>
+    <script src="https://fitty-component.glitch.me/bundle.js"></script>
+    <!-- <script src="../scripts/fitty-component.min.js"></script> -->
 </head>
 <body>
     <template id="custom-slide-template">
@@ -234,7 +247,8 @@
                 }
                 document.currentScript.actions = function * () {
                     this.style.background = '#3a1c71 linear-gradient(to bottom, #3a1c71, #d76d77, #ffaf7b) no-repeat';
-                    yield (async function () {
+                    yield;
+                    (async function () {
                         animate( $('log-left'),
                             {'transform': ['rotate(20deg)','rotate(80deg)']},
                             {easing: getRootVar('--easeOutBack'), duration: 500, fill: 'forwards'}
@@ -295,6 +309,8 @@
                         )
                     }.bind(this)());
 
+                    yield;
+
                     const text = $('text');
                     const props = {
                         transform: ['scale(0.8)', 'scale(1)'],
@@ -313,6 +329,40 @@
             </script>
         </grid-slide>
         <grid-notes></grid-notes>
+
+        <grid-slide>
+            <div class="type-art small" style="display: grid; grid-template: 1fr 1fr/1fr 1fr 1fr;grid-gap: calc(var(--padding) * 4); margin: calc(var(--padding) * 4);">
+                <fitty-text style="--vertical-align: center; font-weight: bold;">CSS</fitty-text>
+                <span style="border-radius: 3rem; grid-column-end: span 2; background: var(--color-yellow);"></span>
+                <span style="border-radius: 3rem; background: var(--color-red);"></span>
+                <fitty-text style="grid-column-end: span 2; --vertical-align: center; font-weight: bold;">Grid</fitty-text>
+            </div>
+        </grid-slide>
+
+        <grid-slide>
+            <fitty-text style="--vertical-align: center;">
+                <h1 class="hero" style="color: var(--color-light); font-family: 'Samsung One'; font-weight: 800;">&lt;<span style="color: var(--color-red)">web</span>-<span style="color: var(--color-yellow)">components</span>&gt;</h1>
+            </fitty-text>
+        </grid-slide>
+
+        <grid-slide>
+            <div class="type-art small" style="display: grid; grid-template: 0.8fr 0.3fr 1fr/10vw 1fr 1fr;grid-gap: calc(var(--padding) * 1); margin: calc(var(--padding) * 4);">
+                <fitty-text style="--vertical-align: center; font-weight: bold; writing-mode: vertical-lr; transform: rotate(180deg);--horizontal-align: left;">CSS</fitty-text>
+                <fitty-text style="grid-column-end: span 2; --vertical-align: center; font-weight: bold; --horizontal-align: left;">Grid</fitty-text>
+                <span class="filler" style="font-size:10vh;">♥</span>
+                <fitty-text style="--vertical-align: start; grid-column: 2/-1;">
+                    &lt;<span style="color: var(--color-red)">web</span>-<br /><span style="color: var(--color-yellow)">components</span>&gt;
+                </fitty-text>
+            </div>
+        </grid-slide>
+
+        <grid-slide>
+            <fitty-text class="type-art small hero">
+                <span style="color: var(--color-cyan); font-family: Samsung One; font-weight: 800;">CSS</span><span style="color: var(--color-yellow); font-size: 2em;">Custom</span><br />
+                <span style="font-family: Samsung One; font-weight: 800; color: var(--color-red);">Properties</span>
+            </fitty-text>
+        </grid-slide>
+
     </grid-slides-controller>
 </body>
 </html>
