@@ -40,7 +40,7 @@
 
         grid-slide {
             color: var(--color-light);
-            background: linear-gradient(to bottom left, var(--color-cyan), var(--color-cyan-dark));
+            background: linear-gradient(to bottom left, var(--color-cyan), var(--color-cyan-dark), var(--color-cyan-dark));
             flex-direction: column;
             font-size: 3rem;
             background-size: cover;
@@ -103,6 +103,7 @@
 
         #animation-demo-1 .wood {
             background-image: url(images/light-wood-texture.jpg);
+            border: 2px solid black;
         }
 
         #animation-demo-1 .domino {
@@ -122,7 +123,7 @@
             transform-origin: bottom right;
             border-radius: 0.5em;
             left: 100em;
-            top: 32em;
+            top: 58em;
         }
 
         #animation-demo-1 .button {
@@ -133,14 +134,24 @@
             transform-origin: bottom right;
             border-radius: 0.5em;
             left: 102em;
-            top: 30em;
+            top: 56em;
         }
 
         #animation-demo-1 #bulb {
             color: yellow;
             font-size: 18em;
-            left: calc(50% - 0.5em);
+            left: 70%;
             filter: grayscale(100%);
+        }
+
+        #animation-demo-1 #text > h1 {
+            opacity: 0;
+            color: white;
+            margin: auto;
+            width: auto;
+            text-align: center;
+            font-weight: bold;
+            font-size: 5vw;
         }
     </style>
     <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/edf84e6e/webcomponents-sd-ce.js"></script>
@@ -187,23 +198,30 @@
             <fitty-text class="hero type-art">
                 A <span style="color: var(--color-yellow);">Rube Goldberg</span><br /><span style="color: var(--color-yellow);">Machine</span><br /><span style="font-size: 1.5em; color: var(--color-cyan);margin-top: -0.333em; transform:translate(-0.1em, 0.1em);">&amp;</span>New <span style="color: var(--color-red);">Web</span> Technology
             </fitty-text>
-            <div id="animation-demo-1" style="position: relative; --door-hinge: 1; font-size: calc(0.85vw - 0.04rem);">
-                <span id="anim-ball"><span style="font-size: 12em;position: static;">⚽</span></span>
-                <span id="log-left" style="transform-origin: top left; top: 15em; width: 12em; height: 3em;" class="wood"></span>
-                <span id="log-right" style="transform-origin: top right; top: 15em; left: 15em; width: 12em; height: 3em;" class="wood"></span>
-                <span style="transform-origin: top left; top: 36em; left: 0em; width: 40em; height: 3em;transform: rotate(10deg);" class="wood"></span>
-                <span style="transform-origin: top left; top: 36em; left: 44em; width: 70em; height: 3em;" class="wood"></span>
-                <span class="domino" style="left: 43.5em;top: 31em;"></span>
-                <span class="domino" style="left: 47em;top: 31em;"></span>
-                <span class="domino" style="left: 51em;top: 31em;"></span>
-                <span class="domino" style="left: 55em;top: 31em;"></span>
-                <span class="domino" style="left: 59em;top: 31em;"></span>
-                <span class="domino" style="left: 63.25em;top: 24.75em; width: 4.5em; height: 11.25em;"></span>
-                <span class="domino" style="left: 70.75em;top: 19.125em; width: 6.75em; height: 16.875em;"></span>
-                <span class="domino" style="left: 80.1875em;top: 10.6875em; width: 10.125em; height: 25.3125em;"></span>
+            <div id="animation-demo-1" style="position: relative; --door-hinge: 1; font-size: calc(0.7vw - 0.08rem); transform-origin: center bottom;">
+                <span id="anim-ball" style="top: 26em; transform: translate(8em, 6em);"><span style="font-size: 12em; position: static;">⚽</span></span>
+                <span id="log-left" style="transform-origin: top left; transform: rotate(20deg); top: 41em; width: 12em; height: 3em;" class="wood"></span>
+                <span id="log-right" style="transform-origin: top right; transform: rotate(-20deg); top: 41em; left: 15em; width: 12em; height: 3em;" class="wood"></span>
+                <span style="transform-origin: top left; top: 62em; left: 0em; width: 40em; height: 3em;transform: rotate(10deg);" class="wood"></span>
+                <span style="transform-origin: top left; top: 62em; left: 44em; width: 70em; height: 3em;" class="wood"></span>
+                <span class="domino" style="left: 43.5em;top: 57em;"></span>
+                <span class="domino" style="left: 47em;top: 57em;"></span>
+                <span class="domino" style="left: 51em;top: 57em;"></span>
+                <span class="domino" style="left: 55em;top: 57em;"></span>
+                <span class="domino" style="left: 59em;top: 57em;"></span>
+                <span class="domino" style="left: 63.25em;top: 50.75em; width: 4.5em; height: 11.25em;"></span>
+                <span class="domino" style="left: 70.75em;top: 45.125em; width: 6.75em; height: 16.875em;"></span>
+                <span class="domino" style="left: 80.1875em;top: 36.6875em; width: 10.125em; height: 25.3125em;"></span>
                 <span class="remote"></span>
                 <span id="button" class="button"></span>
-                <span id="bulb">💡</span>
+                <span id="bulb">🚨</span>
+                <span id="rocket" style="left: 65%; top: -20em;"><span style="transform: rotate(-45deg); font-size: 20em; padding: 0.2em;">🚀</span></span>
+                <div id="text" style="display: grid;height: 100%;grid-template: 1fr 1fr/1fr 1fr;grid-gap: var(--padding); transform: scale(2) translateY(-125vh);">
+                    <h1>CSS Grid</h1>
+                    <h1>Web Animations</h1>
+                    <h1>Web Components</h1>
+                    <h1>CSS Custom Properties</h1>
+                </div>
             </div>
             <script>
                 const $ = sel => document.getElementById(sel);
@@ -215,7 +233,8 @@
                     return anim;
                 }
                 document.currentScript.actions = function * () {
-                    (async function () {
+                    this.style.background = '#3a1c71 linear-gradient(to bottom, #3a1c71, #d76d77, #ffaf7b) no-repeat';
+                    yield (async function () {
                         animate( $('log-left'),
                             {'transform': ['rotate(20deg)','rotate(80deg)']},
                             {easing: getRootVar('--easeOutBack'), duration: 500, fill: 'forwards'}
@@ -258,16 +277,37 @@
                             {'transform': ['translateY(0)', 'translateY(1.9em)']},
                             {easing: getRootVar('--easeInQuad'), duration: 300, fill: 'forwards'}
                         ).finished;
-                        animate($('bulb'),
-                            {filter: ['grayscale(100%)', 'grayscale(0%) drop-shadow(0px 0px 20px yellow)']},
+                        await animate($('bulb'),
+                            {filter: ['grayscale(100%)', 'sepia(100%) saturate(250%) hue-rotate(60deg) drop-shadow(0px 0px 50px lightgreen)']},
                             {easing: 'ease', duration: 300, fill: 'forwards'}
+                        ).finished;
+                        animate(this,
+                            {backgroundPosition: ['0 0', '0 100vh']},
+                            {easing: 'ease', duration: 1300, fill: 'forwards'}
                         )
-                    }());
-                    animations.forEach(a=>a.pause());
-                    yield;
-                    animations.forEach(a=>a.play());
+                        animate(this.firstChild,
+                            {transform: ['translateY(0)', 'translateY(100vh) scale(0.5)']},
+                            {easing: 'ease', duration: 1300, fill: 'forwards'}
+                        )
+                        animate($('rocket'),
+                            {transform: ['translateY(0)', 'scale(2) translateY(-30vh) rotate(-23deg) translateY(-80vh)']},
+                            {easing: 'ease', duration: 1300, fill: 'forwards'}
+                        )
+                    }.bind(this)());
+
+                    const text = $('text');
+                    const props = {
+                        transform: ['scale(0.8)', 'scale(1)'],
+                        opacity: [0, 1]
+                    };
+                    const details = {easing: getRootVar('--easeOutBack'), duration: 300, fill: 'forwards'};
+                    yield animate(text.children[0], props, details);
+                    yield animate(text.children[1], props, details);
+                    yield animate(text.children[2], props, details);
+                    animate(text.children[3], props, details);
                 }
                 document.currentScript.teardown = function () {
+                    this.style.background = '';
                     animations.splice(0).map(a => a.cancel());
                 }
             </script>

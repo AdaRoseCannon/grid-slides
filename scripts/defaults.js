@@ -220,10 +220,10 @@ GRIDSLIDES.registerSlideData('el-by-el',
 					i++;
 					const nextEl = children[i];
 					if (el.tagName === 'SCRIPT' && el.actions) {
-						yield * el.actions();
+						yield * el.actions.bind(this)();
 						if (nextEl) {
 							yield;
-							if (el.teardown) el.teardown();
+							if (el.teardown) el.teardown.bind(this)();
 						}
 						continue;
 					}
@@ -244,7 +244,7 @@ GRIDSLIDES.registerSlideData('el-by-el',
 			if (!children) init.bind(this)();
 			for (const el of children) {
 				if (el.tagName === 'SCRIPT' && el.teardown) {
-					el.teardown();
+					el.teardown.bind(this)();
 				}
 			}
 			this.innerHTML = '';
