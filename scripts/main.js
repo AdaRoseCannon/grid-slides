@@ -549,7 +549,7 @@ class GridSlide extends HTMLElementPlus {
 				if (!this.hasAttribute('teardown-pending')) this.teardown();
 				return;
 			}
-			if (!this.__isSetup) {
+			if (!this.__isSetup || this.__dirty) {
 				this.teardown();
 				this.setup();
 			}

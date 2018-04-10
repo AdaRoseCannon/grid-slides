@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css?family=Lily+Script+One');
+
+:root {
+    --color-dark: #474143;
+    --color-light: #FFFFFF;
+    --color-yellow: #FFC636;
+    --color-cyan: #00ADA9;
+    --color-cyan-dark: #107D7A;
+    --color-red: #FF6444;
+}
+
+html, body {
+    min-height: 100vh;
+    min-width: 100vw;
+    margin: 0;
+    font-family: 'Samsung One', Helvetica, Arial, sans-serif;
+    font-weight: 200;
+}
+
+h1 {
+    font-weight: 200;
+    color: black;
+}
+
+h2 {
+    font-size: 0.8em;
+    font-weight: 200;
+}
+
+grid-slide {
+    color: var(--color-light);
+    background: linear-gradient(to bottom left, var(--color-cyan), var(--color-cyan-dark), var(--color-cyan-dark));
+    flex-direction: column;
+    font-size: 3rem;
+    background-size: cover;
+    background-position: center center;
+}
+
+@media screen and (max-width: 100rem) {
+    grid-slides-controller {
+        --padding: 0.4rem;
+    }
+    grid-slide {
+        font-size:2rem;
+    }
+}
+
+@media screen and (max-width: 50rem) {
+    grid-slides-controller {
+        --padding: 0.2rem;
+    }
+    grid-slide {
+        font-size:1rem;
+    }
+}
+
+grid-slide code {
+    font-size: 0.8em;
+}
+
+.hero {
+    font-family: 'lily script one';
+    font-size: 3em;
+    text-align: center;
+    align-self: center;
+}
+
+body.fonts-ready fitty-text {
+    opacity: 1;
+}
+
+.type-art {
+    align-self: stretch;
+    line-height: 0.9;
+    --vertical-align: center;
+    grid-column: full;
+    margin: 0.4em 0;
+}
+
+.type-art.small {
+    grid-column: one-quarter/three-quarter;
+}
+
+.caption {
+    grid-area: 1/content-inner;
+    align-self: flex-end;
+    background: var(--color-dark);
+    margin: 0;
+}
+
+#animation-demo-1 span {
+    position: absolute;
+    top:0;
+    left: 0;
+}
+
+#animation-demo-1 .wood {
+    background-image: url(images/light-wood-texture.jpg);
+    border: 2px solid black;
+}
+
+#animation-demo-1 .domino {
+    background: var(--color-dark);
+    width: 2em;
+    height: 5em;
+    display: inline-block;
+    transform-origin: bottom right;
+    border-radius: 0.5em;
+}
+
+#animation-demo-1 .remote {
+    background: var(--color-dark);
+    width: 8em;
+    height: 4em;
+    display: inline-block;
+    transform-origin: bottom right;
+    border-radius: 0.5em;
+    left: 100em;
+    top: 58em;
+}
+
+#animation-demo-1 .button {
+    background: var(--color-red);
+    width: 4em;
+    height: 3em;
+    display: inline-block;
+    transform-origin: bottom right;
+    border-radius: 0.5em;
+    left: 102em;
+    top: 56em;
+}
+
+#animation-demo-1 #bulb {
+    color: yellow;
+    font-size: 18em;
+    left: 70%;
+    top: 0.5em;
+    filter: grayscale(100%);
+}
+
+#animation-demo-1 #text > h1 {
+    opacity: 0;
+    color: white;
+    margin: auto;
+    width: auto;
+    text-align: center;
+    font-weight: bold;
+    font-size: 5vw;
+}
+
+.filler {
+    grid-column: 1/-1;
+    text-align: center;
+    width: auto;
+    height: auto;
+    line-height: 1;
+}
+
+fitty-text {
+    line-height: 0.8;
+}
+
+grid-slide {
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
