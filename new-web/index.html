@@ -50,7 +50,7 @@
 
     <grid-slides-controller>
         <grid-slide el-by-el>
-            <fitty-text class="hero type-art">
+            <fitty-text class="hero type-art" style="margin: 0 0.5em;">
                 A <span style="color: var(--color-yellow);">Rube Goldberg</span><br /><span style="color: var(--color-yellow);">Machine</span><br /><span style="font-size: 1.5em; color: var(--color-cyan);margin-top: -0.333em; transform:translate(-0.1em, 0.1em);">&amp;</span>New <span style="color: var(--color-red);">Web</span> Technology
             </fitty-text>
             <div id="animation-demo-1" style="position: relative; --door-hinge: 1; font-size: calc(0.7vw - 0.08rem); transform-origin: center bottom;">
@@ -172,29 +172,181 @@
         </grid-slide>
 
         <!-- CSS Grid -->
-        <grid-slide>
+        <grid-slide el-by-el>
             <div class="type-art small" style="display: grid; grid-template: 1fr 1fr/1fr 1fr 1fr;grid-gap: calc(var(--padding) * 4); margin: calc(var(--padding) * 4);">
                 <fitty-text style="--vertical-align: center; font-weight: bold;">CSS</fitty-text>
                 <span style="border-radius: 3rem; grid-column-end: span 2; background: var(--color-yellow);"></span>
                 <span style="border-radius: 3rem; background: var(--color-red);"></span>
                 <fitty-text style="grid-column-end: span 2; --vertical-align: center; font-weight: bold;">Grid</fitty-text>
             </div>
+            <fitty-text style="--vertical-align: center;"><span style="line-height: 1.5;">
+                You <span style="color: var(--color-red); font-weight: 400;">don’t need a framework</span> to use CSS Grid. <br />
+                <span style="color: var(--color-yellow)">CSS Grid <i>is</i> a framework.</span><br />
+                <div style="font-size: 0.8em; text-align: right; margin-top: 0.5em;">
+                    &mdash; Rachel Andrew (@rachelandrew)
+                </div>
+            </span></fitty-text>
+            <h1 class="hero" style="color: var(--color-white); font-family: Samsung One;">This page is intentionally left blank</h1>
+            <html-encode><template>
+                <section>
+                    <h1>title</h1>
+                    <div style="display:flex">
+                        <div class="some-widget"></div>
+                        <div class="some-widget"></div>
+                    </div>
+                    <div style="display:flex">
+                        <div class="some-widget"></div>
+                        <div class="some-widget"></div>
+                    </div>
+                </section>
+            </template></html-encode>
+            <html-encode><template>
+                <section>
+                    <h1>title</h1>
+                    <div class="some-widget"></div>
+                    <div class="some-widget"></div>
+                    <div class="some-widget"></div>
+                    <div class="some-widget"></div>
+                </section>
+            </template></html-encode>
+            <fitty-text style="--vertical-align: center; grid-column: one-quarter/three-quarter;"><span style="line-height: 1.5;">
+                <span style="color:var(--color-yellow);">Flexbox</span> works from the <span style="color:var(--color-yellow);">content out</span>&hellip;<br />
+                &emsp;&emsp; <span style="color:var(--color-red);">Grid</span> works from the <span style="color:var(--color-red);">layout in</span>. 
+                <div style="font-size: 0.8em; text-align: right; margin-top: 0.5em;">
+                    &mdash; Rachel Andrew (@rachelandrew)
+                </div>
+            </span></fitty-text>
         </grid-slide>
+        <grid-notes>
+            <ul>
+                <li>If nothing else it saves you 250k to download a grid library</li>
+                <li>Allows you to use space intentionally, make use of white space.</li>
+                <li>Remove Layout elements.</li>
+            </ul>
+        </grid-notes>
 
         <!-- web animation -->
-        <grid-slide>
-            <fitty-text class="type-art small hero"><span style="color: var(--color-cyan); font-family: Samsung One; font-weight: 800; writing-mode: vertical-rl; transform: rotate(200deg) translateX(-0.3em);">Web</span><span style="font-family: Samsung One; font-weight: 800; color: var(--color-red);">Animations</span></fitty-text>
+        <grid-slide el-by-el>
+            <fitty-text class="type-art small hero">
+                <span style="color: var(--color-cyan); font-family: Samsung One; font-weight: 800; writing-mode: vertical-rl; transform: rotate(200deg) translateX(-0.3em);">Web</span><span style="font-family: Samsung One; font-weight: 800; color: var(--color-red);">Animations</span>
+            </fitty-text>
+            <div style="padding-right: 6em; margin: 1em 1em 0 1em; position: relative;">
+                <html-encode id='anim-html-encode' style="font-size: 1.5em;">
+                    <template id='anim-template'><script></script></template>
+                </html-encode>
+                <span id="anim-ball-demo" style="position: absolute; bottom: 0; right: 0;"><span style="font-size: 6em; position: static;">⚽</span></span>
+            </div>
+            <script>
+                document.currentScript.actions = function * () {
+                    const templateScript = document.getElementById('anim-template').content.firstElementChild;
+                    const ball = document.getElementById('anim-ball-demo');
+                    const encoder = document.getElementById('anim-html-encode');
+                    const anim = a => [
+                        { transform: 'translateY(0)' },
+                        { transform: `translateY(${a})` },
+                    ];
+                    templateScript.innerHTML = `
+                        ball.animate(
+                            KeyFrames,
+                            KeyFrameOptions
+                        );
+                    `;
+                    encoder.update();
+                    yield;
+                    templateScript.innerHTML = `
+                        ball.animate([
+                            { transform: 'translateY(0)' },
+                            { transform: 'translateY(-80vh)' },
+                        ], {
+                            duration: 1000
+                        });
+
+                        // The same
+                        ball.animate({
+                            transform: [
+                                'translateY(0)',
+                                'translateY(-80vh)'
+                            ]
+                        }, {
+                            duration: 1000
+                        });`;
+                    encoder.update();
+                    yield;
+                    ball.animate(anim('-80vh'), {
+                        duration: 1000
+                    });
+                    yield;
+                    templateScript.innerHTML = `
+                        ball.animate([
+                            { transform: 'translateY(0)' },
+                            { transform: 'translateY(-80vh)' },
+                        ], {
+                            duration: 1000,
+                            iterations: 2
+                        });`;
+                    encoder.update();
+                    yield;
+                    ball.animate(anim('-80vh'), {
+                        duration: 1000,
+                        iterations: 2
+                    });
+                    yield;
+                    templateScript.innerHTML = `
+                        ball.animate([
+                            { transform: 'translateY(0)' },
+                            { transform: 'translateY(-80vh)' },
+                        ], {
+                            duration: 1000,
+                            iterations: 2,
+                            direction: 'alternate'
+                        });`;
+                    encoder.update();
+                    yield;
+                    const a = ball.animate(anim('-80vh'), {
+                        duration: 1000,
+                        iterations: 2,
+                        direction: 'alternate'
+                    });
+                    yield;
+                    templateScript.innerHTML = `
+                        ball.animate([
+                            { transform: 'translateY(0)' },
+                            { transform: 'translateY(-80vh)' },
+                        ], {
+                            duration: 1000,
+                            iterations: 2,
+                            direction: 'alternate',
+                            easing: 'ease-out'
+                        });`;
+                    encoder.update();
+                    yield;
+                    ball.animate(anim('-80vh'), {
+                        duration: 1000,
+                        iterations: 2,
+                        direction: 'alternate',
+                        easing: 'ease-out'
+                    });
+                }
+            </script>
         </grid-slide>
+        <grid-notes>
+            <ul>
+                <li>Another super powered framework built into the browser!</li>
+                <li>KeyFrames, KeyFrameOptions</li>
+                <li>KeyFrameOptions provides lots of handy functionality.</li>
+            </ul>
+        </grid-notes>
 
         <!-- Web Components -->
-        <grid-slide>
+        <grid-slide el-by-el>
             <fitty-text style="--vertical-align: center;">
                 <h1 class="hero" style="color: var(--color-light); font-family: 'Samsung One'; font-weight: 800;">&lt;<span style="color: var(--color-red)">web</span>-<span style="color: var(--color-yellow)">components</span>&gt;</h1>
             </fitty-text>
+            <h1>Lol</h1>
         </grid-slide>
 
         <!-- CSS Custom Properties -->
-        <grid-slide el-by-el>
+        <grid-slide>
             <fitty-text class="type-art small hero">
                 <span style="color: var(--color-cyan); font-family: Samsung One; font-weight: 800;">CSS</span><span style="color: var(--color-yellow); font-size: 2em;">Custom</span><br />
                 <span style="font-family: Samsung One; font-weight: 800; color: var(--color-red);">Properties</span>

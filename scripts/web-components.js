@@ -40,51 +40,58 @@ class HTMLEncode extends HTMLElementPlus {
 		<slot></slot><pre><code ref="code"></code></pre>`;
 	}
 
-	allAttributesChangedCallback(data) {
+	update() {
+		requestAnimationFrame(function updateHTML(count) {
+			if (count === undefined) count = 0;
+			count++;
+			if (count === 10) return;
+			let script = this.querySelector('script,template');
+			let detectedLang = 'html';
+			if (!script) {
+				return requestAnimationFrame(() => updateHTML.bind(this)(count));
+			}
+			if (script.tagName === 'TEMPLATE' && script.innerHTML === '') {
+				return requestAnimationFrame(() => updateHTML.bind(this)(count));
+			}
+			if (script.tagName === 'TEMPLATE' && script.content.firstElementChild.tagName === 'SCRIPT') {
+				script = script.content.firstElementChild;
+				detectedLang = script.getAttribute('type') || 'javascript';
+			}
+			if (script.tagName === 'TEMPLATE' && script.content.firstElementChild.tagName === 'STYLE') {
+				script = script.content.firstElementChild;
+				detectedLang = 'css';
+			}
+			const a = script.innerHTML;
+			const ws = a.split('\n');
+			const firstLine = ws[1] || ws[0];
+			let len = (firstLine.match(/\s+/) || [''])[0].length;
+			if (ws.slice(1,-1).length) ws.slice(1,-1).reduce((a,b) => {
+				if (a === '' || b === '') return a;
+				len = similarStart(a,b,len);
+				return (a || '').slice(0, len);
+			});
+			if (ws[0].match(/^\s*$/)) {
+				ws.splice(0,1);
+			}
+			const str = ws.map(a => a.slice(len)).join('\n');
+			if (window.hljs) {
+				this.refs.code.innerHTML = window.hljs.highlight(this.lang || detectedLang, str).value;
+			} else {
+				this.refs.code.textContent = str;
+			}
+		}.bind(this));
+	}
+
+	allAttributesChangedCallback() {
 		if (!this.shadowRoot) {
 			this.attachShadow({mode: 'open'});
 			this.shadowRoot.appendChild(this.templateContent);
-			requestAnimationFrame(function updateHTML(count) {
-				if (count === undefined) count = 0;
-				count++;
-				if (count === 10) return;
-				let script = this.querySelector('script,template');
-				if (!script) {
-					return requestAnimationFrame(() => updateHTML.bind(this)(count));
-				}
-				if (script.tagName === 'TEMPLATE' && script.innerHTML === '') {
-					return requestAnimationFrame(() => updateHTML.bind(this)(count));
-				}
-				if (script.tagName === 'TEMPLATE' && script.content.firstElementChild.tagName === 'SCRIPT') {
-					script = script.content.firstElementChild;
-				}
-				if (script.tagName === 'TEMPLATE' && script.content.firstElementChild.tagName === 'STYLE') {
-					script = script.content.firstElementChild;
-				}
-				const a = script.innerHTML;
-				const ws = a.split('\n');
-				const firstLine = ws[1] || ws[0];
-				let len = (firstLine.match(/\s+/) || [''])[0].length;
-				if (ws.slice(1,-1).length) ws.slice(1,-1).reduce((a,b) => {
-					if (a === '' || b === '') return a;
-					len = similarStart(a,b,len);
-					return (a || '').slice(0, len);
-				});
-				if (ws[0].match(/^\s*$/)) {
-					ws.splice(0,1);
-				}
-				const str = ws.map(a => a.slice(len)).join('\n');
-				if (window.hljs) {
-					this.refs.code.innerHTML = window.hljs.highlight(data.lang, str).value;
-				} else {
-					this.refs.code.textContent = str;
-				}
-			}.bind(this));
+			this.update();
 		}
 	}
 
 	static defaultAttributeValue (name) {
-		if (name === 'lang') return 'html';
+		if (name === 'lang') return null;
 	}
 
 	static get observedAttributes() {
