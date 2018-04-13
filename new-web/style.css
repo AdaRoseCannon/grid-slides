@@ -169,3 +169,31 @@ html-encode {
     font-size: 2em;
     margin-top: calc(var(--padding) * 2);
 }
+
+.jail {
+    font-size: 1em;
+    line-height: 1em;
+    position: relative;
+}
+
+.jail:after {
+    content: '🔒';
+    font-size: 5em;
+    opacity: 0.8;
+    position: absolute;
+    left:50%;
+    top:50%;
+    transform: translate(-50%, -50%);
+}
+
+.noodle {
+    display: inline-block;
+    position: absolute;
+    right: 40%;
+    top: 20%;
+    font-weight: 800;
+    font-family: monospace;
+    font-size: 4rem;
+    color: transparent;
+    text-shadow: 0 0 0.2rem yellow, 0 0 0.1rem yellow, 0 0 red;
+}

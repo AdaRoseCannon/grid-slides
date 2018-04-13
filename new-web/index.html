@@ -342,7 +342,38 @@
             <fitty-text style="--vertical-align: center;">
                 <h1 class="hero" style="color: var(--color-light); font-family: 'Samsung One'; font-weight: 800;">&lt;<span style="color: var(--color-red)">web</span>-<span style="color: var(--color-yellow)">components</span>&gt;</h1>
             </fitty-text>
-            <h1>Lol</h1>
+            <div style="display: flex; flex-direction: column;">
+                <html-encode style="width: -moz-min-content; width: min-content;"><template>
+                    <my-car style="homer"></my-car>
+                </template></html-encode>
+                <img src="../components/images/mycar.jpg" alt="homers terrible car from the simpsons" style="flex-grow: 1; object-fit: contain;"/>
+            </div>
+            <fitty-text style="font-size: 2em; text-shadow: -0.15em 0.15em yellow, 0em 0.15em magenta, 0.15em -0.15em cyan; font-weight: 800; mix-blend-mode: exclusion; background-color: var(--color-light); --vertical-align: center; color: var(--color-dark); grid-column: full;">
+                Shadow DOM
+            </fitty-text>
+            <section>
+                <h1>Scoped css</h1>
+                <html-encode class="jail"><template><style>
+                    div {
+                        background-color: blue;
+                        font-family: papyrus;
+                    }
+                    span {
+                        font-family: comic-sans;
+                        color: pink;
+                    }
+                </style></template></html-encode>
+            </section>
+            <section>
+                <h1>JS Callbacks</h1>
+                <img src="../components/images/shoe-phone.jpg">
+            </section>
+            <section style="background: url('../components/images/soup.jpg'); background-repeat: no-repeat; background-size: cover; background-position: 70% top;">
+                <span class="noodle" style="transform: translate(0, 45vh) rotate(10deg) ;">&lt;div&gt;</span>
+                <span class="noodle" style="transform: translate(20vw, 5vh) rotate(-10deg) ;">&lt;div&gt;</span>
+                <span class="noodle" style="transform: translate(-5vw, 5vh) rotate(40deg) ;">&lt;div&gt;</span>
+                <span class="noodle" style="transform: translate(20vw, 25vh) rotate(-30deg) ;">&lt;div&gt;</span>
+            </section>
         </grid-slide>
 
         <!-- CSS Custom Properties -->
