@@ -419,6 +419,7 @@
             <p>Custom properties bring variables to CSS by letting you define your own properties.</p>
             <p>They are a small part of the large houdini spec which is steadily coming to browsers.</p>
             <p>Make CSS more programatic.</p>
+            <p>Explicitly label how stuff works, i.e. --padding </p>
             <p>They can be accessed using the var() method.</p>
             <p>And even used in calc() methods.</p>
             <p>Most importantly is that they work in the cascade too.</p>
@@ -437,7 +438,10 @@
         </grid-slide>
         <grid-notes>
             <ul>
-                <li>Custom properties in the cascade</li>
+				<li>Custom properties in the cascade</li>
+				<li>Custom properties pierce the shadow DOM</li>
+				<li>Set values on --host to define default values</li>
+                <li>These can be overridden using the stylesheet or on the element directly</li>
             </ul>
         </grid-notes>
 
@@ -452,6 +456,14 @@
                 </fitty-text>
             </div>
         </grid-slide>
+        <grid-notes>
+            <ul>
+				<li>CSS Grid removes layout cruft</li>
+				<li>Web Components remove visual element cruft</li>
+				<li>Syntactic and Readable HTML</li>
+				<li>All elements have syntactic meaning, describes behaviour using the HTML</li>
+            </ul>
+        </grid-notes>
 
         <!-- Grid and Custom Properties-->
         <grid-slide>
@@ -464,6 +476,13 @@
                 Properties
             </fitty-text>
         </grid-slide>
+        <grid-notes>
+            <ul>
+				<li>Clarify Responsive Design</li>
+				<li>i.e. shrink the gutters</li>
+				<li>Place elements into a different column/row by bulk</li>
+            </ul>
+        </grid-notes>
 
         <!-- Custom Properties and Web Animations -->
         <grid-slide>
