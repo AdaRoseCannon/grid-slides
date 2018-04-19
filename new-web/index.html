@@ -360,6 +360,17 @@
                     });
                 }
             </script>
+            <html-encode style="font-size: 1.2em;"><template><script>
+                const animPromise = (async function () {
+                    await el.animate(keyframes1, options).finished;
+                    await el.animate(keyframes2, options).finished;
+                    await el.animate(keyframes3, options).finished;
+                }());
+
+                animPromise.then(function () {
+                    /* Do something */
+                });
+            </script></template></html-encode>
         </grid-slide>
         <grid-notes>
             <ul>
@@ -632,7 +643,7 @@
         </grid-notes>
 
         <!-- Grid and Custom Properties-->
-        <grid-slide>
+        <grid-slide el-by-el style="font-size: 2em;">
             <fitty-text class="type-art small">
                 <span style="color:var(--color-red)">
                     <span style="writing-mode: vertical-rl; transform:rotate(180deg); font-size: 0.5em;">CSS</span>Grid
@@ -641,6 +652,24 @@
                 <span style="color:var(--color-yellow);font-family: lily script one;">Custom</span><br />
                 Properties
             </fitty-text>
+            <html-encode><template><style>
+                :root {
+                    --padding: 15px;
+                    --grid-columns: 5;
+                }
+
+                @media only screen and (max-width: 600px) {
+                    :root {
+                        --padding: 20px;
+                        --grid-columns: 1;
+                    }
+                }
+
+                .my-grid {
+                    display: grid;
+                    grid-template-columns: repeat(var(--grid-columns), 1fr);
+                }
+            </style></template></html-encode>
         </grid-slide>
         <grid-notes>
             <ul>
@@ -651,12 +680,79 @@
         </grid-notes>
 
         <!-- Custom Properties and Web Animations -->
-        <grid-slide>
+        <grid-slide el-by-el>
             <fitty-text class="type-art small">
                 <span style="color:var(--color-yellow);font-family: lily script one;">Custom</span><br />Properties<br />
                 <span class="filler" style="width: 4em;">+</span><br />
                 <span style="margin-top: -30%;"><span style="color: var(--color-cyan); font-family: Samsung One; font-weight: 800; writing-mode: vertical-rl; transform: rotate(200deg) translateX(-0.3em);">Web</span><span style="font-family: Samsung One; font-weight: 800; color: var(--color-red);">Animations</span></span>
             </fitty-text>
+            <html-encode style="font-size: 1em;"><template>
+                <style>
+                    :root {
+                        /* Cubic */
+                        --easeInCubic    : cubic-bezier(0.550, 0.055, 0.675, 0.190);
+                        --easeOutCubic   : cubic-bezier(0.215, 0.610, 0.355, 1.000);
+                        --easeInOutCubic : cubic-bezier(0.645, 0.045, 0.355, 1.000);
+
+                        /* Circ */
+                        --easeInCirc     : cubic-bezier(0.600, 0.040, 0.980, 0.335);
+                        --easeOutCirc    : cubic-bezier(0.075, 0.820, 0.165, 1.000);
+                        --easeInOutCirc  : cubic-bezier(0.785, 0.135, 0.150, 0.860);
+
+                        /* Expo */
+                        --easeInExpo     : cubic-bezier(0.950, 0.050, 0.795, 0.035);
+                        --easeOutExpo    : cubic-bezier(0.190, 1.000, 0.220, 1.000);
+                        --easeInOutExpo  : cubic-bezier(1.000, 0.000, 0.000, 1.000);
+
+                        /* etc */
+                    }
+                </style>
+            </template></html-encode>
+            <html-encode style="font-size: 1em;"><template>
+                <script>
+                    const docStyles = getComputedStyle(document.documentElement);
+
+                    el.animate(
+                        {'transform': ['rotate(-20deg)','rotate(-80deg)']},
+                        {
+                            easing: docStyles.getPropertyValue('--easeInOutCubic'),
+                            duration: 500,
+                            fill: 'forwards'
+                        }
+                    );
+                </script>
+            </template></html-encode>
+            <html-encode style="font-size: 1em;" lang="html"><template>
+                <style>
+                    :root {
+                        --durFactor: 1; /* Default */
+                    }
+
+                    body.slow-anim {
+                        --durFactor: 2; /* Slow */
+                    }
+                    
+                    @media screen and (prefers-reduced-motion: reduce) {
+                        :root {
+                            --durFactor: 0; /* Disable animations */
+                        }
+                    }
+                </style>
+            </template></html-encode>
+            <html-encode style="font-size: 1em;" lang="html"><template>
+                <script>
+                    const docStyles = getComputedStyle(document.documentElement);
+
+                    el.animate(
+                        {'transform': ['rotate(-20deg)','rotate(-80deg)']},
+                        {
+                            easing: docStyles.getPropertyValue('--easeInOutCubic'),
+                            duration: 500 * Number(docStyles.getPropertyValue('--durFactor')),
+                            fill: 'forwards'
+                        }
+                    );
+                </script>
+            </template></html-encode>
         </grid-slide>
         <grid-notes>
             <ul>
