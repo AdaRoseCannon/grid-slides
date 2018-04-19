@@ -753,6 +753,30 @@
                     );
                 </script>
             </template></html-encode>
+            <html-encode style="font-size: 1em;" lang="html"><template>
+                <script>
+                    const docStyles = getComputedStyle(document.documentElement);
+
+                    el.animate(
+                        {
+                            '--x-coord': ['10px','200px'],
+                            '--y-coord': ['10px','200px']
+                        },
+                        options
+                    );
+                </script>
+            </template></html-encode>
+            <html-encode style="font-size: 1em;" lang="html"><template>
+                <script>
+                    // Not widely available yet.
+                    // Part of TypedOM of Houdini
+                    CSS.registerProperty({
+                        name: "--x-coord",
+                        syntax: "<length>",
+                        initialValue: "0"
+                    });
+                </script>
+            </template></html-encode>
         </grid-slide>
         <grid-notes>
             <ul>
