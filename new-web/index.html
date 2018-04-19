@@ -7,6 +7,7 @@
     <link href="../css/style.css" rel="stylesheet">
     <link href="./style.css" rel="stylesheet">
     <link href="https://samsunginter.net/fonts/SamsungOne/fonts.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai.min.css" rel="stylesheet" >
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
 
     <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/edf84e6e/webcomponents-sd-ce.js"></script>
@@ -375,7 +376,7 @@
             </fitty-text>
             <div style="display: flex; flex-direction: column;">
                 <html-encode style="width: -moz-min-content; width: min-content;"><template>
-                    <my-car style="homer"></my-car>
+                    <my-car class="homer"></my-car>
                 </template></html-encode>
                 <img src="../components/images/mycar.jpg" alt="homers terrible car from the simpsons" style="flex-grow: 1; object-fit: contain;"/>
             </div>
@@ -413,7 +414,33 @@
                 <span style="color: var(--color-cyan); font-family: Samsung One; font-weight: 800;">CSS</span><span style="color: var(--color-yellow); font-size: 2em;">Custom</span><br />
                 <span style="font-family: Samsung One; font-weight: 800; color: var(--color-red);">Properties</span>
             </fitty-text>
-            <h1>custom properties are awesome</h1>
+            <html-encode><template><style>
+                :root {
+                    --color-cyan: #00ADA9;
+                }
+                p {
+                    background: var(--color-cyan);
+                }
+            </style></template></html-encode>
+            <html-encode><template><style>
+                :root {
+                    --padding: 5px;
+                }
+                p {
+                    background: calc(var(--padding) * 5);
+                }
+            </style></template></html-encode>
+            <html-encode><template><style>
+                :root {
+                    --padding: 5px;
+                }
+                main {
+                    --padding: 3px;
+                }
+                p {
+                    background: calc(var(--padding) * 5);
+                }
+            </style></template></html-encode>
         </grid-slide>
         <grid-notes>
             <p>Custom properties bring variables to CSS by letting you define your own properties.</p>
@@ -427,7 +454,7 @@
         </grid-notes>
 
         <!-- Custom Properties and Web Components -->
-        <grid-slide>
+        <grid-slide el-by-el>
             <fitty-text class="type-art" style="font-size: 2em; line-height: 1.2;--horizontal-align: left; margin: 0 1em;">
                 <span style="color: var(--color-white); font-family: 'Samsung One'; font-weight: 400;">&lt;<span style="color: var(--color-red); font-weight: 800;">web-components</span>
                 <span style="font-size: 5em; line-height: 0.2em; transform: translateY(0.4em); display: inline-block; mix-blend-mode: luminosity; color: var(--color-cyan); opacity: 0.8;">&amp;</span>
@@ -435,6 +462,76 @@
                 <span style="z-index: 100; position: relative;">&emsp;&emsp;style=&quot;<span style="color: var(--color-yellow); font-weight: 800;">--custom-properties</span>:
                 🦄;&quot; &gt;</span></span>
             </fitty-text>
+            <html-encode lang="html" style="font-size: 1em;"><template>
+                <style>
+                    :root {
+                        --my-var: 5px;
+                    }
+                </style>
+
+                <custom-element>
+                    <!-- (in shadow DOM) -->
+                    <style>
+                        :host {
+                            margin: var(--my-var);
+                        }
+                    </style>
+                </custom-element>
+            </template></html-encode>
+            <html-encode lang="html" style="font-size: 1em;"><template>
+                <style>
+                    :root {
+                        --my-var: 5px;
+                    }
+                </style>
+
+                <custom-element>
+                    <!-- (in shadow DOM) -->
+                    <style>
+                        :host {
+                            --my-var: 10px;
+                            margin: var(--my-var);
+                        }
+                    </style>
+                </custom-element>
+            </template></html-encode>
+            <html-encode lang="html" style="font-size: 1em;"><template>
+                <style>
+                    :root {
+                        --my-var: 5px;
+                    }
+                </style>
+
+                <custom-element style="--my-var: 20px;">
+                    <!-- (in shadow DOM) -->
+                    <style>
+                        :host {
+                            --my-var: 10px;
+                            margin: var(--my-var);
+                        }
+                    </style>
+                </custom-element>
+            </template></html-encode>
+            <html-encode lang="html" style="font-size: 1em;"><template>
+                <style>
+                    :root {
+                        --my-var: 5px;
+                    }
+                    custom-element {
+                        --my-var: 20px;
+                    }
+                </style>
+
+                <custom-element>
+                    <!-- (in shadow DOM) -->
+                    <style>
+                        :host {
+                            --my-var: 10px;
+                            margin: var(--my-var);
+                        }
+                    </style>
+                </custom-element>
+            </template></html-encode>
         </grid-slide>
         <grid-notes>
             <ul>
@@ -446,7 +543,7 @@
         </grid-notes>
 
         <!-- Components and Grid -->
-        <grid-slide>
+        <grid-slide el-by-el>
             <div class="type-art small" style="display: grid; grid-template: 0.8fr 0.3fr 1fr/10vw 1fr 1fr;grid-gap: calc(var(--padding) * 1); margin: calc(var(--padding) * 4);">
                 <fitty-text style="--vertical-align: center; font-weight: bold; writing-mode: vertical-lr; transform: rotate(180deg);--horizontal-align: left;">CSS</fitty-text>
                 <fitty-text style="grid-column-end: span 2; --vertical-align: center; font-weight: bold; --horizontal-align: left;">Grid</fitty-text>
@@ -455,6 +552,75 @@
                     &lt;<span style="color: var(--color-red)">web</span>-<br /><span style="color: var(--color-yellow)">components</span>&gt;
                 </fitty-text>
             </div>
+            <pre style="background-color: #333; text-align: left; font-size: 1.2em; padding: 0 1em 1em 1em; margin: calc(var(--padding) * 2) 0 0 0;"><code ref="code" class="style-scope html-encode">
+<span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">div</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"head"</span>&gt;</span>
+    <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">header</span>&gt;</span>
+        <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">h1</span>&gt;</span>My thing<span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">h1</span>&gt;</span>
+    <span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">header</span>&gt;</span>
+<span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">div</span>&gt;</span>
+<span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">div</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"left-column"</span>&gt;</span>
+    <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">div</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"widget"</span>&gt;</span>
+        <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">div</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"widget-description"</span>&gt;</span>
+            <span><span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">p</span>&gt;</span>lorem ipsum<span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">p</span>&gt;</span></span>
+        <span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">div</span>&gt;</span>
+        <span><span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">button</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"widget-button"</span>&gt;</span>lol<span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">button</span>&gt;</span></span>
+    <span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">div</span>&gt;</span>
+<span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">div</span>&gt;</span>
+<span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">div</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"right-column"</span>&gt;</span>
+    <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">main</span>&gt;</span>
+        <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">p</span>&gt;</span>Hello world<span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">p</span>&gt;</span>
+    <span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">main</span>&gt;</span>
+<span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">div</span>&gt;</span>
+            </code></pre>
+            <pre style="background-color: #333; text-align: left; font-size: 1.2em; padding: 0 1em 1em 1em; margin: calc(var(--padding) * 2) 0 0 0;"><code ref="code" class="style-scope html-encode">
+<span class="hljs-tag style-scope html-encode" style="text-decoration: line-through;">&lt;<span class="hljs-name style-scope html-encode">div</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"head"</span>&gt;</span>
+    <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">header</span>&gt;</span>
+        <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">h1</span>&gt;</span>My thing<span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">h1</span>&gt;</span>
+    <span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">header</span>&gt;</span>
+<span class="hljs-tag style-scope html-encode" style="text-decoration: line-through;">&lt;/<span class="hljs-name style-scope html-encode">div</span>&gt;</span>
+<span class="hljs-tag style-scope html-encode" style="text-decoration: line-through;">&lt;<span class="hljs-name style-scope html-encode">div</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"left-column"</span>&gt;</span>
+    <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">div</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"widget"</span>&gt;</span>
+        <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">div</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"widget-description"</span>&gt;</span>
+            <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">p</span>&gt;</span>lorem ipsum<span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">p</span>&gt;</span>
+        <span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">div</span>&gt;</span>
+        <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">button</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"widget-button"</span>&gt;</span>lol<span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">button</span>&gt;</span>
+    <span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">div</span>&gt;</span>
+<span class="hljs-tag style-scope html-encode" style="text-decoration: line-through;">&lt;/<span class="hljs-name style-scope html-encode">div</span>&gt;</span>
+<span class="hljs-tag style-scope html-encode" style="text-decoration: line-through;">&lt;<span class="hljs-name style-scope html-encode">div</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"right-column"</span>&gt;</span>
+    <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">main</span>&gt;</span>
+        <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">p</span>&gt;</span>Hello world<span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">p</span>&gt;</span>
+    <span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">main</span>&gt;</span>
+<span class="hljs-tag style-scope html-encode" style="text-decoration: line-through;">&lt;/<span class="hljs-name style-scope html-encode">div</span>&gt;</span>
+            </code></pre>
+            <pre style="background-color: #333; text-align: left; font-size: 1.2em; padding: 0 1em 1em 1em; margin: calc(var(--padding) * 2) 0 0 0;"><code ref="code" class="style-scope html-encode">
+<span class="hljs-tag style-scope html-encode" style="text-decoration: line-through;">&lt;<span class="hljs-name style-scope html-encode">div</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"head"</span>&gt;</span>
+    <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">header</span>&gt;</span>
+        <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">h1</span>&gt;</span>My thing<span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">h1</span>&gt;</span>
+    <span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">header</span>&gt;</span>
+<span class="hljs-tag style-scope html-encode" style="text-decoration: line-through;">&lt;/<span class="hljs-name style-scope html-encode">div</span>&gt;</span>
+<span class="hljs-tag style-scope html-encode" style="text-decoration: line-through;">&lt;<span class="hljs-name style-scope html-encode">div</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"left-column"</span>&gt;</span>
+    <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">div</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"widget"</span>&gt;</span>
+        <span class="hljs-tag style-scope html-encode" style="text-decoration: line-through;">&lt;<span class="hljs-name style-scope html-encode">div</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"widget-description"</span>&gt;</span>
+            <span style="text-decoration: line-through;"><span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">p</span>&gt;</span>lorem ipsum<span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">p</span>&gt;</span></span>
+        <span class="hljs-tag style-scope html-encode" style="text-decoration: line-through;">&lt;/<span class="hljs-name style-scope html-encode">div</span>&gt;</span>
+        <span style="text-decoration: line-through;"><span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">button</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"widget-button"</span>&gt;</span>lol<span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">button</span>&gt;</span></span>
+    <span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">div</span>&gt;</span>
+<span class="hljs-tag style-scope html-encode" style="text-decoration: line-through;">&lt;/<span class="hljs-name style-scope html-encode">div</span>&gt;</span>
+<span class="hljs-tag style-scope html-encode" style="text-decoration: line-through;">&lt;<span class="hljs-name style-scope html-encode">div</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"right-column"</span>&gt;</span>
+    <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">main</span>&gt;</span>
+        <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">p</span>&gt;</span>Hello world<span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">p</span>&gt;</span>
+    <span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">main</span>&gt;</span>
+<span class="hljs-tag style-scope html-encode" style="text-decoration: line-through;">&lt;/<span class="hljs-name style-scope html-encode">div</span>&gt;</span>
+            </code></pre>
+            <html-encode lang="html" style="font-size: 1.2em;"><template>
+                <header>
+                    <h1>My thing</h1>
+                </header>
+                <my-widget></my-widget>
+                <main>
+                    <p>Hello world</p>
+                </main>
+            </template></html-encode>
         </grid-slide>
         <grid-notes>
             <ul>

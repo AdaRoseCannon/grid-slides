@@ -53,11 +53,11 @@ class HTMLEncode extends HTMLElementPlus {
 			if (script.tagName === 'TEMPLATE' && script.innerHTML === '') {
 				return requestAnimationFrame(() => updateHTML.bind(this)(count));
 			}
-			if (script.tagName === 'TEMPLATE' && script.content.firstElementChild.tagName === 'SCRIPT') {
+			if (!this.lang && script.tagName === 'TEMPLATE' && script.content.firstElementChild.tagName === 'SCRIPT') {
 				script = script.content.firstElementChild;
 				detectedLang = script.getAttribute('type') || 'javascript';
 			}
-			if (script.tagName === 'TEMPLATE' && script.content.firstElementChild.tagName === 'STYLE') {
+			if (!this.lang && script.tagName === 'TEMPLATE' && script.content.firstElementChild.tagName === 'STYLE') {
 				script = script.content.firstElementChild;
 				detectedLang = 'css';
 			}
