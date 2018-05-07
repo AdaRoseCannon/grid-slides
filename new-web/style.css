@@ -166,7 +166,6 @@ grid-slide {
     user-select: none;
 }
 html-encode {
-    font-size: 2em;
     margin-top: calc(var(--padding) * 2);
 }
 

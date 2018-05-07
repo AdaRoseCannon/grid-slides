@@ -267,8 +267,8 @@
             <fitty-text class="type-art small hero">
                 <span style="color: var(--color-cyan); font-family: Samsung One; font-weight: 800; writing-mode: vertical-rl; transform: rotate(200deg) translateX(-0.3em);">Web</span><span style="font-family: Samsung One; font-weight: 800; color: var(--color-red);">Animations</span>
             </fitty-text>
-            <div style="padding-right: 6em; margin: 1em 1em 0 1em; position: relative;">
-                <html-encode id='anim-html-encode' style="font-size: 1.5em;">
+            <div style="padding-right: 6em; margin: 1em 1em 0 1em; position: relative; font-size: 2.2rem;">
+                <html-encode id='anim-html-encode'>
                     <template id='anim-template'><script></script></template>
                 </html-encode>
                 <span id="anim-ball-demo" style="position: absolute; bottom: 0; right: 0;"><span style="font-size: 6em; position: static;">⚽</span></span>
@@ -365,11 +365,15 @@
                     });
                 }
             </script>
-            <html-encode style="font-size: 1.2em;"><template><script>
+            <html-encode style="font-size: 2.2rem;"><template><script>
                 const animPromise = (async function () {
                     await el.animate(keyframes1, options).finished;
                     await el.animate(keyframes2, options).finished;
                     await el.animate(keyframes3, options).finished;
+
+                    for (const el of document.querySelectorAll('.domino')) {
+                        await el.animate(dominoFallKeyFrames, options).finished;
+                    }
                 }());
 
                 animPromise.then(function () {
@@ -391,7 +395,7 @@
                 <h1 class="hero" style="color: var(--color-light); font-family: 'Samsung One'; font-weight: 800;">&lt;<span style="color: var(--color-red)">web</span>-<span style="color: var(--color-yellow)">components</span>&gt;</h1>
             </fitty-text>
             <div style="display: flex; flex-direction: column;">
-                <html-encode style="width: -moz-min-content; width: min-content;"><template>
+                <html-encode style="align-self: center; font-size: 1.5em;"><template>
                     <my-car class="homer"></my-car>
                 </template></html-encode>
                 <img src="../components/images/mycar.jpg" alt="homers terrible car from the simpsons" style="flex-grow: 1; object-fit: contain;"/>
@@ -422,6 +426,7 @@
                 <span class="noodle" style="transform: translate(-5vw, 5vh) rotate(40deg) ;">&lt;div&gt;</span>
                 <span class="noodle" style="transform: translate(20vw, 25vh) rotate(-30deg) ;">&lt;div&gt;</span>
             </section>
+            <img src="../components/images/lego.png" />
         </grid-slide>
 
         <!-- CSS Custom Properties -->
@@ -478,7 +483,7 @@
                 <span style="z-index: 100; position: relative;">&emsp;&emsp;style=&quot;<span style="color: var(--color-yellow); font-weight: 800;">--custom-properties</span>:
                 🦄;&quot; &gt;</span></span>
             </fitty-text>
-            <html-encode lang="html" style="font-size: 1em;"><template>
+            <html-encode lang="html" style="font-size: 0.9em;"><template>
                 <style>
                     :root {
                         --my-var: 5px;
@@ -494,7 +499,7 @@
                     </style>
                 </custom-element>
             </template></html-encode>
-            <html-encode lang="html" style="font-size: 1em;"><template>
+            <html-encode lang="html" style="font-size: 0.9em;"><template>
                 <style>
                     :root {
                         --my-var: 5px;
@@ -511,7 +516,7 @@
                     </style>
                 </custom-element>
             </template></html-encode>
-            <html-encode lang="html" style="font-size: 1em;"><template>
+            <html-encode lang="html" style="font-size: 0.9em;"><template>
                 <style>
                     :root {
                         --my-var: 5px;
@@ -528,7 +533,7 @@
                     </style>
                 </custom-element>
             </template></html-encode>
-            <html-encode lang="html" style="font-size: 1em;"><template>
+            <html-encode lang="html" style="font-size: 0.9em;"><template>
                 <style>
                     :root {
                         --my-var: 5px;
@@ -666,18 +671,46 @@
                     --grid-columns: 5;
                 }
 
+                .my-grid {
+                    display: grid;
+                    grid-template-columns: repeat(var(--grid-columns), 1fr);
+                }
+
                 @media only screen and (max-width: 600px) {
                     :root {
                         --padding: 20px;
                         --grid-columns: 1;
                     }
                 }
+            </style></template></html-encode>
+
+            <html-encode><template><style>
+                :root {
+                    --layout-big: "🍱 🍱" min-content
+                        "🌯 🐠" min-content
+                        "🍭 🐠" 1fr
+                        "🏖️ 🏖️" min-content
+                        /300px 1fr;
+                    
+                    --layout-small: "🍱 🍱" min-content
+                        "🌯 🍭" min-content
+                        "🐠 🐠" minmax(min-content, 1fr)
+                        "🏖️ 🏖️" min-content
+                        /1fr 1fr;
+                }
 
                 .my-grid {
                     display: grid;
-                    grid-template-columns: repeat(var(--grid-columns), 1fr);
+                    grid-template: var(--layout-small);
+                }
+
+                @media only screen and (min-width: 600px) {
+                    .my-grid {
+                        grid-template: var(--layout-big);
+                    }
                 }
             </style></template></html-encode>
+
         </grid-slide>
         <grid-notes>
             <ul>
