@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Lily+Script+One');
 
 :root {
+    --color-darker: #103635;
     --color-dark: #474143;
     --color-light: #FFFFFF;
     --color-yellow: #FFC636;
@@ -28,7 +29,7 @@ h2 {
 }
 
 grid-slides-controller {
-    background: var(--color-dark);
+    background: var(--color-darker);
 }
 
 grid-slide {

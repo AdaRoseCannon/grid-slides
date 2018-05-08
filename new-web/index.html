@@ -223,6 +223,18 @@
                     &mdash; Rachel Andrew (@rachelandrew)
                 </div>
             </span></fitty-text>
+            <html-encode style="font-size: 1.2em;"><template><style>
+                body {
+                    display: grid;
+                    grid-template-columns: 200px 1fr 200px;
+                    grid-template-rows: 300px 1fr min-content; 
+                }
+
+                header {
+                    grid-row: 1;
+                    grid-column: 1/span 3;
+                }
+            </style></template></html-encode>
             <h1 class="hero" style="color: var(--color-white); font-family: Samsung One;">This page is intentionally left blank</h1>
             <html-encode style="font-size: 1.2em;"><template>
                 <section>
@@ -266,9 +278,14 @@
         </grid-slide>
         <grid-notes>
             <ul>
+                <li>CSS Grid is a Framework for doing 2D layout in the web</li>
+                <li>You can place objects intentionally in the grid.</li>
                 <li>If nothing else it saves you 250k to download a grid library</li>
+                <li>You can place items precisely in a grid but not only that</li>
                 <li>Allows you to use space intentionally, make use of white space.</li>
                 <li>Remove Layout elements.</li>
+                <li>This main feature is one of the things that makes grid powerful.</li>
+                <li>If you find making layouts with CSS a bit like this gif, grid is probably the answer to your trouble</li>
             </ul>
         </grid-notes>
 
@@ -413,6 +430,12 @@
             <fitty-text style="font-size: 2em; text-shadow: -0.15em 0.15em yellow, 0em 0.15em magenta, 0.15em -0.15em cyan; font-weight: 800; mix-blend-mode: exclusion; background-color: var(--color-light); --vertical-align: center; color: var(--color-dark); grid-column: full;">
                 Shadow DOM
             </fitty-text>
+            <section style="background: url('../components/images/soup.jpg'); background-repeat: no-repeat; background-size: cover; background-position: 70% top;">
+                <span class="noodle" style="transform: translate(0, 45vh) rotate(10deg) ;">&lt;div&gt;</span>
+                <span class="noodle" style="transform: translate(20vw, 5vh) rotate(-10deg) ;">&lt;div&gt;</span>
+                <span class="noodle" style="transform: translate(-5vw, 5vh) rotate(40deg) ;">&lt;div&gt;</span>
+                <span class="noodle" style="transform: translate(20vw, 25vh) rotate(-30deg) ;">&lt;div&gt;</span>
+            </section>
             <section>
                 <h1>Scoped css</h1>
                 <html-encode class="jail"><template><style>
@@ -430,14 +453,19 @@
                 <h1>JS Callbacks</h1>
                 <img src="../components/images/shoe-phone.jpg">
             </section>
-            <section style="background: url('../components/images/soup.jpg'); background-repeat: no-repeat; background-size: cover; background-position: 70% top;">
-                <span class="noodle" style="transform: translate(0, 45vh) rotate(10deg) ;">&lt;div&gt;</span>
-                <span class="noodle" style="transform: translate(20vw, 5vh) rotate(-10deg) ;">&lt;div&gt;</span>
-                <span class="noodle" style="transform: translate(-5vw, 5vh) rotate(40deg) ;">&lt;div&gt;</span>
-                <span class="noodle" style="transform: translate(20vw, 25vh) rotate(-30deg) ;">&lt;div&gt;</span>
-            </section>
             <img src="../components/images/lego.png" />
         </grid-slide>
+        <grid-notes>
+            <ul>
+                <li>Component Engine</li>
+                <li>Hide HTML into the shadow DOM, including style and link tags so you can add style to the elment.</li>
+                <li>The result of this encapsulation solves our div soup problem. Elements for appearance are hidden in the internals of our element.</li>
+                <li>Styles added this way are encapsualted to the element.</li>
+                <li>In addition callbacks to the element life cycle allow us to respond to the element being changed dynamically.</li>
+                <li>We can make a set of isolated components we can plug together just like lego bricks.</li>
+                <li>This allows us to use custom elements within any framework because it is *just* html.</li>
+            </ul>
+        </grid-notes>
 
         <!-- CSS Custom Properties -->
         <grid-slide el-by-el>
@@ -472,17 +500,42 @@
                     background: calc(var(--padding) * 5);
                 }
             </style></template></html-encode>
+            <html-encode style="font-size: 0.9em;"><template><style>
+                /* Mobile First */
+                :root {
+                    --padding: 5px;
+                }
+
+                /* Larger */
+                @media only screen and (min-width: 500px) {
+                    :root {
+                        --padding: 15px;
+                    }
+                }
+
+                /* Desktops */
+                @media only screen and (min-width: 800px) {
+                    :root {
+                        --padding: 30px;
+                    }
+                }
+
+                main {
+                    margin-left: var(--padding);
+                    padding: var(--padding);
+                }
+            </style></template></html-encode>
         </grid-slide>
-        <grid-notes>
-            <p>Custom properties bring variables to CSS by letting you define your own properties.</p>
-            <p>They are a small part of the large houdini spec which is steadily coming to browsers.</p>
-            <p>Make CSS more programatic.</p>
-            <p>Explicitly label how stuff works, i.e. --padding </p>
-            <p>They can be accessed using the var() method.</p>
-            <p>And even used in calc() methods.</p>
-            <p>Most importantly is that they work in the cascade too.</p>
-            <p>Here is how you can take advantage of it.</p>
-        </grid-notes>
+        <grid-notes><ul>
+            <li>Custom properties bring variables to CSS by letting you define your own properties.</li>
+            <li>They are a small part of the large houdini spec which is steadily coming to browsers.</li>
+            <li>Make CSS more programatic.</li>
+            <li>Explicitly label how stuff works, i.e. --padding </li>
+            <li>They can be accessed using the var() method.</li>
+            <li>And even used in calc() methods.</li>
+            <li>Most importantly is that they work in the cascade too.</li>
+            <li>Here is how you can take advantage of it.</li>
+        </ul></grid-notes>
 
         <!-- Custom Properties and Web Components -->
         <grid-slide el-by-el>
