@@ -61,7 +61,7 @@
         </style>
         <footer>
             <span>@lady_ada_king</span>
-            <span style="text-align: right;">Samsung Internet</span>
+            <span style="text-align: right;"><img src="images/samsung-internet_256x256.png" style="vertical-align: text-bottom; height: 30px;" /> Samsung Internet</span>
         </footer>
     </template>
     <script>
@@ -98,7 +98,12 @@
                 <span id="button" class="button"></span>
                 <span id="bulb">🚨</span>
                 <span id="rocket" style="left: 65%; top: -20em;"><span style="transform: rotate(-45deg); font-size: 20em; padding: 0.2em;">🚀</span></span>
-                <div id="text" style="display: grid;height: 100%;grid-template: 1fr 1fr/1fr 1fr;grid-gap: var(--padding); transform: scale(2) translateY(-125vh);">
+                <div id="text1" style="position: absolute; top: 0; width: 100%; display: grid;height: 100%;grid-template: 1fr 1fr/1fr 1fr;grid-gap: var(--padding); transform: scale(2) translateY(-125vh);">
+                    <h1>HTML</h1>
+                    <h1>CSS</h1>
+                    <h1>JavaScript</h1>
+                </div>
+                <div id="text2" style="position: absolute; top: 0; width: 100%; display: grid;height: 100%;grid-template: 1fr 1fr/1fr 1fr;grid-gap: var(--padding); transform: scale(2) translateY(-125vh);">
                     <h1>CSS Grid</h1>
                     <h1>Web Animations</h1>
                     <h1>Web Components</h1>
@@ -180,16 +185,29 @@
 
                     yield;
 
-                    const text = $('text');
+                    const text1 = $('text1');
+                    const text2 = $('text2');
                     const props = {
                         transform: ['scale(0.8)', 'scale(1)'],
                         opacity: [0, 1]
                     };
+                    const props2 = {
+                        transform: ['scale(2) translateY(-125vh)', 'scale(1.5) translateY(-125vh)'],
+                        opacity: [1, 0]
+                    };
                     const details = {easing: getRootVar('--easeOutBack'), duration: 300, fill: 'forwards'};
-                    yield animate(text.children[0], props, details);
-                    yield animate(text.children[1], props, details);
-                    yield animate(text.children[2], props, details);
-                    animate(text.children[3], props, details);
+
+                    for (child of text1.children) {
+                        yield animate(child, props, details);
+                    }
+
+                    yield animate(text1, props2, details);
+
+                    for (child of text2.children) {
+                        yield animate(child, props, details);
+                    }
+
+                    animate(text2, props2, details);
                 }
                 document.currentScript.teardown = function () {
                     this.style.background = '';
