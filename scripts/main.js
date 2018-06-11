@@ -492,10 +492,6 @@ class GridSlide extends HTMLElementPlus {
 		}
 	}
 	
-	registerSlideData(obj) {
-		this.parentNode.registerSlideGenerator(this, obj);
-	}
-	
 	reset() {
 		this.teardown();
 		this.setup();

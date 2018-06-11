@@ -12,10 +12,7 @@
 
     <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/edf84e6e/webcomponents-sd-ce.js"></script>
     <script src="../scripts/HTMLElementPlus.js"></script>
-    <script src="../scripts/main.js"></script>
-    <script src="../scripts/defaults.js"></script>
-    <script src="../scripts/web-components.js"></script>
-    <!-- <script src="https://fitty-component.glitch.me/bundle.js"></script> -->
+    <script type="module" src="../scripts/esm/index.js"></script>
     <script src="../scripts/fitty-component.min.js"></script>
 
     <!-- COMMON TAGS -->
@@ -40,7 +37,7 @@
     <meta name="og:type" content="website">
 </head>
 <body>
-    <template id="custom-slide-template">
+    <!-- <template id="custom-slide-template">
         <style>
             footer {
                 position: absolute;
@@ -68,7 +65,7 @@
         GridSlide.template.content.appendChild(
             document.getElementById('custom-slide-template').content
         );
-    </script>
+    </script> -->
 
     <grid-slides-controller>
         <grid-slide el-by-el>
