@@ -43,8 +43,8 @@ class GridSlidesController extends HTMLElementPlus {
 	constructor() {
 		super();
 
-		this.transitionIn = this.constructor.transitions.get('slide-right');
-		this.transitionOut = this.constructor.transitions.get('slide-left');
+		this.transitionIn = this.constructor.transitions.get('slide-left');
+		this.transitionOut = this.constructor.transitions.get('slide-right');
 		
 		this.addEventListener('click', function () {
 			if (this.hasAttribute('presenting')) {

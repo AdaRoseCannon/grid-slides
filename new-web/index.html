@@ -68,7 +68,7 @@
     </script> -->
 
     <grid-slides-controller>
-        <grid-slide el-by-el>
+        <grid-slide el-by-el transition-in="none" transition-out="slide-up">
             <fitty-text class="hero type-art" style="margin: 0.2em;">
                 A <span style="color: var(--color-yellow);">Rube Goldberg</span><br /><span style="color: var(--color-yellow);">Machine</span><br /><span style="font-size: 1.5em; color: var(--color-cyan);margin-top: -0.333em; transform:translate(-0.1em, 0.1em);">&amp;</span>New <span style="color: var(--color-red);">Web</span> Technology
             </fitty-text>
@@ -245,7 +245,7 @@
         </grid-notes>
 
         <!-- CSS Grid -->
-        <grid-slide el-by-el>
+        <grid-slide el-by-el transition-in="slide-down">
             <div class="type-art small" style="display: grid; grid-template: 1fr 1fr/1fr 1fr 1fr;grid-gap: calc(var(--padding) * 4); margin: calc(var(--padding) * 4);">
                 <fitty-text style="--vertical-align: center; font-weight: bold;">CSS</fitty-text>
                 <span style="border-radius: 3rem; grid-column-end: span 2; background: var(--color-yellow);"></span>

@@ -3,33 +3,10 @@
 'use strict';
 
 import './plugins/el-by-el.js';
+import './plugins/transitions.js';
 import GridSlide from './grid-slide.js';
 import GridSlidesController from './grid-slides-controller.js';
 import HTMLEncode from './html-encode.js';
-
-GridSlidesController.registerTransition('slide-left',
-	[{
-		transform: 'translateX(-100vw)'
-	},{
-		transform: 'translateX(0)'
-	}],
-	{
-		duration: 500,
-		easing: getComputedStyle(document.documentElement).getPropertyValue('--easeInOutQuart')
-	}
-);
-
-GridSlidesController.registerTransition('slide-right',
-	[{
-		transform: 'translateX(100vw)'
-	},{
-		transform: 'translateX(0)'
-	}],
-	{
-		duration: 500,
-		easing: getComputedStyle(document.documentElement).getPropertyValue('--easeInOutQuart')
-	}
-);
 
 // only polyfill .finished in browsers that already support animate()
 if (Element.prototype.animate) {
