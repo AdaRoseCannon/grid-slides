@@ -12,6 +12,10 @@ class GridSlidesController extends HTMLElementPlus {
 	}
 
 	static registerTransition(name, keyframes, settings) {
+		if (typeof keyframes === 'function') {
+			this.transitions.set(name, keyframes);
+			return;
+		}
 		this.transitions.set(name, {keyframes, settings});
 	}
 
@@ -131,7 +135,11 @@ class GridSlidesController extends HTMLElementPlus {
 				oldSlide.removeAttribute('active');
 				
 				if (priorSiblings(oldSlide).includes(newSlide)) {
-					newSlide.setAttribute('pending', '');
+					// Remove any existing pending items
+					for (const el of document.querySelectorAll('grid-slide[pending]')) {
+						el.removeAttribute('pending');
+					}
+					this.__setup(newSlide);
 					return this.animate(newSlide, oldSlide, true);
 				}
 			}
@@ -141,12 +149,17 @@ class GridSlidesController extends HTMLElementPlus {
 
 	animate (newSlide, oldSlide, backwards) {
 
+		if (newSlide.currentAnimation) {
+			newSlide.currentAnimation.finish();
+			newSlide.currentAnimation = undefined;
+		}
+
 		const newSlideTransition = !backwards ? (newSlide.transitionIn || this.transitionIn) : (newSlide.transitionOut || this.transitionOut);
 		(newSlide.currentAnimation = newSlide.animate(
 			newSlideTransition.keyframes,
 			Object.assign({ direction: 'normal', fill: 'forwards'}, newSlideTransition.settings)
-		))
-		.finished.then(() => {
+		)).finished
+		.then(() => {
 			newSlide.setAttribute('active', '');
 			newSlide.removeAttribute('pending');
 
@@ -155,19 +168,18 @@ class GridSlidesController extends HTMLElementPlus {
 		});
 
 		if (oldSlide) {
+			if (oldSlide.currentAnimation) {
+				oldSlide.currentAnimation.finish();
+				oldSlide.currentAnimation = undefined;
+			}
 			const oldSlideTransition = !backwards ? (oldSlide.transitionOut || this.transitionOut) : (oldSlide.transitionIn || this.transitionIn);
 			(oldSlide.currentAnimation = oldSlide.animate(
 				oldSlideTransition.keyframes,
-				Object.assign({ direction: 'reverse', fill: 'forwards' }, oldSlideTransition.settings)
-			))
-			.finished.then(function () {
+				Object.assign({ direction: 'reverse', fill: 'forwards'}, oldSlideTransition.settings)
+			)).finished
+			.then(function () {
 				oldSlide.removeAttribute('teardown-pending');
 			});
-		}
-	}
-
-	get transitions() {
-		return this.__transitions || {
 		}
 	}
 
@@ -196,12 +208,7 @@ class GridSlidesController extends HTMLElementPlus {
 		// animate slides into starting position
 		for (const slide of this.querySelectorAll('grid-slide')) {
 			if (slide !== firstSlide) {
-				const newSlideTransition = slide.transitionIn || this.transitionIn;
-				(slide.currentAnimation = slide.animate(
-					newSlideTransition.keyframes,
-					Object.assign({ direction: 'normal', fill: 'forwards'}, newSlideTransition.settings)
-				))
-				slide.currentAnimation.pause();
+				this.holdAnimFirstFrame(slide)
 			}
 		}
 
@@ -210,7 +217,18 @@ class GridSlidesController extends HTMLElementPlus {
 		this.setSlide(firstSlide);
 	}
 
+	holdAnimFirstFrame(slide) {
+
+		const newSlideTransition = slide.transitionIn || this.transitionIn;
+
+		(slide.currentAnimation = slide.animate(
+			newSlideTransition.keyframes,
+			Object.assign({ direction: 'normal'}, newSlideTransition.settings)
+		)).pause();
+	}
+
 	__setup(slideEl) {
+		// this.holdAnimFirstFrame(slideEl);
 		slideEl.setAttribute('pending', '');
 	}
 
@@ -277,14 +295,6 @@ class GridSlidesController extends HTMLElementPlus {
 	nextSlide() {
 		const nextSlide = this.getNextSlide();
 		if (nextSlide) this.setSlide(nextSlide);
-	}
-
-	registerSlideTransition(name, obj) {
-		this.registerTransition(name, obj);
-	}
-
-	registerSlideGenerator(slide, generator) {
-		console.log(slide, generator);
 	}
 }
 

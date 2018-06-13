@@ -54,7 +54,11 @@ GridSlidesController.registerSlideData('el-by-el',
             showFirstChild = function () {
                 run(firstChild);
             }
-            if (!children.length) throw Error('Empty elByEl target');
+            if (!children.length) {
+                console.warn('Empty elByEl target', this);
+                out.action = function * () {};
+                return;
+            }
 
             out.action = (function * () {
                 yield;

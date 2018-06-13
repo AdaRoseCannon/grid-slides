@@ -408,10 +408,6 @@ class GridSlidesController extends HTMLElementPlus {
 		if (nextSlide) this.setSlide(nextSlide);
 	}
 
-	registerSlideTransition(name, obj) {
-		GRIDSLIDES.registerTransition(name, obj);
-	}
-
 	registerSlideGenerator(slide, generator) {
 		console.log(slide, generator);
 	}
