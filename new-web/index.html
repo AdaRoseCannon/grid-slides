@@ -37,7 +37,7 @@
     <meta name="og:type" content="website">
 </head>
 <body>
-    <!-- <template id="custom-slide-template">
+    <template id="custom-slide-template">
         <style>
             footer {
                 position: absolute;
@@ -61,11 +61,12 @@
             <span style="text-align: right;"><img src="images/samsung-internet_256x256.png" style="vertical-align: text-bottom; height: 30px;" /> Samsung Internet</span>
         </footer>
     </template>
-    <script>
+    <script type="module">
+        import GridSlide from '../scripts/esm/grid-slide.js';
         GridSlide.template.content.appendChild(
             document.getElementById('custom-slide-template').content
         );
-    </script> -->
+    </script>
 
     <grid-slides-controller>
         <grid-slide el-by-el transition-in="none" transition-out="slide-up">
