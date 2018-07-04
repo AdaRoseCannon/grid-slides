@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Woah, New Web stuff!</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="./style.css" rel="stylesheet">
+    <link href="https://samsunginter.net/fonts/SamsungOne/fonts.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai.min.css" rel="stylesheet" >
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+    <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/edf84e6e/webcomponents-sd-ce.js"></script>
+    <script src="../scripts/HTMLElementPlus.js"></script>
+    <script type="module" src="../scripts/esm/index.js"></script>
+    <script src="../scripts/fitty-component.min.js"></script>
+
+    <!-- COMMON TAGS -->
+    <meta charset="utf-8">
+    <title>Transitions Tests</title>
+    <!-- Search Engine -->
+    <meta name="description" content="Slides for the DeltaV talk.">
+    <meta name="image" content="https://i.imgur.com/YWA5Dqh.jpg">
+    <!-- Schema.org for Google -->
+    <meta itemprop="name" content="Rube Goldberg Machines and New Web Technology">
+    <meta itemprop="description" content="Slides for the DeltaV talk.">
+    <meta itemprop="image" content="https://i.imgur.com/YWA5Dqh.jpg">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Rube Goldberg Machines and New Web Technology">
+    <meta name="twitter:description" content="Slides for the DeltaV talk.">
+    <meta name="twitter:site" content="@lady_ada_king">
+    <meta name="twitter:image:src" content="https://i.imgur.com/YWA5Dqh.jpg">
+    <!-- Open Graph general (Facebook, Pinterest & Google+) -->
+    <meta name="og:title" content="Rube Goldberg Machines and New Web Technology">
+    <meta name="og:description" content="Slides for the DeltaV talk.">
+    <meta name="og:type" content="website">
+</head>
+<body>
+    <template id="custom-slide-template">
+        <style>
+            footer {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                padding: 0.5em 1em;
+                background: var(--color-dark);
+                color: white;
+                display: flex;
+                justify-content: space-between;
+                grid-column: full;
+                font-size: 1.5rem;
+            }
+            :host {
+                padding-bottom: 2em !important;
+            }
+        </style>
+        <footer>
+            <span>@lady_ada_king</span>
+            <span style="text-align: right;"><img src="images/samsung-internet_256x256.png" style="vertical-align: text-bottom; height: 30px;" /> Samsung Internet</span>
+        </footer>
+    </template>
+    <script type="module">
+        import GridSlide from '../scripts/esm/grid-slide.js';
+        GridSlide.template.content.appendChild(
+            document.getElementById('custom-slide-template').content
+        );
+    </script>
+    <grid-slides-controller>
+        <grid-slide el-by-el transition-in="none" transition-out="slide-up">
+            <fitty-text class="hero type-art" style="margin: 0.2em;">
+                A <span style="color: var(--color-yellow);">Rube Goldberg</span><br /><span style="color: var(--color-yellow);">Machine</span><br /><span style="font-size: 1.5em; color: var(--color-cyan);margin-top: -0.333em; transform:translate(-0.1em, 0.1em);">&amp;</span>New <span style="color: var(--color-red);">Web</span> Technology
+            </fitty-text>
+        </grid-slide>
+
+        <grid-slide el-by-el transition-in="slide-down" transition-out="fade">
+            <div class="type-art small" style="display: grid; grid-template: 1fr 1fr/1fr 1fr 1fr;grid-gap: calc(var(--padding) * 4); margin: calc(var(--padding) * 4);">
+                <fitty-text style="--vertical-align: center; font-weight: bold;">CSS</fitty-text>
+                <span style="border-radius: 3rem; grid-column-end: span 2; background: var(--color-yellow);"></span>
+                <span style="border-radius: 3rem; background: var(--color-red);"></span>
+                <fitty-text style="grid-column-end: span 2; --vertical-align: center; font-weight: bold;">Grid</fitty-text>
+            </div>
+        </grid-slide>
+
+        <grid-slide el-by-el transition-in="wipe">
+            <fitty-text style="--vertical-align: center;"><span style="line-height: 1.5;">
+                You <span style="color: var(--color-red); font-weight: 400;">don’t need a framework</span> to use CSS Grid. <br />
+                <span style="color: var(--color-yellow)">CSS Grid <i>is</i> a framework.</span><br />
+                <div style="font-size: 0.8em; text-align: right; margin-top: 0.5em;">
+                    &mdash; Rachel Andrew (@rachelandrew)
+                </div>
+            </span></fitty-text>
+        </grid-slide>
+
+        <grid-slide el-by-el>
+            <fitty-text style="--vertical-align: center; grid-column: one-quarter/three-quarter;"><span style="line-height: 1.5;">
+                <span style="color:var(--color-yellow);">Flexbox</span> works from the <span style="color:var(--color-yellow);">content out</span>&hellip;<br />
+                &emsp;&emsp; <span style="color:var(--color-red);">Grid</span> works from the <span style="color:var(--color-red);">layout in</span>. 
+                <div style="font-size: 0.8em; text-align: right; margin-top: 0.5em;">
+                    &mdash; Rachel Andrew (@rachelandrew)
+                </div>
+            </span></fitty-text>
+        </grid-slide>
+
+        <grid-slide el-by-el>
+            <fitty-text style="--vertical-align: center; --horizontal-align: left;"><span style="line-height: 1.5;">
+                It was a <span style="color: var(--color-red); font-weight: 400;">layout</span> that I figured would take maybe half a day of wrangling CSS.
+                <br />
+                <br />
+                I used CSS grid and I was <span style="color: var(--color-yellow)">done in five minutes</span>.<br />&emsp;&emsp;That’s not an exaggeration. It was literally five minutes.
+                <div style="font-size: 0.8em; text-align: right; margin-top: 0.5em;">
+                    &mdash; Jeremy Keith (@adactio)
+                </div>
+            </span></fitty-text>
+        </grid-slide>
+
+        <!-- web animation -->
+        <grid-slide el-by-el>
+            <fitty-text class="type-art small hero">
+                <span style="color: var(--color-cyan); font-family: Samsung One; font-weight: 800; writing-mode: vertical-rl; transform: rotate(200deg) translateX(-0.3em);">Web</span><span style="font-family: Samsung One; font-weight: 800; color: var(--color-red);">Animations</span>
+            </fitty-text>
+        </grid-slide>
+
+        <grid-slide el-by-el>
+            <fitty-text style="--vertical-align: center;">
+                <h1 class="hero" style="color: var(--color-light); font-family: 'Samsung One'; font-weight: 800;">&lt;<span style="color: var(--color-red)">web</span>-<span style="color: var(--color-yellow)">components</span>&gt;</h1>
+            </fitty-text>
+        </grid-slide>
+
+        <grid-slide el-by-el>
+            <fitty-text style="font-size: 2em; text-shadow: -0.15em 0.15em yellow, 0em 0.15em magenta, 0.15em -0.15em cyan; font-weight: 800; mix-blend-mode: exclusion; background-color: var(--color-light); --vertical-align: center; color: var(--color-dark); grid-column: full;">
+                Shadow DOM
+            </fitty-text>
+        </grid-slide>
+
+        <!-- CSS Custom Properties -->
+        <grid-slide el-by-el>
+            <fitty-text class="type-art small hero">
+                <span style="color: var(--color-cyan); font-family: Samsung One; font-weight: 800;">CSS</span><span style="color: var(--color-yellow); font-size: 2em;">Custom</span><br />
+                <span style="font-family: Samsung One; font-weight: 800; color: var(--color-red);">Properties</span>
+            </fitty-text>
+        </grid-slide>
+
+        <!-- Custom Properties and Web Components -->
+        <grid-slide el-by-el>
+            <fitty-text class="type-art" style="font-size: 2em; line-height: 1.2;--horizontal-align: left; margin: 0 1em;">
+                <span style="color: var(--color-white); font-family: 'Samsung One'; font-weight: 400;">&lt;<span style="color: var(--color-red); font-weight: 800;">web-components</span>
+                <span style="font-size: 5em; line-height: 0.2em; transform: translateY(0.4em); display: inline-block; mix-blend-mode: luminosity; color: var(--color-cyan); opacity: 0.8;">&amp;</span>
+                <br />
+                <span style="z-index: 100; position: relative;">&emsp;&emsp;style=&quot;<span style="color: var(--color-yellow); font-weight: 800;">--custom-properties</span>:
+                🦄;&quot; &gt;</span></span>
+            </fitty-text>
+        </grid-slide>
+
+    </grid-slides-controller>
+</body>
+</html>
+
