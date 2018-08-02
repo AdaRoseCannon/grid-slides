@@ -16,7 +16,7 @@ if (Element.prototype.animate) {
 		window.Animation = document.firstElementChild.animate([]).constructor;
 	}
 
-	if (Animation.prototype.finished === undefined) {
+	if (!('finished' in Animation.prototype)) {
 		Object.defineProperty(Animation.prototype, 'finished', {
 			get() {
 				if (!this._finished) {

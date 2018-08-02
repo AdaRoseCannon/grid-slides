@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Woah, New Web stuff for BrazilJS!</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="./style.css" rel="stylesheet">
+    <link href="https://samsunginter.net/fonts/SamsungOne/fonts.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai.min.css" rel="stylesheet" >
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="https://twemoji.maxcdn.com/2/twemoji.min.js?11.0"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => twemoji.parse(document.body));
+    </script>
+    <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/edf84e6e/webcomponents-sd-ce.js"></script>
+    <script src="../scripts/HTMLElementPlus.js"></script>
+    <script type="module" src="../scripts/esm/index.js"></script>
+    <script src="https://fitty-component.glitch.me/bundle.js"></script>
+    <!-- COMMON TAGS -->
+    <meta charset="utf-8">
+    <title>The Intersections of New Web APIs.</title>
+    <!-- Search Engine -->
+    <meta name="description" content="Slides for the DeltaV talk.">
+    <meta name="image" content="https://i.imgur.com/YWA5Dqh.jpg">
+    <!-- Schema.org for Google -->
+    <meta itemprop="name" content="The Intersections of New Web APIs.">
+    <meta itemprop="description" content="Slides for the DeltaV talk.">
+    <meta itemprop="image" content="https://i.imgur.com/YWA5Dqh.jpg">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The Intersections of New Web APIs.">
+    <meta name="twitter:description" content="Slides for the DeltaV talk.">
+    <meta name="twitter:site" content="@lady_ada_king">
+    <meta name="twitter:image:src" content="https://i.imgur.com/YWA5Dqh.jpg">
+    <!-- Open Graph general (Facebook, Pinterest & Google+) -->
+    <meta name="og:title" content="The Intersections of New Web APIs.">
+    <meta name="og:description" content="Slides for the DeltaV talk.">
+    <meta name="og:type" content="website">
+
+    <script>
+        CSS.paintWorklet.addModule('https://ada.is/three-paint/dist/bundle.js');
+    </script>
+</head>
+<body>
+    <template id="custom-slide-template">
+        <style>
+            footer {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                padding: 0.5em 1em;
+                background: var(--color-dark);
+                color: white;
+                display: flex;
+                justify-content: space-between;
+                grid-column: full;
+                font-size: 1.5rem;
+            }
+            :host {
+                padding-bottom: 2em !important;
+            }
+        </style>
+        <footer>
+            <span>@lady_ada_king</span>
+            <span style="text-align: right;"><img src="images/samsung-internet_256x256.png" style="vertical-align: text-bottom; height: 30px;" /> Samsung Internet</span>
+        </footer>
+    </template>
+    <script type="module">
+        import GridSlide from '../scripts/esm/grid-slide.js';
+        GridSlide.template.content.appendChild(document.getElementById('custom-slide-template').content);
+    </script>
+
+    <grid-slides-controller>
+        <grid-slide el-by-el transition-in="none" transition-out="slide-up">
+            <fitty-text class="hero type-art" style="margin: 0.2em;">
+                <span style="color: var(--color-dark); position: absolute; font-size: 3em; z-index: -1; opacity: 0.15; mix-blend-mode: lighten;">⬤</span><span style="color: var(--color-yellow); z-index: 100; position: relative;">Intersections</span><br /><!--
+                --><span style="display: inline-block; z-index: -1; position: relative;"><span style="font-size: 3em; line-height: 0.33em; color: var(--color-cyan); transform: translateY(30%);">&emsp;<span style="position: absolute; font-size: 3em; z-index: -1; opacity: 0.15; mix-blend-mode: lighten;">⬤</span>&emsp;of&ensp;</span></span><br /><!--
+                --><span style="color: white; z-index: 100;">New <span style="color: var(--color-red);">Web</span> APIs</span>
+            </fitty-text>
+            <fitty-text class="type-art small" style="margin: 0 0.5em; --horizontal-align: left; line-height: 1;">
+                <span style="font-weight: 200;">This talk is a <br />
+                    &emsp;&emsp;<span style="color:var(--color-red); font-family: var(--fancy-font);">love letter</span><br />
+                    &emsp;&emsp;&emsp;&emsp;to complexity.</span></span>
+            </fitty-text>
+            <div id="animation-demo-1" style="position: relative; --door-hinge: 1; font-size: calc(0.7vw - 0.08rem); transform-origin: center bottom;">
+                <span id="anim-ball" style="top: 26em; transform: translate(8em, 6em);"><span style="font-size: 12em; position: static;">⚽</span></span>
+                <span id="log-left" style="transform-origin: top left; transform: rotate(20deg); top: 41em; width: 12em; height: 3em;" class="wood"></span>
+                <span id="log-right" style="transform-origin: top right; transform: rotate(-20deg); top: 41em; left: 15em; width: 12em; height: 3em;" class="wood"></span>
+                <span style="transform-origin: top left; top: 62em; left: 0em; width: 40em; height: 3em;transform: rotate(10deg);" class="wood"></span>
+                <span style="transform-origin: top left; top: 62em; left: 44em; width: 70em; height: 3em;" class="wood"></span>
+                <span class="domino" style="left: 43.5em;top: 57em;"></span>
+                <span class="domino" style="left: 47em;top: 57em;"></span>
+                <span class="domino" style="left: 51em;top: 57em;"></span>
+                <span class="domino" style="left: 55em;top: 57em;"></span>
+                <span class="domino" style="left: 59em;top: 57em;"></span>
+                <span class="domino" style="left: 63.25em;top: 50.75em; width: 4.5em; height: 11.25em;"></span>
+                <span class="domino" style="left: 70.75em;top: 45.125em; width: 6.75em; height: 16.875em;"></span>
+                <span class="domino" style="left: 80.1875em;top: 36.6875em; width: 10.125em; height: 25.3125em;"></span>
+                <span class="remote"></span>
+                <span id="button" class="button"></span>
+                <span id="bulb">🚨</span>
+                <span id="rocket" style="left: 65%; top: -20em;"><span style="transform: rotate(-45deg); font-size: 20em; padding: 0.2em;">🚀</span></span>
+                <div id="text1" style="position: absolute; top: 0; width: 100%; display: grid;height: 100%;grid-template: 1fr 1fr/1fr 1fr;grid-gap: var(--padding); transform: scale(2) translateY(-125vh);">
+                    <h1>HTML</h1>
+                    <h1>CSS</h1>
+                    <h1>JavaScript</h1>
+                </div>
+                <div id="text2" style="position: absolute; top: 0; width: 100%; display: grid;height: 100%;grid-template: 1fr 1fr/1fr 1fr;grid-gap: var(--padding); transform: scale(2) translateY(-125vh);">
+                    <h1>CSS Grid</h1>
+                    <h1>Web Animations</h1>
+                    <h1>Web Components</h1>
+                    <h1>CSS Custom Properties</h1>
+                </div>
+            </div>
+            <script>
+                const $ = sel => document.getElementById(sel);
+                const getRootVar = name => getComputedStyle(document.documentElement).getPropertyValue(name);
+                const animations = [];
+                const animate = function (el, a, b) {
+                    const anim = el.animate(a,b);
+                    animations.push(anim);
+                    return anim;
+                }
+                document.currentScript.actions = function * () {
+                    this.style.background = '#3a1c71 linear-gradient(to bottom, #3a1c71, #d76d77, #ffaf7b) no-repeat';
+                    yield;
+                    (async function () {
+                        animate( $('log-left'),
+                            {'transform': ['rotate(20deg)','rotate(80deg)']},
+                            {easing: getRootVar('--easeOutBack'), duration: 500, fill: 'forwards'}
+                        );
+                        animate( $('log-right'),
+                            {'transform': ['rotate(-20deg)','rotate(-80deg)']},
+                            {easing: getRootVar('--easeOutBack'), duration: 500, fill: 'forwards'}
+                        );
+                        await animate( $('anim-ball'),
+                            {'transform': ['translate(8em, 6em)','translate(8em, 26em)']},
+                            {easing: getRootVar('--easeInQuad'), duration: 500, fill: 'forwards'}
+                        ).finished;
+                        await animate( $('anim-ball'),
+                            {'transform': ['translate(8em, 26em)', 'translate(8em, 16em)']},
+                            {easing: getRootVar('--easeOutQuad'), duration: 500, fill: 'forwards', direction: 'alternate', iterations: 2}
+                        ).finished;
+                        await animate( $('anim-ball'),
+                            {'transform': ['translate(8em, 26em) rotate(0deg)', 'translate(32em, 29em) rotate(270deg)']},
+                            {easing: getRootVar('--easeInQuad'), duration: 1000, fill: 'forwards'}
+                        ).finished;
+                        const dominoes = Array.from(document.querySelectorAll('.domino'));
+                        let lastDomino = dominoes[dominoes.length - 1];
+                        for (const el of dominoes) {
+                            const anim = animate( el,
+                                {'transform': ['rotate(0deg)', 'rotate(30deg)']},
+                                {easing: getRootVar('--easeInQuad'), duration: 300, fill: 'forwards'}
+                            ).finished;
+                            const anim2 = anim.then(() => animate( el,
+                                {'transform': ['rotate(30deg)', 'rotate(60deg)']},
+                                {easing: getRootVar('--easeInQuad'), duration: 300, fill: 'forwards'}
+                            ).finished);
+                            await anim;
+                            if (el === lastDomino) await anim2;
+                        }
+                        animate(lastDomino,
+                            {'transform': ['rotate(60deg)', 'rotate(70deg)']},
+                            {easing: getRootVar('--easeInQuad'), duration: 300, fill: 'forwards'}
+                        ).finished;
+                        await animate($('button'),
+                            {'transform': ['translateY(0)', 'translateY(1.9em)']},
+                            {easing: getRootVar('--easeInQuad'), duration: 300, fill: 'forwards'}
+                        ).finished;
+                        await animate($('bulb'),
+                            {filter: ['grayscale(100%)', 'sepia(100%) saturate(250%) hue-rotate(60deg) drop-shadow(0px 0px 50px lightgreen)']},
+                            {easing: 'ease', duration: 300, fill: 'forwards'}
+                        ).finished;
+                        animate(this,
+                            {backgroundPosition: ['0 0', '0 100vh']},
+                            {easing: 'ease', duration: 1300, fill: 'forwards'}
+                        )
+                        animate(this.firstChild,
+                            {transform: ['translateY(0)', 'translateY(100vh) scale(0.5)']},
+                            {easing: 'ease', duration: 1300, fill: 'forwards'}
+                        )
+                        animate($('rocket'),
+                            {transform: ['translateY(0)', 'scale(2) translateY(-30vh) rotate(-23deg) translateY(-80vh)']},
+                            {easing: 'ease', duration: 1300, fill: 'forwards'}
+                        )
+                    }.bind(this)());
+
+                    yield;
+
+                    const text1 = $('text1');
+                    const text2 = $('text2');
+                    const props = {
+                        transform: ['scale(0.8)', 'scale(1)'],
+                        opacity: [0, 1]
+                    };
+                    const props2 = {
+                        transform: ['scale(2) translateY(-125vh)', 'scale(1.5) translateY(-125vh)'],
+                        opacity: [1, 0]
+                    };
+                    const details = {easing: getRootVar('--easeOutBack'), duration: 300, fill: 'forwards'};
+
+                    for (child of text1.children) {
+                        yield animate(child, props, details);
+                    }
+
+                    yield animate(text1, props2, details);
+
+                    for (child of text2.children) {
+                        yield animate(child, props, details);
+                    }
+
+                    animate(text2, props2, details);
+                }
+                document.currentScript.teardown = function () {
+                    this.style.background = '';
+                    animations.splice(0).map(a => a.cancel());
+                }
+            </script>
+        </grid-slide>
+        <grid-notes>
+            <p>This talk is a love letter to complexity.</p>
+            <p>When I was a child I fascinated by rube goldberg machines.</p>
+            <p>They are these quirky machines with many interlocking parts of very different Technology</p>
+            <p>I used to spend hours with marbles, pipes, string, playing cards and dolls and all the other toys in my toybox to build these amazing contraptions.</p>
+
+            <p>Front end web development is complex.</p>
+
+            <p>Between CSS, HTML and JavaScript there are many different parts which behave very differently.</p>
+
+            <p>The features in the web platform are growing day-by-day, it feels I have been learning the web platform my entire life and I still discovering new toys or get new toys added to my toybox.</p>
+
+            <p>This talk I am going to introduce 4 new-ish toys we have to play with and explore how they work together:</p>
+            
+            <ul>
+                <li>CSS Grid</li>
+                <li>Web Animations</li>
+                <li>Web Components</li>
+                <li>Custom CSS Properties</li>
+            </ul>
+
+            <p>Each one is a deep complex topic it's own right so I can't go into depth about them.</p>
+
+            <p>Learning to use them effectively will take some research, practise and time.</p>
+
+            <p>The goal of this talk is to show how they can work together.</p>
+
+            <p>When they are used in conjunction it feels like super powers for front end web development.</p>
+
+            <p>Hopefully will change the way we think about front end web deveopment.</p>
+        </grid-notes>
+
+        <!-- CSS Grid -->
+        <grid-slide el-by-el transition-in="slide-down">
+            <div class="type-art small" style="display: grid; grid-template: 1fr 1fr/1fr 1fr 1fr;grid-gap: calc(var(--padding) * 4); margin: calc(var(--padding) * 4);">
+                <fitty-text style="--vertical-align: center; font-weight: bold;">CSS</fitty-text>
+                <span style="border-radius: 3rem; grid-column-end: span 2; background: var(--color-yellow);"></span>
+                <span style="border-radius: 3rem; background: var(--color-red);"></span>
+                <fitty-text style="grid-column-end: span 2; --vertical-align: center; font-weight: bold;">Grid</fitty-text>
+            </div>
+            <fitty-text style="--vertical-align: center;"><span style="line-height: 1.5;">
+                You <span style="color: var(--color-red); font-weight: 400;">don’t need a framework</span> to use CSS Grid. <br />
+                <span style="color: var(--color-yellow)">CSS Grid <i>is</i> a framework.</span><br />
+                <div style="font-size: 0.8em; text-align: right; margin-top: 0.5em;">
+                    &mdash; Rachel Andrew (@rachelandrew)
+                </div>
+            </span></fitty-text>
+            <html-encode style="font-size: 1.2em;"><template><style>
+                body {
+                    display: grid;
+                    grid-template-columns: 200px 1fr 200px;
+                    grid-template-rows: 300px 1fr min-content; 
+                }
+
+                header {
+                    grid-row: 1;
+                    grid-column: 1/span 3;
+                }
+            </style></template></html-encode>
+            <h1 class="hero" style="color: var(--color-white); font-family: Samsung One;">This page is intentionally left blank</h1>
+            <html-encode style="font-size: 1.2em;"><template>
+                <section>
+                    <h1>title</h1>
+                    <div style="display:flex">
+                        <div class="some-widget"></div>
+                        <div class="some-widget"></div>
+                    </div>
+                    <div style="display:flex">
+                        <div class="some-widget"></div>
+                        <div class="some-widget"></div>
+                    </div>
+                </section>
+            </template></html-encode>
+            <html-encode style="font-size: 1.2em;"><template>
+                <section>
+                    <h1>title</h1>
+                    <div class="some-widget"></div>
+                    <div class="some-widget"></div>
+                    <div class="some-widget"></div>
+                    <div class="some-widget"></div>
+                </section>
+            </template></html-encode>
+            <fitty-text style="--vertical-align: center; grid-column: one-quarter/three-quarter;"><span style="line-height: 1.5;">
+                <span style="color:var(--color-yellow);">Flexbox</span> works from the <span style="color:var(--color-yellow);">content out</span>&hellip;<br />
+                &emsp;&emsp; <span style="color:var(--color-red);">Grid</span> works from the <span style="color:var(--color-red);">layout in</span>. 
+                <div style="font-size: 0.8em; text-align: right; margin-top: 0.5em;">
+                    &mdash; Rachel Andrew (@rachelandrew)
+                </div>
+            </span></fitty-text>
+            <img src="images/css.gif">
+            <fitty-text style="--vertical-align: center; --horizontal-align: left;"><span style="line-height: 1.5;">
+                It was a <span style="color: var(--color-red); font-weight: 400;">layout</span> that I figured would take maybe half a day of wrangling CSS.
+                <br />
+                <br />
+                I used CSS grid and I was <span style="color: var(--color-yellow)">done in five minutes</span>.<br />&emsp;&emsp;That’s not an exaggeration. It was literally five minutes.
+                <div style="font-size: 0.8em; text-align: right; margin-top: 0.5em;">
+                    &mdash; Jeremy Keith (@adactio)
+                </div>
+            </span></fitty-text>
+        </grid-slide>
+        <grid-notes>
+            <ul>
+                <li>CSS Grid is a Framework for doing 2D layout in the web</li>
+                <li>You can place objects intentionally in the grid.</li>
+                <li>If nothing else it saves you 250k to download a grid library</li>
+                <li>You can place items precisely in a grid but not only that</li>
+                <li>Allows you to use space intentionally, make use of white space.</li>
+                <li>Remove Layout elements.</li>
+                <li>This main feature is one of the things that makes grid powerful.</li>
+                <li>If you find making layouts with CSS a bit like this gif, grid is probably the answer to your trouble</li>
+            </ul>
+        </grid-notes>
+
+        <!-- web animation -->
+        <grid-slide el-by-el>
+            <fitty-text class="type-art small hero">
+                <span style="color: var(--color-cyan); font-family: Samsung One; font-weight: 800; writing-mode: vertical-rl; transform: rotate(200deg) translateX(-0.3em);">Web</span><span style="font-family: Samsung One; font-weight: 800; color: var(--color-red);">Animations</span>
+            </fitty-text>
+            <div style="padding-right: 6em; margin: 1em 1em 0 1em; position: relative; font-size: 2.2rem;">
+                <html-encode id='anim-html-encode'>
+                    <template id='anim-template'><script></script></template>
+                </html-encode>
+                <span id="anim-ball-demo" style="position: absolute; bottom: 0; right: 0;"><span style="font-size: 6em; position: static;">⚽</span></span>
+            </div>
+            <script>
+                document.currentScript.actions = function * () {
+                    const templateScript = document.getElementById('anim-template').content.firstElementChild;
+                    const ball = document.getElementById('anim-ball-demo');
+                    const encoder = document.getElementById('anim-html-encode');
+                    const anim = a => [
+                        { transform: 'translateY(0)' },
+                        { transform: `translateY(${a})` },
+                    ];
+                    templateScript.innerHTML = `
+                        ball.animate(
+                            KeyFrames,
+                            KeyFrameOptions
+                        );
+                    `;
+                    encoder.update();
+                    yield;
+                    templateScript.innerHTML = `
+                        ball.animate([
+                            { transform: 'translateY(0)' },
+                            { transform: 'translateY(-80vh)' },
+                        ], {
+                            duration: 1000
+                        });
+
+                        // The same
+                        ball.animate({
+                            transform: [
+                                'translateY(0)',
+                                'translateY(-80vh)'
+                            ]
+                        }, {
+                            duration: 1000
+                        });`;
+                    encoder.update();
+                    yield;
+                    ball.animate(anim('-80vh'), {
+                        duration: 1000
+                    });
+                    yield;
+                    templateScript.innerHTML = `
+                        ball.animate([
+                            { transform: 'translateY(0)' },
+                            { transform: 'translateY(-80vh)' },
+                        ], {
+                            duration: 1000,
+                            iterations: 2
+                        });`;
+                    encoder.update();
+                    yield;
+                    ball.animate(anim('-80vh'), {
+                        duration: 1000,
+                        iterations: 2
+                    });
+                    yield;
+                    templateScript.innerHTML = `
+                        ball.animate([
+                            { transform: 'translateY(0)' },
+                            { transform: 'translateY(-80vh)' },
+                        ], {
+                            duration: 1000,
+                            iterations: 2,
+                            direction: 'alternate'
+                        });`;
+                    encoder.update();
+                    yield;
+                    const a = ball.animate(anim('-80vh'), {
+                        duration: 1000,
+                        iterations: 2,
+                        direction: 'alternate'
+                    });
+                    yield;
+                    templateScript.innerHTML = `
+                        ball.animate([
+                            { transform: 'translateY(0)' },
+                            { transform: 'translateY(-80vh)' },
+                        ], {
+                            duration: 1000,
+                            iterations: 2,
+                            direction: 'alternate',
+                            easing: 'ease-out'
+                        });`;
+                    encoder.update();
+                    yield;
+                    ball.animate(anim('-80vh'), {
+                        duration: 1000,
+                        iterations: 2,
+                        direction: 'alternate',
+                        easing: 'ease-out'
+                    });
+                }
+            </script>
+            <html-encode style="font-size: 2.2rem;"><template><script>
+                const animPromise = (async function () {
+                    await el.animate(keyframes1, options).finished;
+                    await el.animate(keyframes2, options).finished;
+                    await el.animate(keyframes3, options).finished;
+
+                    for (const el of document.querySelectorAll('.domino')) {
+                        await el.animate(dominoFallKeyFrames, options).finished;
+                    }
+                }());
+
+                animPromise.then(function () {
+                    /* Do something */
+                });
+            </script></template></html-encode>
+        </grid-slide>
+        <grid-notes>
+            <ul>
+                <li>Another super powered framework built into the browser!</li>
+                <li>KeyFrames, KeyFrameOptions</li>
+                <li>KeyFrameOptions provides lots of handy functionality.</li>
+            </ul>
+        </grid-notes>
+
+        <!-- Web Components -->
+        <grid-slide el-by-el>
+            <fitty-text style="--vertical-align: center;">
+                <h1 class="hero" style="color: var(--color-light); font-family: 'Samsung One'; font-weight: 800;">&lt;<span style="color: var(--color-red)">web</span>-<span style="color: var(--color-yellow)">components</span>&gt;</h1>
+            </fitty-text>
+            <div style="display: flex; flex-direction: column;">
+                <html-encode style="align-self: center; font-size: 1.5em;"><template>
+                    <my-car class="homer"></my-car>
+                </template></html-encode>
+                <img src="../components/images/mycar.jpg" alt="homers terrible car from the simpsons" style="flex-grow: 1; object-fit: contain;"/>
+            </div>
+            <fitty-text style="font-size: 2em; text-shadow: -0.15em 0.15em yellow, 0em 0.15em magenta, 0.15em -0.15em cyan; font-weight: 800; mix-blend-mode: exclusion; background-color: var(--color-light); --vertical-align: center; color: var(--color-dark); grid-column: full;">
+                Shadow DOM
+            </fitty-text>
+            <section style="background: url('../components/images/soup.jpg'); background-repeat: no-repeat; background-size: cover; background-position: 70% top;">
+                <span class="noodle" style="transform: translate(0, 45vh) rotate(10deg) ;">&lt;div&gt;</span>
+                <span class="noodle" style="transform: translate(20vw, 5vh) rotate(-10deg) ;">&lt;div&gt;</span>
+                <span class="noodle" style="transform: translate(-5vw, 5vh) rotate(40deg) ;">&lt;div&gt;</span>
+                <span class="noodle" style="transform: translate(20vw, 25vh) rotate(-30deg) ;">&lt;div&gt;</span>
+            </section>
+            <section>
+                <h1>Scoped css</h1>
+                <html-encode class="jail"><template><style>
+                    div {
+                        background-color: blue;
+                        font-family: papyrus;
+                    }
+                    span {
+                        font-family: comic-sans;
+                        color: pink;
+                    }
+                </style></template></html-encode>
+            </section>
+            <section>
+                <h1>JS Callbacks</h1>
+                <img src="../components/images/shoe-phone.jpg">
+            </section>
+            <img src="../components/images/lego.png" />
+            <section>
+                <img src="../components/images/lego-repair.jpg" alt="Lego Repair by Jan Vormann">
+                <h3 style="position: absolute;bottom: calc(var(--padding) * 4);text-align: center;width: 100%;">Lego Street Repairs by Jan Vormann</h3>
+            </section>
+        </grid-slide>
+        <grid-notes>
+            <ul>
+                <li>Component Engine</li>
+                <li>Hide HTML into the shadow DOM, including style and link tags so you can add style to the elment.</li>
+                <li>The result of this encapsulation solves our div soup problem. Elements for appearance are hidden in the internals of our element.</li>
+                <li>Styles added this way are encapsualted to the element.</li>
+                <li>In addition callbacks to the element life cycle allow us to respond to the element being changed dynamically.</li>
+                <li>We can make a set of isolated components we can plug together just like lego bricks.</li>
+                <li>This allows us to use custom elements within any framework because it is *just* html.</li>
+            </ul>
+        </grid-notes>
+
+        <!-- CSS Custom Properties -->
+        <grid-slide el-by-el>
+            <fitty-text class="type-art small hero">
+                <span style="color: var(--color-cyan); font-family: Samsung One; font-weight: 800;">CSS</span><span style="color: var(--color-yellow); font-size: 2em;">Custom</span><br />
+                <span style="font-family: Samsung One; font-weight: 800; color: var(--color-red);">Properties</span>
+            </fitty-text>
+            <html-encode><template><style>
+                :root {
+                    --color-cyan: #00ADA9;
+                }
+                p {
+                    background: var(--color-cyan);
+                }
+            </style></template></html-encode>
+            <html-encode><template><style>
+                :root {
+                    --padding: 5px;
+                }
+                p {
+                    margin: calc(var(--padding) * 5);
+                }
+            </style></template></html-encode>
+            <html-encode><template><style>
+                :root {
+                    --padding: 5px;
+                }
+                main {
+                    --padding: 3px;
+                }
+                p {
+                    margin: calc(var(--padding) * 5);
+                }
+            </style></template></html-encode>
+            <html-encode style="font-size: 0.9em;"><template><style>
+                /* Mobile First */
+                :root {
+                    --padding: 5px;
+                }
+
+                /* Larger */
+                @media only screen and (min-width: 500px) {
+                    :root {
+                        --padding: 15px;
+                    }
+                }
+
+                /* Desktops */
+                @media only screen and (min-width: 800px) {
+                    :root {
+                        --padding: 30px;
+                    }
+                }
+
+                main {
+                    margin-left: var(--padding);
+                    padding: var(--padding);
+                }
+            </style></template></html-encode>
+            <div style="background-image: paint(three); --rotate-x: 0; --rotate-y: 20; --rotate-z: 10;"></div>
+            <div style="background-image: paint(three); --rotate-x: 10; --rotate-y: -20; --rotate-z: 0;">
+                <html-encode style="font-size: 0.9em;"><template><style>
+                    div {
+                        background-image: paint(three);
+                        --rotate-x: 10;
+                        --rotate-y: -20;
+                        --rotate-z: 0;
+                        padding: var(--padding);
+                    }
+                </style></template></html-encode>
+            </div>
+        </grid-slide>
+        <grid-notes><ul>
+            <li>Custom properties bring variables to CSS by letting you define your own properties.</li>
+            <li>They are a small part of the large houdini spec which is steadily coming to browsers.</li>
+            <li>Make CSS more programatic.</li>
+            <li>Explicitly label how stuff works, i.e. --padding </li>
+            <li>They can be accessed using the var() method.</li>
+            <li>And even used in calc() methods.</li>
+            <li>Most importantly is that they work in the cascade too.</li>
+            <li>Here is how you can take advantage of it.</li>
+        </ul></grid-notes>
+
+        <!-- Custom Properties and Web Components -->
+        <grid-slide el-by-el>
+            <fitty-text class="type-art" style="font-size: 2em; line-height: 1.2;--horizontal-align: left; margin: 0 1em;">
+                <span style="color: var(--color-white); font-family: 'Samsung One'; font-weight: 400;">&lt;<span style="color: var(--color-red); font-weight: 800;">web-components</span>
+                <span style="font-size: 5em; line-height: 0.2em; transform: translateY(0.4em); display: inline-block; mix-blend-mode: luminosity; color: var(--color-cyan); opacity: 0.8;">&amp;</span>
+                <br />
+                <span style="z-index: 100; position: relative;">&emsp;&emsp;style=&quot;<span style="color: var(--color-yellow); font-weight: 800;">--custom-properties</span>:
+                🦄;&quot; &gt;</span></span>
+            </fitty-text>
+            <html-encode lang="html" style="font-size: 0.9em;"><template>
+                <style>
+                    :root {
+                        --my-var: 5px;
+                    }
+                </style>
+
+                <custom-element>
+                    <!-- (in shadow DOM) -->
+                    <style>
+                        :host {
+                            margin: var(--my-var);
+                        }
+                    </style>
+                </custom-element>
+            </template></html-encode>
+            <html-encode lang="html" style="font-size: 0.9em;"><template>
+                <style>
+                    :root {
+                        --my-var: 5px;
+                    }
+                </style>
+
+                <custom-element>
+                    <!-- (in shadow DOM) -->
+                    <style>
+                        :host {
+                            --my-var: 10px;
+                            margin: var(--my-var);
+                        }
+                    </style>
+                </custom-element>
+            </template></html-encode>
+            <html-encode lang="html" style="font-size: 0.9em;"><template>
+                <style>
+                    :root {
+                        --my-var: 5px;
+                    }
+                </style>
+
+                <custom-element style="--my-var: 20px;">
+                    <!-- (in shadow DOM) -->
+                    <style>
+                        :host {
+                            --my-var: 10px;
+                            margin: var(--my-var);
+                        }
+                    </style>
+                </custom-element>
+            </template></html-encode>
+            <html-encode lang="html" style="font-size: 0.9em;"><template>
+                <style>
+                    :root {
+                        --my-var: 5px;
+                    }
+                    custom-element {
+                        --my-var: 20px;
+                    }
+                </style>
+
+                <custom-element>
+                    <!-- (in shadow DOM) -->
+                    <style>
+                        :host {
+                            --my-var: 10px;
+                            margin: var(--my-var);
+                        }
+                    </style>
+                </custom-element>
+            </template></html-encode>
+        </grid-slide>
+        <grid-notes>
+            <ul>
+				<li>Custom properties in the cascade</li>
+				<li>Custom properties pierce the shadow DOM</li>
+				<li>Set values on --host to define default values</li>
+                <li>These can be overridden using the stylesheet or on the element directly</li>
+            </ul>
+        </grid-notes>
+
+        <!-- Components and Grid -->
+        <grid-slide el-by-el>
+            <div class="type-art small" style="display: grid; grid-template: 0.8fr 0.3fr 1fr/10vw 1fr 1fr;grid-gap: calc(var(--padding) * 1); margin: calc(var(--padding) * 4);">
+                <fitty-text style="--vertical-align: center; font-weight: bold; writing-mode: vertical-lr; transform: rotate(180deg);--horizontal-align: left;">CSS</fitty-text>
+                <fitty-text style="grid-column-end: span 2; --vertical-align: center; font-weight: bold; --horizontal-align: left;">Grid</fitty-text>
+                <span class="filler" style="font-size:10vh;">♥</span>
+                <fitty-text style="--vertical-align: start; grid-column: 2/-1;">
+                    &lt;<span style="color: var(--color-red)">web</span>-<br /><span style="color: var(--color-yellow)">components</span>&gt;
+                </fitty-text>
+            </div>
+            <pre style="background-color: #333; text-align: left; font-size: 1.2em; padding: 0 1em 1em 1em; margin: calc(var(--padding) * 2) 0 0 0;"><code ref="code" class="style-scope html-encode">
+<span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">div</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"head"</span>&gt;</span>
+    <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">header</span>&gt;</span>
+        <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">h1</span>&gt;</span>My thing<span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">h1</span>&gt;</span>
+    <span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">header</span>&gt;</span>
+<span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">div</span>&gt;</span>
+<span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">div</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"left-column"</span>&gt;</span>
+    <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">div</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"widget"</span>&gt;</span>
+        <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">div</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"widget-description"</span>&gt;</span>
+            <span><span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">p</span>&gt;</span>lorem ipsum<span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">p</span>&gt;</span></span>
+        <span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">div</span>&gt;</span>
+        <span><span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">button</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"widget-button"</span>&gt;</span>lol<span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">button</span>&gt;</span></span>
+    <span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">div</span>&gt;</span>
+<span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">div</span>&gt;</span>
+<span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">div</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"right-column"</span>&gt;</span>
+    <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">main</span>&gt;</span>
+        <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">p</span>&gt;</span>Hello world<span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">p</span>&gt;</span>
+    <span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">main</span>&gt;</span>
+<span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">div</span>&gt;</span>
+            </code></pre>
+            <pre style="background-color: #333; text-align: left; font-size: 1.2em; padding: 0 1em 1em 1em; margin: calc(var(--padding) * 2) 0 0 0;"><code ref="code" class="style-scope html-encode">
+<span class="hljs-tag style-scope html-encode" style="text-decoration: line-through;">&lt;<span class="hljs-name style-scope html-encode">div</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"head"</span>&gt;</span>
+    <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">header</span>&gt;</span>
+        <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">h1</span>&gt;</span>My thing<span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">h1</span>&gt;</span>
+    <span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">header</span>&gt;</span>
+<span class="hljs-tag style-scope html-encode" style="text-decoration: line-through;">&lt;/<span class="hljs-name style-scope html-encode">div</span>&gt;</span>
+<span class="hljs-tag style-scope html-encode" style="text-decoration: line-through;">&lt;<span class="hljs-name style-scope html-encode">div</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"left-column"</span>&gt;</span>
+    <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">div</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"widget"</span>&gt;</span>
+        <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">div</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"widget-description"</span>&gt;</span>
+            <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">p</span>&gt;</span>lorem ipsum<span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">p</span>&gt;</span>
+        <span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">div</span>&gt;</span>
+        <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">button</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"widget-button"</span>&gt;</span>lol<span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">button</span>&gt;</span>
+    <span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">div</span>&gt;</span>
+<span class="hljs-tag style-scope html-encode" style="text-decoration: line-through;">&lt;/<span class="hljs-name style-scope html-encode">div</span>&gt;</span>
+<span class="hljs-tag style-scope html-encode" style="text-decoration: line-through;">&lt;<span class="hljs-name style-scope html-encode">div</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"right-column"</span>&gt;</span>
+    <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">main</span>&gt;</span>
+        <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">p</span>&gt;</span>Hello world<span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">p</span>&gt;</span>
+    <span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">main</span>&gt;</span>
+<span class="hljs-tag style-scope html-encode" style="text-decoration: line-through;">&lt;/<span class="hljs-name style-scope html-encode">div</span>&gt;</span>
+            </code></pre>
+            <pre style="background-color: #333; text-align: left; font-size: 1.2em; padding: 0 1em 1em 1em; margin: calc(var(--padding) * 2) 0 0 0;"><code ref="code" class="style-scope html-encode">
+<span class="hljs-tag style-scope html-encode" style="text-decoration: line-through;">&lt;<span class="hljs-name style-scope html-encode">div</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"head"</span>&gt;</span>
+    <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">header</span>&gt;</span>
+        <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">h1</span>&gt;</span>My thing<span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">h1</span>&gt;</span>
+    <span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">header</span>&gt;</span>
+<span class="hljs-tag style-scope html-encode" style="text-decoration: line-through;">&lt;/<span class="hljs-name style-scope html-encode">div</span>&gt;</span>
+<span class="hljs-tag style-scope html-encode" style="text-decoration: line-through;">&lt;<span class="hljs-name style-scope html-encode">div</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"left-column"</span>&gt;</span>
+    <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">div</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"widget"</span>&gt;</span>
+        <span class="hljs-tag style-scope html-encode" style="text-decoration: line-through;">&lt;<span class="hljs-name style-scope html-encode">div</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"widget-description"</span>&gt;</span>
+            <span style="text-decoration: line-through;"><span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">p</span>&gt;</span>lorem ipsum<span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">p</span>&gt;</span></span>
+        <span class="hljs-tag style-scope html-encode" style="text-decoration: line-through;">&lt;/<span class="hljs-name style-scope html-encode">div</span>&gt;</span>
+        <span style="text-decoration: line-through;"><span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">button</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"widget-button"</span>&gt;</span>lol<span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">button</span>&gt;</span></span>
+    <span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">div</span>&gt;</span>
+<span class="hljs-tag style-scope html-encode" style="text-decoration: line-through;">&lt;/<span class="hljs-name style-scope html-encode">div</span>&gt;</span>
+<span class="hljs-tag style-scope html-encode" style="text-decoration: line-through;">&lt;<span class="hljs-name style-scope html-encode">div</span> <span class="hljs-attr style-scope html-encode">class</span>=<span class="hljs-string style-scope html-encode">"right-column"</span>&gt;</span>
+    <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">main</span>&gt;</span>
+        <span class="hljs-tag style-scope html-encode">&lt;<span class="hljs-name style-scope html-encode">p</span>&gt;</span>Hello world<span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">p</span>&gt;</span>
+    <span class="hljs-tag style-scope html-encode">&lt;/<span class="hljs-name style-scope html-encode">main</span>&gt;</span>
+<span class="hljs-tag style-scope html-encode" style="text-decoration: line-through;">&lt;/<span class="hljs-name style-scope html-encode">div</span>&gt;</span>
+            </code></pre>
+            <html-encode lang="html" style="font-size: 1.2em;"><template>
+                <header>
+                    <h1>My thing</h1>
+                </header>
+                <my-widget></my-widget>
+                <main>
+                    <p>Hello world</p>
+                </main>
+            </template></html-encode>
+            <fitty-text class="type-art small" style="line-height: 1.2;">
+                <span style="color: var(--color-red);">&lt;Web Components&gt;</span> &amp; <span style="color: var(--color-yellow);">CSS Grid</span> bring<br /><span style="font-weight: 800;">Clarity</span> to Complexity
+            </fitty-text>
+        </grid-slide>
+        <grid-notes>
+            <ul>
+				<li>CSS Grid removes layout cruft</li>
+				<li>Web Components remove visual element cruft</li>
+				<li>Syntactic and Readable HTML</li>
+				<li>All elements have syntactic meaning, describes behaviour using the HTML</li>
+            </ul>
+        </grid-notes>
+
+        <!-- Grid and Custom Properties-->
+        <grid-slide el-by-el style="font-size: 2em;">
+            <fitty-text class="type-art small">
+                <span style="color:var(--color-red)">
+                    <span style="writing-mode: vertical-rl; transform:rotate(180deg); font-size: 0.5em;">CSS</span>Grid
+                </span><br />
+                <span>×</span><br />
+                <span style="color:var(--color-yellow);font-family: var(--fancy-font);">Custom</span><br />
+                Properties
+            </fitty-text>
+            <html-encode><template><style>
+                :root {
+                    --padding: 15px;
+                    --grid-columns: 5;
+                }
+
+                .my-grid {
+                    display: grid;
+                    grid-template-columns: repeat(var(--grid-columns), 1fr);
+                }
+
+                @media only screen and (max-width: 600px) {
+                    :root {
+                        --padding: 20px;
+                        --grid-columns: 1;
+                    }
+                }
+            </style></template></html-encode>
+
+            <html-encode><template><style>
+                :root {
+                    --layout-big: "🍱 🍱" min-content
+                        "🌯 🐠" min-content
+                        "🍭 🐠" 1fr
+                        "🏖️ 🏖️" min-content
+                        /300px 1fr;
+                    
+                    --layout-small: "🍱 🍱" min-content
+                        "🌯 🍭" min-content
+                        "🐠 🐠" minmax(min-content, 1fr)
+                        "🏖️ 🏖️" min-content
+                        /1fr 1fr;
+                }
+
+                .my-grid {
+                    display: grid;
+                    grid-template: var(--layout-small);
+                }
+
+                @media only screen and (min-width: 600px) {
+                    .my-grid {
+                        grid-template: var(--layout-big);
+                    }
+                }
+            </style></template></html-encode>
+
+        </grid-slide>
+        <grid-notes>
+            <ul>
+				<li>Clarify Responsive Design</li>
+				<li>i.e. shrink the gutters</li>
+				<li>Place elements into a different column/row by bulk</li>
+            </ul>
+        </grid-notes>
+
+        <!-- Custom Properties and Web Animations -->
+        <grid-slide el-by-el>
+            <fitty-text class="type-art small">
+                <span style="color:var(--color-yellow);font-family: var(--fancy-font);">Custom</span><br />Properties<br />
+                <span class="filler" style="width: 4em;">+</span><br />
+                <span style="margin-top: -30%;"><span style="color: var(--color-cyan); font-family: Samsung One; font-weight: 800; writing-mode: vertical-rl; transform: rotate(200deg) translateX(-0.3em);">Web</span><span style="font-family: Samsung One; font-weight: 800; color: var(--color-red);">Animations</span></span>
+            </fitty-text>
+            <html-encode style="font-size: 1em;"><template>
+                <style>
+                    :root {
+                        /* Cubic */
+                        --easeInCubic    : cubic-bezier(0.550, 0.055, 0.675, 0.190);
+                        --easeOutCubic   : cubic-bezier(0.215, 0.610, 0.355, 1.000);
+                        --easeInOutCubic : cubic-bezier(0.645, 0.045, 0.355, 1.000);
+
+                        /* Circ */
+                        --easeInCirc     : cubic-bezier(0.600, 0.040, 0.980, 0.335);
+                        --easeOutCirc    : cubic-bezier(0.075, 0.820, 0.165, 1.000);
+                        --easeInOutCirc  : cubic-bezier(0.785, 0.135, 0.150, 0.860);
+
+                        /* Expo */
+                        --easeInExpo     : cubic-bezier(0.950, 0.050, 0.795, 0.035);
+                        --easeOutExpo    : cubic-bezier(0.190, 1.000, 0.220, 1.000);
+                        --easeInOutExpo  : cubic-bezier(1.000, 0.000, 0.000, 1.000);
+
+                        /* etc */
+                    }
+                </style>
+            </template></html-encode>
+            <html-encode style="font-size: 1em;"><template>
+                <script>
+                    const docStyles = getComputedStyle(document.documentElement);
+
+                    el.animate(
+                        {'transform': ['rotate(-20deg)','rotate(-80deg)']},
+                        {
+                            easing: docStyles.getPropertyValue('--easeInOutCubic'),
+                            duration: 500,
+                            fill: 'forwards'
+                        }
+                    );
+                </script>
+            </template></html-encode>
+            <html-encode style="font-size: 1em;" lang="html"><template>
+                <style>
+                    :root {
+                        --durFactor: 1; /* Default */
+                    }
+
+                    body.slow-anim {
+                        --durFactor: 2; /* Slow */
+                    }
+                    
+                    @media screen and (prefers-reduced-motion: reduce) {
+                        :root {
+                            --durFactor: 0; /* Disable animations */
+                        }
+                    }
+                </style>
+            </template></html-encode>
+            <html-encode style="font-size: 1em;" lang="html"><template>
+                <script>
+                    const docStyles = getComputedStyle(document.documentElement);
+
+                    el.animate(
+                        {'transform': ['rotate(-20deg)','rotate(-80deg)']},
+                        {
+                            easing: docStyles.getPropertyValue('--easeInOutCubic'),
+                            duration: 500 * Number(docStyles.getPropertyValue('--durFactor')),
+                            fill: 'forwards'
+                        }
+                    );
+                </script>
+            </template></html-encode>
+            <html-encode style="font-size: 1em;" lang="html"><template>
+                <script>
+                    const docStyles = getComputedStyle(document.documentElement);
+
+                    el.animate(
+                        {
+                            '--x-coord': ['10px','200px'],
+                            '--y-coord': ['10px','200px']
+                        },
+                        options
+                    );
+                </script>
+            </template></html-encode>
+            <html-encode style="font-size: 1em;" lang="html"><template>
+                <script>
+                    // Not widely available yet.
+                    // Part of TypedOM of Houdini
+                    CSS.registerProperty({
+                        name: "--x-coord",
+                        syntax: "<length>",
+                        initialValue: "0"
+                    });
+                </script>
+            </template></html-encode>
+            <div style="background-image: paint(three); --rotate-z: 10;">
+            <html-encode style="font-size: 1em; mix-blend-mode: hard-light;" lang="html"><template>
+                <script>
+                    CSS.registerProperty({
+                        name: "--rotate-y",
+                        syntax: "<number>",
+                        initialValue: "0"
+                    });
+                    document.currentScript.previousElementSibling.animate(
+                        {'--rotate-y': ['-180','180']},
+                        {
+                            easing: 'linear',
+                            duration: 6000,
+                            fill: 'none',
+                            iterations: Infinity
+                        }
+                    );
+                </script>
+            </template></html-encode></div>
+            <script>
+                CSS.registerProperty({
+                    name: "--rotate-y",
+                    syntax: "<number>",
+                    initialValue: "0"
+                });
+                document.currentScript.previousElementSibling.animate(
+                    {'--rotate-y': ['-180','180']},
+                    {
+                        easing: 'linear',
+                        duration: 6000,
+                        fill: 'none',
+                        iterations: Infinity
+                    }
+                );
+            </script>
+        </grid-slide>
+        <grid-notes>
+            <ul>
+                <li>Easing as Custom Property</li>
+                <li>Responsive design &amp; low motion, with custom properties</li>
+                <li>Animating custom properties</li>
+            </ul>
+        </grid-notes>
+
+        <grid-slide>
+            <fitty-text class="hero type-art small"><span style="color: var(--color-yellow);">Thank You</span><br> for Listening 💖</fitty-text>
+        </grid-slide>
+
+        <grid-notes>
+            <ul>
+                <li>Web Components -&gt; Custom Properties</li>
+                <li>Grid -&gt; Web Components</li>
+                <li>Grid -&gt; Custom Properties</li>
+                <li>Web Animation -&gt; Custom Properties</li>
+            </ul>
+        </grid-notes>
+
+    </grid-slides-controller>
+</body>
+</html>
+

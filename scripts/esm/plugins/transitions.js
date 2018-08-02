@@ -26,7 +26,7 @@ GridSlidesController.registerTransition('slide-left',
 
 GridSlidesController.registerTransition('slide-down',
 	[{
-		transform: 'translateY(-100vw)'
+		transform: 'translateY(-100vh)'
 	},{
 		transform: 'translateY(0)'
 	}],
@@ -38,7 +38,7 @@ GridSlidesController.registerTransition('slide-down',
 
 GridSlidesController.registerTransition('slide-up',
 	[{
-		transform: 'translateY(100vw)'
+		transform: 'translateY(100vh)'
 	},{
 		transform: 'translateY(0)'
 	}],

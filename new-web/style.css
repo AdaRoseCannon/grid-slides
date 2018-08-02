@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Lily+Script+One');
+@import url('https://fonts.googleapis.com/css?family=Permanent+Marker');
 
 :root {
     --color-darker: #103635;
@@ -16,6 +16,7 @@ html, body {
     margin: 0;
     font-family: 'Samsung One', Helvetica, Arial, sans-serif;
     font-weight: 200;
+    --fancy-font: 'Permanent Marker';
 }
 
 h1 {
@@ -64,7 +65,7 @@ grid-slide code {
 }
 
 .hero {
-    font-family: 'lily script one';
+    font-family: var(--fancy-font);
     font-size: 3em;
     text-align: center;
     align-self: center;
@@ -201,4 +202,9 @@ html-encode {
     font-size: 4rem;
     color: transparent;
     text-shadow: 0 0 0.2rem yellow, 0 0 0.1rem yellow, 0 0 red;
+}
+
+img.emoji {
+    width: 1em;
+    height: 1em;
 }
