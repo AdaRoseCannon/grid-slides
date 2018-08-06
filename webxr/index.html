@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="./style.css" rel="stylesheet">
+    <link href="https://samsunginter.net/fonts/SamsungOne/fonts.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai.min.css" rel="stylesheet" >
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+    <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/edf84e6e/webcomponents-sd-ce.js"></script>
+    <script type="module" src="../scripts/esm/index.js"></script>
+    <script type="module" src="../scripts/esm/vivus-component.js"></script>
+    <script src="../scripts/fitty-component.min.js"></script>
+
+    <!-- COMMON TAGS -->
+    <meta charset="utf-8">
+    <title>WebXR and the Immersive Web!</title>
+    <!-- Search Engine -->
+    <meta name="description" content="WebXR and the Immersive Web!">
+    <meta name="image" content="https://i.imgur.com/YWA5Dqh.jpg">
+    <!-- Schema.org for Google -->
+    <meta itemprop="name" content="The present and future of XR on the Web!">
+    <meta itemprop="description" content="WebXR and the Immersive Web!">
+    <meta itemprop="image" content="https://i.imgur.com/YWA5Dqh.jpg">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The present and future of XR on the Web!">
+    <meta name="twitter:description" content="WebXR and the Immersive Web!">
+    <meta name="twitter:site" content="@lady_ada_king">
+    <meta name="twitter:image:src" content="https://i.imgur.com/YWA5Dqh.jpg">
+    <!-- Open Graph general (Facebook, Pinterest & Google+) -->
+    <meta name="og:title" content="The present and future of XR on the Web!">
+    <meta name="og:description" content="WebXR and the Immersive Web!">
+    <meta name="og:type" content="website">
+</head>
+<body>
+    <template id="custom-slide-template">
+        <style>
+            footer {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                padding: 0.5em 1em;
+                background: var(--color-dark);
+                color: white;
+                display: flex;
+                justify-content: space-between;
+                grid-column: full;
+                font-size: 1.5rem;
+            }
+            :host {
+                padding-bottom: 2em !important;
+            }
+        </style>
+        <footer>
+            <span>@lady_ada_king</span>
+            <span style="text-align: right;"><img src="images/samsung-internet_256x256.png" style="vertical-align: text-bottom; height: 30px;" /> Samsung Internet</span>
+        </footer>
+    </template>
+    <script type="module">
+        import GridSlide from '../scripts/esm/grid-slide.js';
+        GridSlide.template.content.appendChild(
+            document.getElementById('custom-slide-template').content
+        );
+    </script>
+
+    <grid-slides-controller>
+        <grid-slide el-by-el="reveal: true;" transition-in="none" transition-out="slide-up">
+            <fitty-text>
+                Web<br /><span style="font-size: 3em;">XR</span><br />:The Immersive Web
+            </fitty-text>
+            <vivus-svg src="./images/whatsthis.svg" duration="100" style="position: absolute; filter: invert(1); left: calc(50% + 40vh); top: 40%; width: 200px;"></vivus-svg>
+        </grid-slide>
+        <grid-notes>
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </grid-notes>
+
+    </grid-slides-controller>
+</body>
+</html>
+

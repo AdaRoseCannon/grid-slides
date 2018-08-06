@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css?family=Comfortaa');
+
+:root {
+    --color-darker: #103635;
+    --color-dark: #474143;
+    --color-light: #FFFFFF;
+    --color-yellow: #FFC636;
+    --color-cyan: #00ADA9;
+    --color-cyan-dark: #107D7A;
+    --color-red: #FF6444;
+
+    --space-blue-dark: #0a2b4b;
+    --space-blue-light: #195e8a;
+    --space-white: #faf7ff;
+}
+
+html, body {
+    min-height: 100vh;
+    min-width: 100vw;
+    margin: 0;
+    font-family: 'Samsung One', Helvetica, Arial, sans-serif;
+    font-weight: 200;
+    --fancy-font: 'Comfortaa';
+}
+
+h1 {
+    font-weight: 200;
+    color: var(--space-white);
+}
+
+h2 {
+    font-size: 0.8em;
+    font-weight: 200;
+}
+
+grid-slides-controller {
+    background: var(--color-darker);
+}
+
+grid-slide {
+    color: var(--color-light);
+    background: linear-gradient(to bottom left, var(--space-blue-light), var(--space-blue-dark));
+    flex-direction: column;
+    font-size: 3rem;
+    background-size: cover;
+    background-position: center center;
+}
+
+@media screen and (max-width: 100rem) {
+    grid-slides-controller {
+        --padding: 0.4rem;
+    }
+    grid-slide {
+        font-size:2rem;
+    }
+}
+
+@media screen and (max-width: 50rem) {
+    grid-slides-controller {
+        --padding: 0.2rem;
+    }
+    grid-slide {
+        font-size:1rem;
+    }
+}
+
+grid-slide code {
+    font-size: 0.8em;
+}
+
+body.fonts-ready fitty-text {
+    opacity: 1;
+}
+
+.type-art {
+    align-self: stretch;
+    line-height: 0.9;
+    --vertical-align: center;
+    grid-column: full;
+    margin: 0.4em 0;
+}
+
+.type-art.small {
+    grid-column: one-quarter/three-quarter;
+}
+
+.caption {
+    grid-area: 1/content-inner;
+    align-self: flex-end;
+    background: var(--color-dark);
+    margin: 0;
+}
+
+fitty-text {
+    align-self: stretch;
+    font-family: var(--fancy-font);
+    line-height: 0.9;
+    margin-top: 1em;
+}
+
+grid-slide {
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+html-encode {
+    margin-top: calc(var(--padding) * 2);
+}
+
+img.emoji {
+    width: 1em;
+    height: 1em;
+}
