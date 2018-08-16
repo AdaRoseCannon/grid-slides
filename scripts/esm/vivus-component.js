@@ -14,7 +14,7 @@ class VivusSVG extends HTMLElementPlus {
     
     connectedCallback() {
         this.vivus.reset();
-        this.vivus.play(1, () => console.log('done'))
+        this.vivus.play(1);
     }
 
 	allAttributesChangedCallback(attrs) {

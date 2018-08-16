@@ -13,6 +13,8 @@
     <script type="module" src="../scripts/esm/index.js"></script>
     <script type="module" src="../scripts/esm/vivus-component.js"></script>
     <script src="../scripts/fitty-component.min.js"></script>
+    <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/mrdoob/three.js/r95/examples/js/loaders/GLTFLoader.js"></script>
 
     <!-- COMMON TAGS -->
     <meta charset="utf-8">
@@ -61,6 +63,7 @@
         </footer>
     </template>
     <script type="module">
+        import '../scripts/esm/plugins/aframe.js';
         import GridSlide from '../scripts/esm/grid-slide.js';
         GridSlide.template.content.appendChild(
             document.getElementById('custom-slide-template').content
@@ -68,17 +71,48 @@
     </script>
 
     <grid-slides-controller>
-        <grid-slide el-by-el="reveal: true;" transition-in="none" transition-out="slide-up">
+        <grid-slide el-by-el="reveal: true;" transition-in="none" transition-out="slide-right">
             <fitty-text>
                 Web<br /><span style="font-size: 3em;">XR</span><br />:The Immersive Web
             </fitty-text>
             <vivus-svg src="./images/whatsthis.svg" duration="100" style="position: absolute; filter: invert(1); left: calc(50% + 40vh); top: 40%; width: 200px;"></vivus-svg>
         </grid-slide>
+        <grid-slide a-frame-step-by-step="target: div;" transition-in="fade">
+            <div style="width: 90vw; height: 90vh; align-self: center; justify-self: center;"></div>
+			<template>
+                <a-camera position="0 0 6" fov="30"></a-camera>
+                <a-light></a-light>
+                <a-entity gltf-model="./images/si.glb" scale="0 0 0">
+                    <a-animation delay="1000" from="0 -200 0" to="0 0 0" easing="ease-out-back" begin="model-loaded" dur="3000"></a-animation>
+                    <a-animation delay="1000" from="0 0 0" to="1 1 1" easing="ease-out-back" begin="model-loaded" dur="2000" attribute="scale"></a-animation>
+                    <a-animation delay="1000" from="0 -1 0" to="0 0 0" easing="ease-out-back" begin="model-loaded" dur="1000" attribute="position"></a-animation>
+                </a-entity>
+			</template>
+        </grid-slide>
         <grid-notes>
+            <h3>What is XR and the Immersive Web?</h3>
+            <h3>Past</h3>
             <ul>
-                <li></li>
-                <li></li>
-                <li></li>
+                <li>How the API started</li>
+                <li>First F2F</li>
+                <li>Community Group</li>
+            </ul>
+            <h3>Present</h3>
+            <ul>
+                <li>WebVR 1.1</li>
+                <li>VR Focused</li>
+                <li>Link Traversal</li>
+                <li>Gamepad Extensions</li>
+                <li>Working Group, focused on WebXR</li>
+                <li>WebAR Demos using Camera</li>
+            </ul>
+            <h3>Future</h3>
+            <ul>
+                <li>Multi-headed rendering</li>
+                <li>Basic AR</li>
+                <li>explore xr-input<ul>
+                    <li>vr-ar, and across hardware</li>
+                </ul></li>
             </ul>
         </grid-notes>
 

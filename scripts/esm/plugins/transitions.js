@@ -2,9 +2,11 @@ import GridSlidesController from '../grid-slides-controller.js';
 
 GridSlidesController.registerTransition('slide-right',
 	[{
-		transform: 'translateX(-100vw)'
+		transform: 'translateX(-100vw)',
+		opacity: 0
 	},{
-		transform: 'translateX(0)'
+		transform: 'translateX(0)',
+		opacity: 1
 	}],
 	{
 		duration: 500,
@@ -14,9 +16,11 @@ GridSlidesController.registerTransition('slide-right',
 
 GridSlidesController.registerTransition('slide-left',
 	[{
-		transform: 'translateX(100vw)'
+		transform: 'translateX(100vw)',
+		opacity: 0
 	},{
-		transform: 'translateX(0)'
+		transform: 'translateX(0)',
+		opacity: 1
 	}],
 	{
 		duration: 500,
