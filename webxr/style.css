@@ -14,6 +14,8 @@
     --space-white: #faf7ff;
 }
 
+
+
 html, body {
     min-height: 100vh;
     min-width: 100vw;
@@ -45,6 +47,17 @@ grid-slide {
     background-size: cover;
     background-position: center center;
 }
+
+/* @media screen and (orientation: portrait) {
+    body {
+        opacity: 0.5;
+        width: 100vh;
+        height: 100vw;
+        min-height: 100vw;
+        min-width: 100vh;
+        transform: rotate(90deg);
+    }
+} */
 
 @media screen and (max-width: 100rem) {
     grid-slides-controller {
