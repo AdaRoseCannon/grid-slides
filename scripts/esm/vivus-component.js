@@ -13,8 +13,10 @@ class VivusSVG extends HTMLElementPlus {
     }
     
     connectedCallback() {
+        if (!this.vivus.isReady) return;
+        if (this.id) console.log(this.id, 'playing');
         this.vivus.reset();
-        this.vivus.play(1);
+        this.vivus.play();
     }
 
 	allAttributesChangedCallback(attrs) {
@@ -26,7 +28,7 @@ class VivusSVG extends HTMLElementPlus {
             this.shadowRoot.appendChild(div);
             this.vivus = new Vivus(div, {
                 duration: Number(attrs.duration) || 200,
-                start: 'manual',
+                // start: 'manual',
                 type: attrs.type || 'oneByOne',
                 file: attrs.src,
                 reverseStack: attrs.reverse && attrs.reverse !== "false"
