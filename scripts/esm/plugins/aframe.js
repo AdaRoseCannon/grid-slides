@@ -20,7 +20,10 @@ GridSlidesController.registerSlideData('a-frame-step-by-step', {
 	},
 	target: {
 		type: 'selector'
-	}
+    },
+    wait: {
+        default: false
+    }
 }, function (options) {
 
 	const steps = [];
@@ -91,6 +94,8 @@ GridSlidesController.registerSlideData('a-frame-step-by-step', {
 		setup: function () {},
 		action: function *() {
             setup.bind(this)();
+
+            if (options.wait) yield;
 
             scene.play();
     

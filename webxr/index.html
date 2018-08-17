@@ -80,14 +80,14 @@
         <grid-slide a-frame-step-by-step="target: div; light: false;" transition-in="fade">
             <div style="width: 90vw; height: 90vh; align-self: center; justify-self: center;"></div>
             <template action="assets">
-                <a-asset-item id="si-gltf" src="./images/si.glb"></a-asset-item>
+                <a-asset-item id="si-gltf" src="./images/si-stars.glb"></a-asset-item>
             </template>
 			<template>
                 <a-camera look-controls="enabled:false;" position="0 0 6" fov="30"></a-camera>
-                <a-entity gltf-model="#si-gltf" scale="0 0 0">
-                    <a-animation delay="1000" from="0 -200 0" to="0 0 0" easing="ease-out-back" dur="3000"></a-animation>
+                <a-entity scale="0 0 0" position="0 -0.5 0">
+                    <a-animation delay="1000" from="0 -180 0" to="0 0 0" easing="ease-in-out" dur="5000"></a-animation>
                     <a-animation delay="1000" from="0 0 0" to="1 1 1" easing="ease-out-back" dur="2000" attribute="scale"></a-animation>
-                    <a-animation delay="1000" from="0 -1 0" to="0 0 0" easing="ease-out-back" dur="1000" attribute="position"></a-animation>
+                    <a-entity gltf-model="#si-gltf" position="0 0.5 0"></a-entity>
                 </a-entity>
 			</template>
         </grid-slide>
