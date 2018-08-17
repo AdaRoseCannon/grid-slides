@@ -1,7 +1,15 @@
-
+/* global AFRAME */
 import "https://aframe.io/releases/0.8.2/aframe.min.js";
 import "https://cdn.rawgit.com/mrdoob/three.js/r95/examples/js/loaders/GLTFLoader.js";
 import GridSlidesController from '../grid-slides-controller.js';
+
+Object.defineProperty(AFRAME.AEntity.prototype, 'removeFromParent', function(){
+    var parentEl = this.parentEl;
+    this.parentEl.remove(this);
+    this.attachedToParent = false;
+    this.parentEl = null;
+    parentEl.emit('child-detached', {el: this});
+})
 
 GridSlidesController.registerSlideData('a-frame-step-by-step', {
 	physics: {
@@ -23,6 +31,7 @@ GridSlidesController.registerSlideData('a-frame-step-by-step', {
     let domLocation = options.target || this;
     
     function teardown() {
+        if (!scene) return;
         try {
             // HACK!! This throws errors sometimes. 
             domLocation.removeChild(scene);
@@ -54,7 +63,6 @@ GridSlidesController.registerSlideData('a-frame-step-by-step', {
             scene.setAttribute('embedded', '');
             scene.setAttribute('renderer', 'gammaOutput:true;');
             scene.setAttribute('vr-mode-ui', 'enabled: false');
-            scene.flushToDOM();
 
             // HACK to ensure the internal daat is accurate
             scene.components.renderer.data = (scene.getAttribute('renderer') || 'gammaOutput:true;');
@@ -75,11 +83,16 @@ GridSlidesController.registerSlideData('a-frame-step-by-step', {
         }
 
         domLocation.appendChild(scene);
+        scene.flushToDOM();
+        scene.pause();
     }
 
 	return {
-		setup,
+		setup: function () {},
 		action: function *() {
+            setup.bind(this)();
+
+            scene.play();
     
             // HACK!! Sometimes the templates haven't been parsed
             if (!steps.length) setup();
