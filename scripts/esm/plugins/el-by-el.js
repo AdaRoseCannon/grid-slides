@@ -69,18 +69,24 @@ GridSlidesController.registerSlideData('el-by-el',
                     if (el.tagName === 'SCRIPT' && el.actions) {
                         yield * el.actions.bind(this)();
                         if (nextEl) {
-                            yield;
                             if (el.teardown) el.teardown.bind(this)();
                         }
                         continue;
                     }
+                    if (el.tagName === 'SCRIPT' || el.tagName === 'TEMPLATE') {
+                        // Non-drawn elements shouldn't be waited for just skip them.
+                        continue;
+                    }
                     if (!nextEl) {
+                        // The last element returns so it doesn't wait before continuing
                         return run(el); 
                     }
-                    if (nextEl.tagName === 'SCRIPT' && nextEl.actions) {
+                    if (nextEl.tagName === 'SCRIPT' || nextEl.tagName === 'TEMPLATE') {
                         // in the case of a script run and then jump straight into the script.
                         run(el);
                     } else {
+
+                        // Normal elemnts do a thing and yield it
                         yield run(el);
                     }
                 }
