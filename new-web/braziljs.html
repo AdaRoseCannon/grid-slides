@@ -4,20 +4,6 @@
     <title>Woah, New Web stuff for BrazilJS!</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="../css/style.css" rel="stylesheet">
-    <link href="./style.css" rel="stylesheet">
-    <link href="https://samsunginter.net/fonts/SamsungOne/fonts.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai.min.css" rel="stylesheet" >
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-    <script src="https://twemoji.maxcdn.com/2/twemoji.min.js?11.0"></script>
-    <script>
-        window.addEventListener('DOMContentLoaded', () => twemoji.parse(document.body));
-    </script>
-    <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/edf84e6e/webcomponents-sd-ce.js"></script>
-    <script src="../scripts/HTMLElementPlus.js"></script>
-    <script type="module" src="../scripts/esm/index.js"></script>
-    <script src="../scripts/fitty-component.min.js"></script>
     <!-- COMMON TAGS -->
     <meta charset="utf-8">
     <title>The Intersections of New Web APIs.</title>
@@ -39,7 +25,57 @@
     <meta name="og:description" content="Slides for the DeltaV talk.">
     <meta name="og:type" content="website">
 
-    <script>
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="./style.css" rel="stylesheet">
+    <link href="https://samsunginter.net/fonts/SamsungOne/fonts.css" rel="stylesheet">
+
+    <template id="custom-slide-template">
+        <style>
+            footer {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                padding: 0.5em 1em;
+                background: var(--color-dark);
+                color: white;
+                display: flex;
+                justify-content: space-between;
+                grid-column: full;
+                font-size: 1.5rem;
+            }
+            :host {
+                padding-bottom: 2em !important;
+            }
+        </style>
+        <footer>
+            <span>Ada Rose Cannon</span>
+            <span style="text-align: right;"><img src="images/samsung-internet_256x256.png" style="vertical-align: text-bottom; height: 30px;" /> Samsung Internet</span>
+        </footer>
+    </template>
+
+    <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/edf84e6e/webcomponents-sd-ce.js"></script>
+    <script src="https://twemoji.maxcdn.com/2/twemoji.min.js?11.0"></script>
+    <script type="module" defer>
+        // Slides lib
+        import "../scripts/esm/index.js";
+
+        // Fitty component
+        import "../scripts/fitty-component.min.js";
+
+        // Add slide footer
+        import GridSlide from '../scripts/esm/grid-slide.js';
+        GridSlide.template.content.appendChild(
+            document.getElementById('custom-slide-template').content
+        );
+
+        // Fix emojis
+        twemoji.parse(document.body, {
+            folder: 'svg',
+            ext: '.svg'
+        });
+
+        // Add three-paint worklet demo code
         CSS.paintWorklet.addModule('https://ada.is/three-paint/dist/bundle.js');
     </script>
 </head>
@@ -961,7 +997,7 @@
                 </script>
             </template></html-encode></div>
             <script>
-                CSS.registerProperty({
+                if ('registerProperty' in CSS) CSS.registerProperty({
                     name: "--rotate-y",
                     syntax: "<number>",
                     initialValue: "0"
