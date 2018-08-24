@@ -62,7 +62,6 @@
 
         // Fitty component
         import "../scripts/fitty-component.min.js";
-        import "../scripts/fitty-component.min.js";
 
         // Add slide footer
         import GridSlide from '../scripts/esm/grid-slide.js';
@@ -473,6 +472,13 @@
                     });
                 }
             </script>
+            <html-encode style="font-size: 2.2rem;"><template><script>
+                el.animate(keyframes1, options).finished
+                .then(function () {
+                    // Animation completed
+                    form.submit();
+                });
+            </script></template></html-encode>
             <html-encode style="font-size: 2.2rem;"><template><script>
                 const animPromise = (async function () {
                     await el.animate(keyframes1, options).finished;
@@ -986,7 +992,7 @@
                         syntax: "<number>",
                         initialValue: "0"
                     });
-                    document.currentScript.previousElementSibling.animate(
+                    myEl.animate(
                         {'--rotate-y': ['-180','180']},
                         {
                             easing: 'linear',
