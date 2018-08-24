@@ -325,6 +325,7 @@ function toggleFullscreen() {
 		} else if (this.webkitRequestFullscreen) {
 			this.webkitRequestFullscreen();
 		}
+		window.screen.lockOrientation("landscape");
 	}
 }
 
