@@ -8,13 +8,15 @@ class VivusSVG extends HTMLElementPlus {
         super();
     }
 
-	static get observedAttributes() {
+	static get observedAttributes() { // type = delayed|oneByOne|sync
 		return ['src', 'width', 'height', 'type', 'reverse', 'duration'];
     }
     
     connectedCallback() {
         if (!this.vivus.isReady) return;
         if (this.id) console.log(this.id, 'playing');
+        const svg = this.shadowRoot.querySelector('svg');
+        if (svg) svg.classList.remove('finished');
         this.vivus.reset();
         this.vivus.play();
     }
@@ -22,6 +24,16 @@ class VivusSVG extends HTMLElementPlus {
 	allAttributesChangedCallback(attrs) {
 		if (!this.shadowRoot) {
             this.attachShadow({mode: 'open'});
+            this.shadowRoot.innerHTML = `
+                <style>
+                    svg:not(.finished) * {
+                        fill-opacity: 0;
+                    }
+                    svg * {
+                        transition: fill-opacity 1s;
+                    }
+                </style>
+            `;
             const div = document.createElement('div');
             if (attrs.width) div.style.width = attrs.width;
             if (attrs.height) div.style.height = attrs.height;
@@ -32,6 +44,8 @@ class VivusSVG extends HTMLElementPlus {
                 type: attrs.type || 'oneByOne',
                 file: attrs.src,
                 reverseStack: attrs.reverse && attrs.reverse !== "false"
+            }, function (obj) {
+                obj.el.classList.add('finished');
             });
 		}
 	}
