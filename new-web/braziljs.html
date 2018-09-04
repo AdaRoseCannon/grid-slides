@@ -60,8 +60,11 @@
         // Slides lib
         import "../scripts/esm/index.js";
 
+        // HTML Encode component
+        import "../scripts/web-components/html-encode.js";
+        
         // Fitty component
-        import "../scripts/fitty-component.min.js";
+        import "../scripts/web-components/fitty-component.min.js";
 
         // Add slide footer
         import GridSlide from '../scripts/esm/grid-slide.js';
@@ -80,34 +83,6 @@
     </script>
 </head>
 <body>
-    <template id="custom-slide-template">
-        <style>
-            footer {
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                padding: 0.5em 1em;
-                background: var(--color-dark);
-                color: white;
-                display: flex;
-                justify-content: space-between;
-                grid-column: full;
-                font-size: 1.5rem;
-            }
-            :host {
-                padding-bottom: 2em !important;
-            }
-        </style>
-        <footer>
-            <span>@lady_ada_king</span>
-            <span style="text-align: right;"><img src="images/samsung-internet_256x256.png" style="vertical-align: text-bottom; height: 30px;" /> Samsung Internet</span>
-        </footer>
-    </template>
-    <script type="module">
-        import GridSlide from '../scripts/esm/grid-slide.js';
-        GridSlide.template.content.appendChild(document.getElementById('custom-slide-template').content);
-    </script>
 
     <grid-slides-controller>
         <grid-slide el-by-el transition-in="none" transition-out="slide-up">

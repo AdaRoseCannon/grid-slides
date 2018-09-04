@@ -99,4 +99,5 @@ class HTMLEncode extends HTMLElementPlus {
 	}
 }
 
+customElements.define('html-encode', HTMLEncode);
 export default HTMLEncode;

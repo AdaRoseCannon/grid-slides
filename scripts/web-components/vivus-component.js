@@ -51,5 +51,6 @@ class VivusSVG extends HTMLElementPlus {
 	}
 }
 
+export default VivusSVG;
 customElements.define('vivus-svg', VivusSVG);
 

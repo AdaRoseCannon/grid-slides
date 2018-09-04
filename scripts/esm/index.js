@@ -6,7 +6,6 @@ import './plugins/el-by-el.js';
 import './plugins/transitions.js';
 import GridSlide from './grid-slide.js';
 import GridSlidesController from './grid-slides-controller.js';
-import HTMLEncode from './html-encode.js';
 
 // only polyfill .finished in browsers that already support animate()
 if (Element.prototype.animate) {
@@ -36,5 +35,4 @@ if (Element.prototype.animate) {
 window.addEventListener('DOMContentLoaded', function () {
 	customElements.define('grid-slides-controller', GridSlidesController);
 	customElements.define('grid-slide', GridSlide);
-	customElements.define('html-encode', HTMLEncode);
 });
