@@ -1,149 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- COMMON TAGS -->
-    <meta charset="utf-8">
-    <title>WebXR and the Immersive Web!</title>
-    <!-- Search Engine -->
-    <meta name="description" content="WebXR and the Immersive Web!">
-    <meta name="image" content="https://i.imgur.com/YWA5Dqh.jpg">
-    <!-- Schema.org for Google -->
-    <meta itemprop="name" content="The present and future of XR on the Web!">
-    <meta itemprop="description" content="WebXR and the Immersive Web!">
-    <meta itemprop="image" content="https://i.imgur.com/YWA5Dqh.jpg">
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="The present and future of XR on the Web!">
-    <meta name="twitter:description" content="WebXR and the Immersive Web!">
-    <meta name="twitter:site" content="@lady_ada_king">
-    <meta name="twitter:image:src" content="https://i.imgur.com/YWA5Dqh.jpg">
-    <!-- Open Graph general (Facebook, Pinterest & Google+) -->
-    <meta name="og:title" content="The present and future of XR on the Web!">
-    <meta name="og:description" content="WebXR and the Immersive Web!">
-    <meta name="og:type" content="website">
+	<!-- COMMON TAGS -->
+	<meta charset="utf-8">
+	<title>WebXR and the Immersive Web!</title>
+	<!-- Search Engine -->
+	<meta name="description" content="WebXR and the Immersive Web!">
+	<meta name="image" content="https://i.imgur.com/YWA5Dqh.jpg">
+	<!-- Schema.org for Google -->
+	<meta itemprop="name" content="The present and future of XR on the Web!">
+	<meta itemprop="description" content="WebXR and the Immersive Web!">
+	<meta itemprop="image" content="https://i.imgur.com/YWA5Dqh.jpg">
+	<!-- Twitter -->
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="The present and future of XR on the Web!">
+	<meta name="twitter:description" content="WebXR and the Immersive Web!">
+	<meta name="twitter:site" content="@lady_ada_king">
+	<meta name="twitter:image:src" content="https://i.imgur.com/YWA5Dqh.jpg">
+	<!-- Open Graph general (Facebook, Pinterest & Google+) -->
+	<meta name="og:title" content="The present and future of XR on the Web!">
+	<meta name="og:description" content="WebXR and the Immersive Web!">
+	<meta name="og:type" content="website">
 
-    <link href="../css/style.css" rel="stylesheet">
-    <link href="./style.css" rel="stylesheet">
-    <link href="https://samsunginter.net/fonts/SamsungOne/fonts.css" rel="stylesheet">
+	<link href="../css/style.css" rel="stylesheet">
+	<link href="./style.css" rel="stylesheet">
+	<link href="https://samsunginter.net/fonts/SamsungOne/fonts.css" rel="stylesheet">
 
-    <template id="custom-slide-template">
-        <style>
-            footer {
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                padding: 0.5em 1em;
-                background: var(--color-dark);
-                color: white;
-                display: flex;
-                justify-content: space-between;
-                grid-column: full;
-                font-size: 1.5rem;
-            }
-            :host {
-                padding-bottom: 2em !important;
-            }
-        </style>
-        <footer>
-            <span>Ada Rose Cannon</span>
-            <span style="text-align: right;"><img src="images/samsung-internet_256x256.png" style="vertical-align: text-bottom; height: 30px;" /> Samsung Internet</span>
-        </footer>
-    </template>
+	<template id="custom-slide-template">
+		<style>
+			footer {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				padding: 0.5em 1em;
+				background: var(--color-dark);
+				color: white;
+				display: flex;
+				justify-content: space-between;
+				grid-column: full;
+				font-size: 1.5rem;
+			}
+			:host {
+				padding-bottom: 2em !important;
+			}
+		</style>
+		<footer>
+			<span>Ada Rose Cannon</span>
+			<span style="text-align: right;"><img src="images/samsung-internet_256x256.png" style="vertical-align: text-bottom; height: 30px;" /> Samsung Internet</span>
+		</footer>
+	</template>
 
-    <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/edf84e6e/webcomponents-sd-ce.js"></script>
-    <script type="module">
-        import "../scripts/esm/index.js";
-        import "../scripts/web-components/vivus-component.js";
-        import "../scripts/web-components/html-encode.js";
-        import "../scripts/web-components/fitty-component.min.js";
-        import '../scripts/esm/plugins/aframe.js';
-        import HTMLElementPlus from 'https://unpkg.com/html-element-plus/html-element-plus.js';
-        import GridSlide from '../scripts/esm/grid-slide.js';
-        GridSlide.template.content.appendChild(
-            document.getElementById('custom-slide-template').content
-        );
-    </script>
+	<script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/edf84e6e/webcomponents-sd-ce.js"></script>
+	<script>
+		navigator.serviceWorker.register('../sw.js');
+	</script>
+	<script type="module">
+		import "../scripts/esm/index.js";
+		import "../scripts/web-components/vivus-component.js";
+		import "../scripts/web-components/html-encode.js";
+		import "../scripts/web-components/fitty-component.min.js";
+		import '../scripts/esm/plugins/aframe.js';
+		import HTMLElementPlus from 'https://unpkg.com/html-element-plus/html-element-plus.js';
+		import GridSlide from '../scripts/esm/grid-slide.js';
+		GridSlide.template.content.appendChild(
+			document.getElementById('custom-slide-template').content
+		);
+	</script>
 </head>
 <body>
 
-    <grid-slides-controller>
-        <grid-slide el-by-el="reveal: true;" transition-in="none" transition-out="slide-right">
-            <fitty-text style="color: black; filter: invert(0.7) sepia(1) hue-rotate(-50deg) saturate(6) drop-shadow(0 0 0.1em rgba(255,0,0,0.7))">
-                Web<br /><span style="padding-bottom: 0.2em;"><vivus-svg src="./images/xr.svg" duration="200" width="2em" height="1.415em" type="delayed"></vivus-svg></span><br />:The Immersive Web
-            </fitty-text>
-            <vivus-svg src="./images/who.svg" duration="100" style="position: absolute; filter: invert(1); left: 2rem; bottom: 3rem; width: 200px;"></vivus-svg>
-            <vivus-svg src="./images/whatsthis.svg" duration="100" style="position: absolute; filter: invert(1); left: calc(50% + 40vh); top: 40%; width: 200px;"></vivus-svg>
-        </grid-slide>
-        <grid-slide a-frame-step-by-step="target: div; light: false;" transition-in="fade">
-            <div style="width: 90vw; height: 90vh; align-self: center; justify-self: center;"></div>
-            <template action="assets">
-                <a-asset-item id="si-gltf" src="./images/si-stars.glb"></a-asset-item>
-            </template>
-			<template>
-                <a-camera look-controls="enabled:false;" position="0 0 6" fov="30"></a-camera>
-                <a-entity scale="0 0 0" position="0 -0.5 0">
-                    <a-animation delay="1000" from="0 -180 0" to="0 0 0" easing="ease-in-out" dur="5000"></a-animation>
-                    <a-animation delay="1000" from="0 0 0" to="1 1 1" easing="ease-out-back" dur="5000" attribute="scale"></a-animation>
-                    <a-entity gltf-model="#si-gltf" position="0 0.5 0" look-controls="reverseMouseDrag: true; hmdEnabled: false;"></a-entity>
-                </a-entity>
+	<grid-slides-controller>
+		<grid-slide el-by-el="reveal: true;" transition-in="none" transition-out="slide-right">
+			<fitty-text style="color: black; filter: invert(0.7) sepia(1) hue-rotate(-50deg) saturate(6) drop-shadow(0 0 0.1em rgba(255,0,0,0.7))">
+				Web<br /><span style="padding-bottom: 0.2em;"><vivus-svg src="./images/xr.svg" duration="200" width="2em" height="1.415em" type="delayed"></vivus-svg></span><br />:The Immersive Web
+			</fitty-text>
+			<vivus-svg src="./images/who.svg" duration="100" style="position: absolute; filter: invert(1); left: 2rem; bottom: 3rem; width: 200px;"></vivus-svg>
+			<vivus-svg src="./images/whatsthis.svg" duration="100" style="position: absolute; filter: invert(1); left: calc(50% + 40vh); top: 40%; width: 200px;"></vivus-svg>
+		</grid-slide>
+		<grid-slide a-frame-step-by-step="target: div; light: false;" transition-in="fade">
+			<div style="width: 90vw; height: 90vh; align-self: center; justify-self: center;"></div>
+			<template action="assets">
+				<a-asset-item id="si-gltf" src="./images/si-stars.glb"></a-asset-item>
 			</template>
-        </grid-slide>
-        <grid-notes>
-            <ul>
-                <li>I'm from Samsung Internet, we're a browser for Android phones. You can find us in the play store.</li>
-                <li>Our main focuses are privacy and performance</li>
-                <li>We also focus on some new Web APIs such as Progressive Web Apps, Web Payment, and Virtual Reality in the Web</li>
-                <li>We even have a VR web browser!</li>
-            </ul>
-        </grid-notes>
-        <grid-slide el-by-el>
-            <!-- Our VR Browser-->
-            <video src=""></video>
-            <!-- WebVR demo -->
-            <video src=""></video>
-            <section>
-                <fitty-text style="flex-grow: 1;--vertical-align: center;">XR<span><vivus-svg src="./images/whatsthis.svg" duration="100" style="filter: invert(1); width: 0.5em; transform: translateY(-0.1em); display: inline-block;"></span></vivus-svg></fitty-text>
-            </section>
-            <img src="./images/special-feeling.svg" />
-            <img src="./images/rogerrabbit.jpg" >
-            <img src="./images/spacejam.jpg" >
-        </grid-slide>
-        <grid-notes>
-            <ul>
-                <li>This browser is able to display WebGL worlds in an immersive fashion.</li>
-                <li>One of my main focuses as a developer advocate is on VR</li>
-                <li>and that is what I am here to talk to you about today!</li>
+			<template>
+				<a-camera look-controls="enabled:false;" position="0 0 6" fov="30"></a-camera>
+				<a-entity scale="0 0 0" position="0 -0.5 0">
+					<a-animation delay="1000" from="0 -180 0" to="0 0 0" easing="ease-in-out" dur="5000"></a-animation>
+					<a-animation delay="1000" from="0 0 0" to="1 1 1" easing="ease-out-back" dur="5000" attribute="scale"></a-animation>
+					<a-entity gltf-model="#si-gltf" position="0 0.5 0" look-controls="reverseMouseDrag: true; hmdEnabled: false;"></a-entity>
+				</a-entity>
+			</template>
+		</grid-slide>
+		<grid-notes>
+			<ul>
+				<li>I'm from Samsung Internet, we're a browser for Android phones. You can find us in the play store.</li>
+				<li>Our main focuses are privacy and performance</li>
+				<li>We also focus on some new Web APIs such as Progressive Web Apps, Web Payment, and Virtual Reality in the Web</li>
+				<li>We even have a VR web browser!</li>
+			</ul>
+		</grid-notes>
+		<grid-slide el-by-el>
+			<!-- Our VR Browser-->
+			<video src="./images/space-jam.mp4" muted></video>
+			<!-- WebVR demo -->
+			<video src="./images/enter-vr.mp4" muted></video>
+			<section>
+				<fitty-text style="flex-grow: 1;--vertical-align: center;">XR<span><vivus-svg src="./images/whatsthis.svg" duration="100" style="filter: invert(1); width: 0.5em; transform: translateY(-0.1em); display: inline-block;"></span></vivus-svg></fitty-text>
+			</section>
+			<img src="./images/special-feeling.svg" />
+			<img src="./images/rogerrabbit.jpg" >
+			<img src="./images/spacejam.jpg" >
+		</grid-slide>
+		<grid-notes>
+			<ul>
+				<li>This browser is able to display WebGL worlds in an immersive fashion.</li>
+				<li>One of my main focuses as a developer advocate is on VR</li>
+				<li>and that is what I am here to talk to you about today!</li>
 
-                <li>So what is XR?</li>
-                <li>it's an umbrella term for AR and VR</li>
-                <li>Why do we group them together? Similar problems.</li>
+				<li>So what is XR?</li>
+				<li>it's an umbrella term for AR and VR</li>
+				<li>Why do we group them together? Similar problems.</li>
 
-                <li>AR -> Brings the world to your environment.</li>
-                <li>VR -> Brings you to the world</li>
-            </ul>
-        </grid-notes>
+				<li>AR -> Brings the world to your environment.</li>
+				<li>VR -> Brings you to the world</li>
+			</ul>
+		</grid-notes>
 
-        <grid-slide>
-            <fitty-text><span>The Past<br /><span style="font-size: 0.5em;">(2016-17)</span></span></fitty-text>
-        </grid-slide>
-        <grid-notes>
-            <h3>THE PAST</h3>
-            <ul>
-                <li>The first WebVR Face to Face...</li>
-                <li>hashed out an API to work with the early VR headsets</li>
-                <li>The WebVR API is based on WebGL for many reasons.</li>
-                <li>WebGL is an API for drawing triangles. It's a little wordy.</li>
-                <li>But yay there are libraries!</li>
-            </ul>
-            <h3>WebVR Today</h3>
-            <ul>
-                WebVR gives you 
-            </ul>
-        </grid-notes>
+		<grid-slide>
+			<fitty-text><span>The Past<br /><span style="font-size: 0.5em;">(2016-17)</span></span></fitty-text>
+		</grid-slide>
+		<grid-notes>
+			<h3>THE PAST</h3>
+			<ul>
+				<li>The first WebVR Face to Face...</li>
+				<li>hashed out an API to work with the early VR headsets</li>
+				<li>The WebVR API is based on WebGL for many reasons.</li>
+				<li>WebGL is an API for drawing triangles. It's a little wordy.</li>
+				<li>But yay there are libraries!</li>
+			</ul>
+			<h3>WebVR Today</h3>
+			WebVR gives you 
+			<ul>
+				<li>Access to the position/rotation of the headsets</li>
+				<li>Ability to render WebGL content to the browser</li>
+				<li>Extensions to the gamepad api to get the position of the controllers.</li>
+			</ul>
+		</grid-notes>
+
+		<grid-notes>
+			<h3>The Future</h3>
+			<ul>
+				<li>Magic Window behaviour is going to be built in.</li>
+				<li>AR capabilities built in</li>
+				<li>Gamepad API -> XR Input</li>
+				<li>XR polyfill also turns WebVR into WebXR</li>
+			</ul>
+		</grid-notes>
 
 
 
@@ -153,39 +169,34 @@
 
 
 
+		<grid-notes>
+			<h3>What is XR and the Immersive Web?</h3>
+			<h3>Past</h3>
+			<ul>
+				<li>How the API started</li>
+				<li>First F2F</li>
+				<li>Community Group</li>
+			</ul>
+			<h3>Present</h3>
+			<ul>
+				<li>WebVR 1.1</li>
+				<li>VR Focused</li>
+				<li>Link Traversal</li>
+				<li>Gamepad Extensions</li>
+				<li>Working Group, focused on WebXR</li>
+				<li>WebAR Demos using Camera</li>
+			</ul>
+			<h3>Future</h3>
+			<ul>
+				<li>Multi-headed rendering</li>
+				<li>Basic AR</li>
+				<li>explore xr-input<ul>
+					<li>vr-ar, and across hardware</li>
+				</ul></li>
+			</ul>
+		</grid-notes>
 
-
-
-
-
-        <grid-notes>
-            <h3>What is XR and the Immersive Web?</h3>
-            <h3>Past</h3>
-            <ul>
-                <li>How the API started</li>
-                <li>First F2F</li>
-                <li>Community Group</li>
-            </ul>
-            <h3>Present</h3>
-            <ul>
-                <li>WebVR 1.1</li>
-                <li>VR Focused</li>
-                <li>Link Traversal</li>
-                <li>Gamepad Extensions</li>
-                <li>Working Group, focused on WebXR</li>
-                <li>WebAR Demos using Camera</li>
-            </ul>
-            <h3>Future</h3>
-            <ul>
-                <li>Multi-headed rendering</li>
-                <li>Basic AR</li>
-                <li>explore xr-input<ul>
-                    <li>vr-ar, and across hardware</li>
-                </ul></li>
-            </ul>
-        </grid-notes>
-
-    </grid-slides-controller>
+	</grid-slides-controller>
 </body>
 </html>
 
