@@ -28,6 +28,7 @@
 	<link href="../css/style.css" rel="stylesheet">
 	<link href="./style.css" rel="stylesheet">
 	<link href="https://samsunginter.net/fonts/SamsungOne/fonts.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai.min.css" rel="stylesheet" >
 
 	<template id="custom-slide-template">
 		<style>
@@ -107,13 +108,12 @@
 			<!-- Our VR Browser-->
 			<video src="./images/space-jam.mp4" muted></video>
 			<!-- WebVR demo -->
-			<video src="./images/enter-vr.mp4" muted></video>
-			<section>
-				<fitty-text style="flex-grow: 1;--vertical-align: center;">XR<span><vivus-svg src="./images/whatsthis.svg" duration="100" style="filter: invert(1); width: 0.5em; transform: translateY(-0.1em); display: inline-block;"></span></vivus-svg></fitty-text>
-			</section>
+			<fitty-text style="flex-grow: 1;--vertical-align: center;">XR<span><vivus-svg src="./images/whatsthis.svg" duration="100" style="filter: invert(1); width: 0.5em; transform: translateY(-0.1em); display: inline-block;"></span></vivus-svg></fitty-text>
 			<img src="./images/special-feeling.svg" />
-			<img src="./images/rogerrabbit.jpg" >
 			<img src="./images/spacejam.jpg" >
+			<img src="./images/rogerrabbit.jpg" >
+			<fitty-text style="line-height: 1.4;">Why <span style="color:var(--color-yellow)">XR</span><br />&emsp;&emsp;on the <span style="color:var(--color-red)">Web</span>??</fitty-text>
+			<fitty-text style="line-height: 1.4;">Bringing <span style="color:var(--color-yellow)">XR</span> powers to the <span style="color:var(--color-red)">Web</span> <br />&emsp;&emsp; brings <span style="color:var(--color-red)">Web</span> Powers to <span style="color:var(--color-yellow)">XR</span>.</fitty-text>
 		</grid-slide>
 		<grid-notes>
 			<ul>
@@ -127,11 +127,45 @@
 
 				<li>AR -> Brings the world to your environment.</li>
 				<li>VR -> Brings you to the world</li>
+
+				<li>If Immersive Headsets are the Future of Devices then the web needs to be there to stay relevant.</li>
+				<li>Right now they have an issue with distribution of content, silo'd large downloads, device specific, hanggs around.</li>
+				<li>Bringing XR powers to the Web. Also brings Web Powers to XR.</li>
 			</ul>
 		</grid-notes>
 
-		<grid-slide>
-			<fitty-text><span>The Past<br /><span style="font-size: 0.5em;">(2016-17)</span></span></fitty-text>
+		<grid-slide el-by-el>
+			<fitty-text>VR on the Web<br />Works today.</fitty-text>
+			<video src="./images/enter-vr.mp4" muted></video>
+			<h1>WebGL Good at Drawing Triangles</h1>
+			<fitty-text>Showing a Cube</fitty-text>
+			<section>
+				<script>
+					const target = document.currentScript.parentNode;
+					fetch('../webvr/images/webgl-demo.txt')
+					.then(r => r.text())
+					.then(body => target.innerHTML = `<html-encode style="max-height: unset;"><template><script>
+${body}
+${'</scr'}ipt></template></html-encode>`)
+				</script>
+			</section>
+			<script>
+				let anim;
+				document.currentScript.actions = function * () {
+					const el = this.firstChild.firstChild;
+					yield;
+					anim = el.animate({
+						transform: ['translateY(0)',`translateY(80vh) translateY(-${el.clientHeight}px) `]
+					},{
+						duration: 5000,
+						easing: 'ease-in-out',
+						fill: 'forwards'
+					});
+				}
+				document.currentScript.teardown = function () {
+					if (anim) anim.cancel();
+				}
+			</script>
 		</grid-slide>
 		<grid-notes>
 			<h3>THE PAST</h3>
@@ -148,12 +182,64 @@
 				<li>Access to the position/rotation of the headsets</li>
 				<li>Ability to render WebGL content to the browser</li>
 				<li>Extensions to the gamepad api to get the position of the controllers.</li>
+				<li>Focus on headset VR</li>
 			</ul>
 		</grid-notes>
+
+		
+		<grid-slide el-by-el>
+			<img src="images/dk2.jpg" style="position: absolute; transform-origin:top left;object-fit:cover;" />
+		
+			<fitty-text>Technology has evolved.</fitty-text>
+
+			<img style="object-fit: cover;" src="images/pkmngo.jpg" />
+			<img src="images/mr.jpg" />
+
+			<table>
+				<thead>
+					<tr style="height: 2em; font-weight: bold;">
+						<td></td>
+						<td>Headsets</td>
+						<td>Handsets</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="padding: 1em; font-weight: bold;">VR</td>
+						<td>GearVR, Oculus Rift, HTC Vive, Oculus GO, etc</td>
+						<td>Mobile Phone Magic Window Mode</td>
+					</tr>
+					<tr>
+						<td style="font-weight: bold;">AR</td>
+						<td>Hololens, Magic Leap</td>
+						<td>Mobile Phone AR, i.e. Pokemon Go</td>
+					</tr>
+				</tbody>
+			</table>
+			<script>
+				const self = document.currentScript;
+				const els = Array.from(self.previousElementSibling.querySelectorAll('tbody>tr:first-child>td:nth-child(3),tbody>tr:nth-child(2)>td:not(:first-child)'));
+				self.actions=function *() {
+					const opts = {
+						duration: 1000,
+						fill: 'forwards',
+						easing: 'ease'
+					}
+					const anims = els.map(el => el.animate({
+						transform: ['scale(0.5,0.5)','scale(1,1)'],
+						opacity: ['0', '1']}
+					,opts));
+					anims.map(a => a.pause());
+					yield;
+					anims.map(a => a.play());
+				}
+			</script>
+		</grid-slide>
 
 		<grid-notes>
 			<h3>The Future</h3>
 			<ul>
+				<li>Expands to Headset VR/AR and Handset VR/Ar</li>
 				<li>Magic Window behaviour is going to be built in.</li>
 				<li>AR capabilities built in</li>
 				<li>Gamepad API -> XR Input</li>
