@@ -14,7 +14,7 @@ async function fromCache(request) {
 	const cache = await caches.open(CACHE);
 	const matching = await cache.match(request);
 	if (matching) {
-		console.log("The service worker is serving the asset from cache, " + request.url);
+		// console.log("The service worker is serving the asset from cache, " + request.url);
 		return matching;
 	}
 

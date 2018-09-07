@@ -1,6 +1,6 @@
-/* global AFRAME */
-import "https://aframe.io/releases/0.8.2/aframe.min.js";
-import "https://cdn.rawgit.com/mrdoob/three.js/r95/examples/js/loaders/GLTFLoader.js";
+/* global AFRAME  */
+// import "https://aframe.io/releases/0.8.2/aframe.js";
+// import "https://cdn.rawgit.com/mrdoob/three.js/r95/examples/js/loaders/GLTFLoader.js";
 import GridSlidesController from '../grid-slides-controller.js';
 
 Object.defineProperty(AFRAME.AEntity.prototype, 'removeFromParent', function(){
