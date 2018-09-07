@@ -54,6 +54,12 @@ GridSlidesController.registerSlideData('el-by-el',
                     el.play();
                     el.setAttribute('loop', true);
                 }
+                if (el.hasAttribute('has-video')) {
+                    el = el.querySelector('video');
+                    el.currentTime = 0;
+                    el.play();
+                    el.setAttribute('loop', true);
+                }
             }
 
             showFirstChild = function () {
