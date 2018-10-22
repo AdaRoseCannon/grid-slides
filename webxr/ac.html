@@ -77,39 +77,18 @@
 <body>
 
 	<grid-slides-controller>
-		<grid-slide el-by-el="reveal: true;" transition-in="none" transition-out="slide-right">
+
+		<grid-slide style="background: #111;" transition-out="fade">
+			<img src="images/samsung-internet_256x256.png" style="mix-blend-mode: color-burn;filter: saturate(0); object-fit: none;">
+		</grid-slide>
+	
+		<grid-slide el-by-el transition-in="fade" transition-out="slide-right">
 			<fitty-text style="color: black; filter: invert(0.7) sepia(1) hue-rotate(-50deg) saturate(6) drop-shadow(0 0 0.1em rgba(255,0,0,0.7))">
 				Web<br /><span style="padding-bottom: 0.2em;"><vivus-svg src="./images/xr.svg" duration="200" width="2em" height="1.415em" type="delayed"></vivus-svg></span><br />:The Immersive Web
 			</fitty-text>
-			<vivus-svg src="./images/who.svg" duration="100" style="position: absolute; filter: invert(1); left: 2rem; bottom: 3rem; width: 200px;"></vivus-svg>
-			<vivus-svg src="./images/whatsthis.svg" duration="100" style="position: absolute; filter: invert(1); left: calc(50% + 40vh); top: 40%; width: 200px;"></vivus-svg>
 		</grid-slide>
-		<grid-slide a-frame-step-by-step="target: div; light: false;" transition-in="fade">
-			<div style="width: 90vw; height: 90vh; align-self: center; justify-self: center;"></div>
-			<template action="assets">
-				<a-asset-item id="si-gltf" src="./images/si-stars.glb"></a-asset-item>
-			</template>
-			<template>
-				<a-camera look-controls="enabled:false;" position="0 0 6" fov="30"></a-camera>
-				<a-entity scale="0 0 0" position="0 -0.5 0">
-					<a-animation delay="1000" from="0 -180 0" to="0 0 0" easing="ease-in-out" dur="5000"></a-animation>
-					<a-animation delay="1000" from="0 0 0" to="1 1 1" easing="ease-out-back" dur="5000" attribute="scale"></a-animation>
-					<a-entity gltf-model="#si-gltf" position="0 0.5 0" look-controls="reverseMouseDrag: true; hmdEnabled: false;"></a-entity>
-				</a-entity>
-			</template>
-		</grid-slide>
-		<grid-notes>
-			<ul>
-				<li>I'm from Samsung Internet, we're a browser for Android phones. You can find us in the play store.</li>
-				<li>Our main focuses are privacy and performance</li>
-				<li>We also focus on some new Web APIs such as Progressive Web Apps, Web Payment, and Virtual Reality in the Web</li>
-				<li>We even have a VR web browser!</li>
-			</ul>
-		</grid-notes>
+
 		<grid-slide el-by-el>
-			<!-- Our VR Browser-->
-			<video src="./images/space-jam.mp4" muted></video>
-			<!-- WebVR demo -->
 			<fitty-text style="flex-grow: 1;--vertical-align: center;">XR<span><vivus-svg src="./images/whatsthis.svg" duration="100" style="filter: invert(1); width: 0.5em; transform: translateY(-0.1em); display: inline-block;"></span></vivus-svg></fitty-text>
 			<img src="./images/special-feeling.svg" />
 			<img src="./images/spacejam.jpg" >
@@ -148,72 +127,7 @@
 				<h3 style="position: absolute;align-self: flex-end;justify-self: center;background: black;margin: 0 0 2em 0;">Amazon Sumerian</h3>
 				<img src="./images/sumerian.png" />
 			</section>
-
-			<img src="./images/render-loop.svg.png" style="filter: invert(1);" />
-			<img src="./images/controllers.gif" />
-			<fitty-text>The WebVR API is based on <font color="var(--color-red)">WebGL</font></fitty-text>
-			<fitty-text><font color="var(--color-red)">WebGL</font>Can be a little tricky.</fitty-text>
-			<img src="images/gl.png" alt="Matrix reaction for knowing WebGL">
-			<fitty-text>Showing a Cube</fitty-text>
-			<section></section>
-			<script>
-				let anim;
-				const target = document.currentScript.previousElementSibling;
-				fetch('../webvr/images/webgl-demo.txt')
-					.then(r => r.text())
-					.then(body => target.innerHTML = `<html-encode style="max-height: unset;"><template><script>
-${body}
-${'</scr'}ipt></template></html-encode>`);
-				document.currentScript.actions = function * () {
-					const el = this.firstChild.firstChild;
-					yield;
-					anim = el.animate({
-						transform: ['translateY(0)',`translateY(80vh) translateY(-${el.clientHeight}px) `]
-					},{
-						duration: 5000,
-						easing: 'ease-in-out',
-						fill: 'forwards'
-					});
-					yield;
-				}
-				document.currentScript.teardown = function () {
-					if (anim) anim.cancel();
-				}
-			</script>
-			<img src="./images/logos.png" />
-			
-			<section style="font-size: 2em;">
-				<h1>Downsides of WebGL</h1>
-				<ul>
-					<li>No DOM</li>
-					<li>No built in A11y</li>
-					<li>Text is expensive</li>
-				</ul>
-			</section>
 		</grid-slide>
-		<grid-notes>
-			<ul>
-				<li>The VR APIs are available in a few modern browsers (Firefox, Edge, Chrome, Samsung Internet, Servo, Oculus)</li>
-				<li>There is a browser for every headset apart from PSVR</li>
-				<li>Here is an example, explain what is happening</li>
-				<li>Render Loop</li>
-				<li>Gamepad API Extensions</li>
-				<li>It requires WebGL, which has benefits and drawbackss</li>
-				<li>WebVR is an API for drawing triangles very quickly using the graphics card.</li>
-				<li>Making it useful for 3D graphics.</li>
-				<li>On it's own it is hard to learn</li>
-				<li>It is quite verbose but there are abstractions.</li>
-				<li>These abstractions usually will handle the WebVR aspects for you</li>
-			</ul>
-			WebVR gives you 
-			<ul>
-				<li>Access to the position/rotation of the headsets</li>
-				<li>Ability to render WebGL content to the browser</li>
-				<li>Extensions to the gamepad api to get the position of the controllers.</li>
-				<li>Focus on headset VR</li>
-			</ul>
-		</grid-notes>
-
 		
 		<grid-slide el-by-el>
 			<fitty-text>WebVR is Changing</fitty-text>
@@ -272,11 +186,9 @@ ${'</scr'}ipt></template></html-encode>`);
 			</section>
 
 			<section>
-				<img src="./images/polyfill.jpg" />
+				<img src="./images/polyfill.png" />
 				<h1>https://github.com/immersive-web/webxr-polyfill</h1>
 			</section>
-
-			<img src="./images/w3c.jpg" />
 
 		</grid-slide>
 
@@ -302,40 +214,11 @@ ${'</scr'}ipt></template></html-encode>`);
         <grid-slide>
 			<fitty-text class="hero type-art small"><span style="color: var(--color-yellow);">Thank You</span><br> for Listening 💖</fitty-text>
 			<p>
-				https://w3c.github.io/immersive-web-wg-charter/immersive-web-wg-charter.html<br /><br />
-				https://github.com/immersive-web/webxr<br /><br />
+				https://github.com/immersive-web/webxr<br />
+				https://w3.org/immersive-web<br />
 				https://samsunginter.net
-				https://twitter.com/lady_ada_king
 			</p>
 		</grid-slide>
-
-		<grid-notes>
-			<h3>What is XR and the Immersive Web?</h3>
-			<h3>Past</h3>
-			<ul>
-				<li>How the API started</li>
-				<li>First F2F</li>
-				<li>Community Group</li>
-			</ul>
-			<h3>Present</h3>
-			<ul>
-				<li>WebVR 1.1</li>
-				<li>VR Focused</li>
-				<li>Link Traversal</li>
-				<li>Gamepad Extensions</li>
-				<li>Working Group, focused on WebXR</li>
-				<li>WebAR Demos using Camera</li>
-			</ul>
-			<h3>Future</h3>
-			<ul>
-				<li>Multi-headed rendering</li>
-				<li>Basic AR</li>
-				<li>explore xr-input<ul>
-					<li>vr-ar, and across hardware</li>
-				</ul></li>
-			</ul>
-		</grid-notes>
-
 	</grid-slides-controller>
 </body>
 </html>
