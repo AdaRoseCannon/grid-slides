@@ -61,11 +61,10 @@ GridSlidesController.registerTransition('fade', [
 });
 
 GridSlidesController.registerTransition('none', [
-    {opacity: 1},
-    {opacity: 1}
+    {display: 'none'},
+    {display: 'flex'}
 ], {
-    duration: 0,
-    easing: 'ease'
+    duration: 0
 });
 
 GridSlidesController.registerTransition('wipe', [
