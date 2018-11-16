@@ -77,7 +77,11 @@
 <body>
 
 	<grid-slides-controller>
-		<grid-slide el-by-el="reveal: true;" transition-in="none" transition-out="slide-right">
+		<grid-slide style="background: #111;" transition-in="none" transition-out="none">
+			<img src="images/samsung-internet_256x256.png" style="mix-blend-mode: color-burn;filter: saturate(0); object-fit: none;">
+		</grid-slide>
+	
+		<grid-slide el-by-el="reveal: true;" transition-in="fade" transition-out="slide-right">
 			<fitty-text style="color: black; filter: invert(0.7) sepia(1) hue-rotate(-50deg) saturate(6) drop-shadow(0 0 0.1em rgba(255,0,0,0.7))">
 				Web<br /><span style="padding-bottom: 0.2em;"><vivus-svg src="./images/xr.svg" duration="200" width="2em" height="1.415em" type="delayed"></vivus-svg></span><br />:The Immersive Web
 			</fitty-text>
@@ -271,12 +275,18 @@ ${'</scr'}ipt></template></html-encode>`);
 				<img src="./images/controllers.gif" />
 			</section>
 
+			<fitty-text style="line-height: 1.1;">Please<br />try out<br />WebXR</fitty-text>
+			<fitty-text>Please be<br />patient</fitty-text>
+
 			<section>
-				<img src="./images/polyfill.jpg" />
+				<img src="./images/polyfill.png" />
 				<h1>https://github.com/immersive-web/webxr-polyfill</h1>
 			</section>
 
-			<img src="./images/w3c.jpg" />
+			<section>
+				<img src="./images/immersive-web-webxr.png" />
+				<h1>https://github.com/immersive-web/webxr</h1>
+			</section>
 
 		</grid-slide>
 
@@ -302,10 +312,9 @@ ${'</scr'}ipt></template></html-encode>`);
         <grid-slide>
 			<fitty-text class="hero type-art small"><span style="color: var(--color-yellow);">Thank You</span><br> for Listening 💖</fitty-text>
 			<p>
-				https://w3c.github.io/immersive-web-wg-charter/immersive-web-wg-charter.html<br /><br />
 				https://github.com/immersive-web/webxr<br /><br />
-				https://samsunginter.net
-				https://twitter.com/lady_ada_king
+				https://samsunginter.net<br /><br />
+				@lady_ada_king @samsunginternet
 			</p>
 		</grid-slide>
 
