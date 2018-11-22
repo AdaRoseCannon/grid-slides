@@ -27,7 +27,7 @@
 
     <link href="../css/style.css" rel="stylesheet">
     <link href="./style.css" rel="stylesheet">
-    <link href="https://samsunginter.net/fonts/SamsungOne/fonts.css" rel="stylesheet">
+    <link href="../fonts/SamsungOne/fonts.css" rel="stylesheet">
 
     <template id="custom-slide-template">
         <style>
@@ -955,7 +955,8 @@
                     CSS.registerProperty({
                         name: "--x-coord",
                         syntax: "<length>",
-                        initialValue: "0"
+                        initialValue: "0",
+                        inherits: true
                     });
                 </script>
             </template></html-encode>
@@ -965,7 +966,8 @@
                     CSS.registerProperty({
                         name: "--rotate-y",
                         syntax: "<number>",
-                        initialValue: "0"
+                        initialValue: "0",
+                        inherits: true
                     });
                     myEl.animate(
                         {'--rotate-y': ['-180','180']},
@@ -982,7 +984,8 @@
                 if ('registerProperty' in CSS) CSS.registerProperty({
                     name: "--rotate-y",
                     syntax: "<number>",
-                    initialValue: "0"
+                    initialValue: "0",
+                    inherits: true
                 });
                 document.currentScript.previousElementSibling.animate(
                     {'--rotate-y': ['-180','180']},
