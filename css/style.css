@@ -61,12 +61,14 @@ grid-slides-controller {
 	display: grid;
 	padding-top: var(--padding);
 	grid-template-columns: [full-start] var(--padding) [slide-start] var(--padding) [slide-inner-start]  1fr [one-quarter] 2fr [center] 2fr [three-quarter] 1fr [slide-inner-end] var(--padding) [slide-end] var(--padding) [full-end];
-	grid-auto-rows: max-content;
+    grid-template-rows: 1fr;
+    grid-auto-rows: 100vh;
 }
 
 grid-slides-controller[presenting] {
     --button-display: none;
     overflow-y: hidden;
+    grid-template-rows: calc(100% - var(--padding) * 2);
 }
 
 grid-slide {
@@ -74,7 +76,6 @@ grid-slide {
     background-color: beige;
 	transform-origin: top center;
 	margin: 0 0 var(--padding) 0;
-	min-height: calc(100vh - var(--padding) * 2);
 	position: relative;
 	display: grid;
 	overflow: hidden;
@@ -94,7 +95,6 @@ grid-notes {
 
 grid-slides-controller[presenting] > grid-slide {
     grid-row: 1;
-	max-height: 100%;
 }
 
 grid-slides-controller[presenting] > grid-notes {

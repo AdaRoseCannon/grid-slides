@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Queer Spaces and WebXR</title>
+	<meta property="og:title" content="Queer Spaces and WebXR">
+	<meta property="og:description" content="A talk by Ada Rose Cannon">
+	<meta name="description" content="A talk by Ada Rose Cannon"/>
+	<meta property="og:url" content="https://ada.is/grid-slides/webxr/queerjs.html">
+	<meta property="og:image" content="">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:site" content="@lady_ada_king">
+	<meta name="twitter:creator" content="@lady_ada_king">
+
+	<link href="../css/style.css" rel="stylesheet">
+	<link href="./style.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai.min.css" rel="stylesheet" >
+	<style>
+		:root {
+			--padding: 0;
+		}
+		grid-slide {
+			background: transparent;
+			padding-bottom: 10vh;
+		}
+		grid-slide {
+			background: linear-gradient(to bottom left, var(--space-blue-light), var(--space-blue-dark));
+		}
+		.caption {
+			position: absolute;
+			align-self: flex-start;
+			background: var(--color-dark);
+			margin: 0;
+			justify-self: center;
+			width: 100%;
+			text-align: center;
+			opacity: 0.9;
+			box-shadow: 0 0 1em black;
+		}
+	</style>
+
+	
+	<script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/edf84e6e/webcomponents-sd-ce.js"></script>
+	<script>
+		navigator.serviceWorker.register('../sw.js');
+	</script>
+	<script src="https://aframe.io/releases/0.8.2/aframe.js"></script>
+	<script src="https://cdn.rawgit.com/mrdoob/three.js/r95/examples/js/loaders/GLTFLoader.js"></script>
+	<script type="module">
+		import "../scripts/esm/index.js";
+		import '../scripts/esm/plugins/aframe.js';
+		import "../scripts/web-components/vivus-component.js";
+		import "../scripts/web-components/html-encode.js";
+		import "../scripts/web-components/fitty-component.min.js";
+		import HTMLElementPlus from 'https://unpkg.com/html-element-plus/html-element-plus.js';
+		import GridSlide from '../scripts/esm/grid-slide.js';
+		import GridSlidesController from '../scripts/esm/grid-slides-controller.js';
+
+		GridSlidesController.registerSlideData('label', {
+			target: {
+				default: '#overlaytext'
+			},
+			text: {
+				default: ''
+			}
+		}, function (options) {
+			return {
+				action: function *() {
+					document.querySelector(options.target).textContent = options.text;
+				}
+			}
+		});
+	</script>
+</head>
+<body>
+
+	<grid-slides-controller>
+		<grid-slide label="text: by Ada Rose Cannon;" transition-in="none" transition-out="fade">
+			<fitty-text>
+				<span style="line-height: 1;" >Queer Spaces <span style="font-size: 1.5em; vertical-align: top;">&</span><br />Virtual Spaces</span>
+			</fitty-text>
+		</grid-slide>
+	
+		<grid-slide label="text:;" a-frame-step-by-step="target: div; light: false;" transition-in="fade">
+			<div style="width: 90vw; height: 90vh; align-self: center; justify-self: center;"></div>
+			<template action="assets">
+				<a-asset-item id="si-gltf" src="./images/si-stars.glb"></a-asset-item>
+			</template>
+			<template>
+				<a-camera look-controls="enabled:false;" position="0 0 6" fov="30"></a-camera>
+				<a-entity scale="0 0 0" position="0 -0.5 0">
+					<a-animation delay="1000" from="0 -180 0" to="0 0 0" easing="ease-in-out" dur="5000"></a-animation>
+					<a-animation delay="1000" from="0 0 0" to="1 1 1" easing="ease-out-back" dur="5000" attribute="scale"></a-animation>
+					<a-entity gltf-model="#si-gltf" position="0 0.5 0" look-controls="reverseMouseDrag: true; hmdEnabled: false;"></a-entity>
+				</a-entity>
+			</template>
+		</grid-slide>
+		<grid-notes>
+			<ul>
+				<li>I'm from Samsung Internet, we're a browser for Android phones. You can find us in the play store.</li>
+				<li>Our main focuses are privacy and performance</li>
+				<li>We also focus on some new Web APIs such as Progressive Web Apps, Web Payment, and Virtual Reality in the Web</li>
+				<li>We even have a VR web browser!</li>
+			</ul>
+		</grid-notes>
+
+		<grid-slide label="text: queeringthemap.com;">
+			<img id="qtm" src="./images/queeringthemap.png" alt="Queering The Map, Each point represents a memorable queer experience.">
+		</grid-slide>
+		
+		<grid-slide label="text: maps.london.gov.uk/lgbtq/;" el-by-el >
+			<video src="images/lgbt.mp4" style="mix-blend-mode: lighten;"></video>
+		</grid-slide>
+
+		<grid-slide label="text: The Daily Dot;">
+			<img id="qtm" style="filter: invert(1); mix-blend-mode: screen;" src="./images/dailydot.png">
+		</grid-slide>
+
+		<grid-slide label="text: The Verge;">
+			<img id="qtm" style="filter: invert(1); mix-blend-mode: screen;" src="./images/theverge.png">
+		</grid-slide>
+
+		<grid-slide label="text:;">
+			<img id="qtm" src="./images/talkingaboutgender.jpg">
+		</grid-slide>
+
+	</grid-slides-controller>
+	<div style="
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		pointer-events: none;
+		background: url(./images/Screen-Overlay-Type-1-Blank.svg);
+		background-size: cover;
+		background-position: bottom center;
+		font-family: comfortaa;
+		color: var(--color-light);
+	">
+		<span id="overlaytext" style="white-space: nowrap; font-size: 4vh; position:absolute; right: 45vw; bottom: 3vh;" >Hello World</span>
+	</div>
+</body>
+</html>
+
