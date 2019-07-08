@@ -20,13 +20,20 @@
 	<style>
 		:root {
 			--padding: 0;
+			--lighterpink: #ffeaf3;
+			--lightpink: #fbd9e8;
 		}
 		grid-slide {
 			background: transparent;
 			padding-bottom: 10vh;
+			color: black;
 		}
-		grid-slide {
-			background: linear-gradient(to bottom left, var(--space-blue-light), var(--space-blue-dark));
+		grid-slide.opaque {
+			background: var(--lighterpink)
+			/* background: linear-gradient(to bottom left, var(--space-blue-light), var(--space-blue-dark)); */
+		}
+		grid-slides-controller {
+			background: var(--lighterpink)
 		}
 		.caption {
 			position: absolute;
@@ -115,16 +122,16 @@
 			<img id="qtm" src="./images/queeringthemap.png" alt="Queering The Map, Each point represents a memorable queer experience.">
 		</grid-slide>
 		
-		<grid-slide label="text: maps.london.gov.uk/lgbtq/;" el-by-el >
+		<grid-slide class="opaque" style="background: var(--space-blue-dark)" label="text: maps.london.gov.uk/lgbtq/;" el-by-el >
 			<video src="images/lgbt.mp4" style="mix-blend-mode: lighten;"></video>
 		</grid-slide>
 
-		<grid-slide label="text: The Daily Dot;">
-			<img id="qtm" style="filter: invert(1); mix-blend-mode: screen;" src="./images/dailydot.png">
+		<grid-slide class="opaque" label="text: The Daily Dot;">
+			<img id="qtm" style="mix-blend-mode: darken;" src="./images/dailydot.png">
 		</grid-slide>
 
-		<grid-slide label="text: The Verge;">
-			<img id="qtm" style="filter: invert(1); mix-blend-mode: screen;" src="./images/theverge.png">
+		<grid-slide class="opaque" label="text: The Verge;">
+			<img id="qtm" style="mix-blend-mode: darken;" src="./images/theverge.png">
 		</grid-slide>
 
 		<grid-slide label="text:;">
