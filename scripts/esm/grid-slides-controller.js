@@ -83,7 +83,7 @@ class GridSlidesController extends HTMLElementPlus {
 		this.tabIndex = 0;
 		this.attachShadow({mode: 'open'});
 		this.shadowRoot.appendChild(this.templateContent);
-		this.refs.start.addEventListener('click', this.startPresenting.bind(this));
+		this.refs.start.addEventListener('click',() => this.setAttribute('presenting', ''));
 		this.refs.fullscreen.addEventListener('click', toggleFullscreen.bind(this));
 	}
 
@@ -196,11 +196,6 @@ class GridSlidesController extends HTMLElementPlus {
 
 		if (evt) evt.stopPropagation();
 
-		// Set the attribute then it will recrse back to this when the attribute is changed.
-		if (this.hasAttribute('presenting')) return;
-
-		this.setAttribute('presenting', '');
-
 		const firstSlide = this.getCurrentSlide() || this.querySelector('grid-slide');
 
 		this.__setup(firstSlide);
@@ -276,6 +271,8 @@ class GridSlidesController extends HTMLElementPlus {
 	}
 
 	setSlide(el) {
+		const currentSlide = this.getCurrentSlide();
+		if (el === currentSlide) return;
 		this.setAttribute('slide', el.id || Array.from(this.children).indexOf(el));
 	}
 

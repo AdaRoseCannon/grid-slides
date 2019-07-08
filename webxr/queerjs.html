@@ -76,14 +76,19 @@
 </head>
 <body>
 
-	<grid-slides-controller>
-		<grid-slide label="text: by Ada Rose Cannon;" transition-in="none" transition-out="fade">
+	<grid-slides-controller presenting>
+		<script>
+			if (window.location.hash) {
+				document.currentScript.parentNode.setAttribute('slide',window.location.hash.slice(1));
+			}
+		</script>
+		<grid-slide id="title" label="text: by Ada Rose Cannon;" transition-in="none" transition-out="fade">
 			<fitty-text>
 				<span style="line-height: 1;" >Queer Spaces <span style="font-size: 1.5em; vertical-align: top;">&</span><br />Virtual Spaces</span>
 			</fitty-text>
 		</grid-slide>
 	
-		<grid-slide label="text:;" a-frame-step-by-step="target: div; light: false;" transition-in="fade">
+		<grid-slide id="logo" label="text:;" a-frame-step-by-step="target: div; light: false;" transition-in="fade">
 			<div style="width: 90vw; height: 90vh; align-self: center; justify-self: center;"></div>
 			<template action="assets">
 				<a-asset-item id="si-gltf" src="./images/si-stars.glb"></a-asset-item>
@@ -125,8 +130,8 @@
 		<grid-slide label="text:;">
 			<img id="qtm" src="./images/talkingaboutgender.jpg">
 		</grid-slide>
-
 	</grid-slides-controller>
+
 	<div style="
 		position: absolute;
 		top: 0;
