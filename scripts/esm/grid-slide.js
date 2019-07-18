@@ -56,7 +56,7 @@ class GridSlide extends HTMLElementPlus {
 		}.bind(this));
 	}
 
-	__parseAttr(string) {
+	static parseAttribute(string) {
 		const out = {};
 		const l = string.split(';').map(p => p.split(':'));
 		l.forEach(p => p[0] && (out[p[0].trim()] = p[1].trim()));
@@ -69,7 +69,7 @@ class GridSlide extends HTMLElementPlus {
 		.map(a => a.name);
 		if (GridSlidesController.slideData.has(attr)) {
 			// Forces order of attributes
-			const datum = this.parentNode.constructor.getSlideData(attr, this, this.__parseAttr(newValue || ''));
+			const datum = GridSlidesController.getSlideData(attr, this, GridSlide.parseAttribute(newValue || ''));
 			this.__data[attrs.indexOf(attr)] = datum;
 			if (datum.init) datum.init.apply(this, []);
 			this.refs.play.style.display = '';

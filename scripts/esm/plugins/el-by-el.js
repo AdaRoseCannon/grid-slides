@@ -1,120 +1,130 @@
-
+/* eslint-disable require-atomic-updates */
+import GridSlide from '../grid-slide.js';
 import GridSlidesController from '../grid-slides-controller.js';
+
+const schema = { //schema
+	preserve: {
+		default: ''
+	},
+	reveal: {
+		default: false
+	},
+	root: {
+		default: ''
+	}
+};
 
 GridSlidesController.registerSlideData('el-by-el',
 
-    { //schema
-        preserve: {
-            default: ''
-        },
-        reveal: {
-            default: false
-        }
-    },
+	schema,
 
-    function elByEl(options) {
+	function elByEl(options) {
 
-        const selector = options.preserve || false;
-        const preserve = [];
-        const reveal = options.reveal || false;
-        let children;
-        let showFirstChild;
+		const selector = options.preserve || false;
+		const preserve = [];
+		const reveal = options.reveal || false;
+		const root = (options.root && this.querySelector(options.root)) || this;
+		let firstChild;
+		let children;
 
-        function replaceWithEl(el, target) {
-            target.innerHTML = '';
-            preserve.forEach(function (el) {
-                target.appendChild(el);
-            });
-            target.appendChild(el);
-        }
+		function replaceWithEl(el, target) {
+			target.innerHTML = '';
+			preserve.forEach(function (el) {
+				target.appendChild(el);
+			});
+			target.appendChild(el);
+		}
 
-        const out = {
-        };
+		const out = {
+		};
 
-        function init() {
-            const self = this;
-            preserve.push(...Array.from(this.children).filter(function (el) {
-                if (el.matches(selector)) {
-                    self.removeChild(el);
-                    return true;
-                }
-            }));
+		const run = function (el) {
+			if (reveal) {
+				root.appendChild(el);
+			} else {
+				replaceWithEl(el, root);
+			}
+			if (el.tagName === 'VIDEO') {
+				el.currentTime = 0;
+				el.play();
+				el.setAttribute('loop', true);
+			}
+			if (el.hasAttribute('has-video')) {
+				el = el.querySelector('video');
+				el.currentTime = 0;
+				el.play();
+				el.setAttribute('loop', true);
+			}
+		}
 
-            children = Array.from(this.children);
-            const firstChild = children.shift();
+		function init() {
+			preserve.push(...Array.from(root.children).filter(function (el) {
+				if (el.matches(selector)) {
+					root.removeChild(el);
+					return true;
+				}
+			}));
 
-            const run = el => {
-                if (reveal) {
-                    this.appendChild(el);
-                } else {
-                    replaceWithEl(el, this);
-                }
-                if (el.tagName === 'VIDEO') {
-                    el.currentTime = 0;
-                    el.play();
-                    el.setAttribute('loop', true);
-                }
-                if (el.hasAttribute('has-video')) {
-                    el = el.querySelector('video');
-                    el.currentTime = 0;
-                    el.play();
-                    el.setAttribute('loop', true);
-                }
-            }
+			children = Array.from(root.children);
+			children.forEach(el => {
+				if (el.hasAttribute('el-by-el')) {
+					const options = GridSlide.parseAttribute(el.getAttribute('el-by-el'));
+					el.elByEl = GridSlidesController.getSlideData('el-by-el', el, options);
+				}
+			});
+			firstChild = children.shift();
 
-            showFirstChild = function () {
-                run(firstChild);
-            }
-            if (!children.length) {
-                console.warn('Empty elByEl target', this);
-                out.action = function * () {};
-                return;
-            }
+			if (!children.length) {
+				console.warn('Empty elByEl target', this);
+				out.action = function * () {};
+				return;
+			}
 
-            out.action = (function * () {
-                yield;
-                let i = 0;
-                for (const el of children) {
-                    i++;
-                    const nextEl = children[i];
-                    if (el.tagName === 'SCRIPT' && el.actions) {
-                        yield * el.actions.bind(this)();
-                        if (nextEl) {
-                            if (el.teardown) el.teardown.bind(this)();
-                        }
-                        continue;
-                    }
-                    if (el.tagName === 'SCRIPT' || el.tagName === 'TEMPLATE') {
-                        // Non-drawn elements shouldn't be waited for just skip them.
-                        continue;
-                    }
-                    if (!nextEl) {
-                        // The last element returns so it doesn't wait before continuing
-                        return run(el); 
-                    }
-                    if (nextEl.tagName === 'SCRIPT' || nextEl.tagName === 'TEMPLATE') {
-                        // in the case of a script run and then jump straight into the script.
-                        run(el);
-                    } else {
+			out.action = (function * () {
+				yield;
+				let i = 0;
+				for (const el of children) {
+					i++;
+					const nextEl = children[i];
+					if (el.tagName === 'SCRIPT' && el.actions) {
+						yield* el.actions.bind(this)();
+						if (nextEl) {
+							if (el.teardown) el.teardown.bind(this)();
+						}
+						continue;
+					}
+					if (el.tagName === 'SCRIPT' || el.tagName === 'TEMPLATE') {
+						// Non-drawn elements shouldn't be waited for just skip them.
+						continue;
+					}
 
-                        // Normal elemnts do a thing and yield it
-                        yield run(el);
-                    }
-                }
-            }).bind(this);
-        }
+					run(el);
 
-        out.teardown = out.setup = function () {
-            if (!children) init.bind(this)();
-            for (const el of children) {
-                if (el.tagName === 'SCRIPT' && el.teardown) {
-                    el.teardown.bind(this)();
-                }
-            }
-            this.innerHTML = '';
-            showFirstChild();
-        };
+					if (el.elByEl) {
+						el.elByEl.setup.bind(el)();
+						const action = el.elByEl.action();
+						return yield * action;
+					}
+					
+					if (nextEl && nextEl.tagName !== 'SCRIPT') yield;
+				}
+			}).bind(this);
+		}
 
-        return out;
-    }
+		out.teardown = out.setup = function () {
+			if (!children) init.bind(this)();
+			for (const el of children) {
+				if (el.tagName === 'SCRIPT' && el.teardown) {
+					el.teardown.bind(this)();
+				}
+				if (el.elByEl) {
+					el.elByEl.teardown();
+				}
+			}
+			this.innerHTML = '';
+			run(firstChild);
+		};
+
+		return out;
+	}
 );

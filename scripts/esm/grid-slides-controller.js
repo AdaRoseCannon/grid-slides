@@ -23,7 +23,7 @@ class GridSlidesController extends HTMLElementPlus {
 		const data = this.slideData.get(name);
 		let out;
 		if (data.schema) {
-			options = processSchema(data.schema, options, el);
+			options = GridSlidesController.processSchema(data.schema, options, el);
 		}
 		if (typeof data === 'object') {
 			out = data;
@@ -293,6 +293,28 @@ class GridSlidesController extends HTMLElementPlus {
 		const nextSlide = this.getNextSlide();
 		if (nextSlide) this.setSlide(nextSlide);
 	}
+
+	static processSchema(schema, data, el) {
+		let out = {};
+		if (schema.type !== undefined || schema.default !== undefined) {
+			const type = schema.type || typeof schema.default;
+			if (data === undefined && schema.default !== undefined) {
+				return schema.default;
+			}
+			if (type === 'number') return Number(data);
+			if (type === 'string') return String(data);
+			if (type === 'boolean') return data === 'true';
+			if (type === 'selector') return el.querySelector(data);
+			if (type === 'selectorAll') return el.querySelectorAll(data);
+		} else {
+			for (const key of Object.keys(schema)) {
+				if (typeof schema[key] === 'object') {
+					out[key] = this.processSchema(schema[key], data[key], el);
+				}
+			}
+		}
+		return out;
+	}
 }
 
 function toggleFullscreen() {
@@ -330,28 +352,6 @@ function toggleFullscreen() {
 			ScreenOrientation.lock('landscape');
 		}
 	}
-}
-
-function processSchema(schema, data, el) {
-	let out = {};
-	if (schema.type !== undefined || schema.default !== undefined) {
-		const type = schema.type || typeof schema.default;
-		if (data === undefined && schema.default !== undefined) {
-			return schema.default;
-		}
-		if (type === 'number') return Number(data);
-		if (type === 'string') return String(data);
-		if (type === 'boolean') return data === 'true';
-		if (type === 'selector') return el.querySelector(data);
-		if (type === 'selectorAll') return el.querySelectorAll(data);
-	} else {
-		for (const key of Object.keys(schema)) {
-			if (typeof schema[key] === 'object') {
-				out[key] = processSchema(schema[key], data[key], el);
-			}
-		}
-	}
-	return out;
 }
 
 const priorSiblings = el => {

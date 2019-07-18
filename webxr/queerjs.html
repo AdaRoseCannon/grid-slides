@@ -18,6 +18,9 @@
 	<link href="./style.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai.min.css" rel="stylesheet" >
 	<style>
+		html, body {
+			font-size: 5vh;
+		}
 		:root {
 			--padding: 0;
 			--lighterpink: #ffeaf3;
@@ -27,6 +30,7 @@
 			background: transparent;
 			padding-bottom: 10vh;
 			color: black;
+			font-family: comfortaa;
 		}
 		grid-slide.opaque {
 			background: var(--lighterpink)
@@ -35,16 +39,25 @@
 		grid-slides-controller {
 			background: var(--lighterpink)
 		}
-		.caption {
-			position: absolute;
-			align-self: flex-start;
-			background: var(--color-dark);
-			margin: 0;
+		.centered {
+			width: auto;
+			height: auto;
 			justify-self: center;
-			width: 100%;
-			text-align: center;
-			opacity: 0.9;
-			box-shadow: 0 0 1em black;
+			align-self: center;
+		}
+		fitty-text {
+			line-height: 1.1;
+		}
+		li {
+			margin-top: 1em;
+		}
+		#title {
+			--bg: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' rotate='30' width='300' height='300'><text x='15' y='30'  rotate='-10' font-size='30px'>⭐</text><text x='250'  rotate='5' y='150' font-size='20px'>⭐</text><text x='15' y='180' font-size='40px'>⭐</text></svg>");
+  			background: var(--bg);
+			background-size: 33%;
+		}
+		section: {
+			grid-column: full;
 		}
 	</style>
 
@@ -89,10 +102,15 @@
 				document.currentScript.parentNode.setAttribute('slide',window.location.hash.slice(1));
 			}
 		</script>
-		<grid-slide id="title" label="text: by Ada Rose Cannon;" transition-in="none" transition-out="fade">
-			<fitty-text>
-				<span style="line-height: 1;" >Queer Spaces <span style="font-size: 1.5em; vertical-align: top;">&</span><br />Virtual Spaces</span>
+
+		<grid-slide transition-out="fade" label="text:;" style="grid-template-columns: 4fr 2fr;">
+			<fitty-text style="line-height: 1;grid-area: 1 / 1;--horizontal-align: right;flex: 1;">
+				<span>
+					Ada Rose<br>Cannon
+				</span><br>
+				<span style="margin-left: 8em;">@lady_ada_king</span>
 			</fitty-text>
+			<img style="width: 100%;height: 100%;grid-area: 1 / 2;" src="./images/ada.svg">
 		</grid-slide>
 	
 		<grid-slide id="logo" label="text:;" a-frame-step-by-step="target: div; light: false;" transition-in="fade">
@@ -109,34 +127,165 @@
 				</a-entity>
 			</template>
 		</grid-slide>
-		<grid-notes>
-			<ul>
-				<li>I'm from Samsung Internet, we're a browser for Android phones. You can find us in the play store.</li>
-				<li>Our main focuses are privacy and performance</li>
-				<li>We also focus on some new Web APIs such as Progressive Web Apps, Web Payment, and Virtual Reality in the Web</li>
-				<li>We even have a VR web browser!</li>
-			</ul>
-		</grid-notes>
+
+		<grid-slide el-by-el id="title" label="text: by Ada Rose Cannon;" transition-out="fade">
+			<fitty-text>
+				<span style="line-height: 1;" >
+					Queer Spaces
+					<span style="font-size: 1.5em; vertical-align: top;">&</span><br />
+					Virtual Spaces
+				</span>
+			</fitty-text>
+		</grid-slide>
 
 		<grid-slide label="text: queeringthemap.com;">
 			<img id="qtm" src="./images/queeringthemap.png" alt="Queering The Map, Each point represents a memorable queer experience.">
 		</grid-slide>
-		
-		<grid-slide class="opaque" style="background: var(--space-blue-dark)" label="text: maps.london.gov.uk/lgbtq/;" el-by-el >
+
+		<grid-slide el-by-el>
+			<section style="grid-template-columns: inherit; display: grid;">
+				<img style="grid-column: auto" src="./images/Jonny-Quest-the-real-adventures-of-jonny-quest.jpg" alt="Jonny Quest">
+				<img style="grid-column: auto" src="./images/neuromancer.jpg" alt="Neuromancer">
+			</section>
+			<video src="images/netscape.mp4" style="mix-blend-mode: lighten;"></video>
+			<img src="./images/lain.gif" alt="Serial Experiments Lain">
+		</grid-slide>
+
+		<grid-slide label="text:;" id="london" class="opaque" transition-out="fade" style="background:linear-gradient(0deg, rgba(10,43,74,1) 0%, rgba(10,43,74,1) 48%, rgba(255,179,179,1) 50%, rgba(204,238,255,1) 94%, rgba(204,238,255,1) 100%)">
+			<img src="./images/london.svg" />
+		</grid-slide>
+
+		<grid-slide class="opaque" transition-in="fade" style="background: var(--space-blue-dark)" label="text: maps.london.gov.uk/lgbtq/;" el-by-el >
 			<video src="images/lgbt.mp4" style="mix-blend-mode: lighten;"></video>
 		</grid-slide>
 
-		<grid-slide class="opaque" label="text: The Daily Dot;">
-			<img id="qtm" style="mix-blend-mode: darken;" src="./images/dailydot.png">
+		<grid-slide label="text:;" id="logos" style="grid-template: 1fr / 1fr 1fr 1fr 1fr; grid-gap: 5vh; margin: 0 5vw;" >
+			<!-- <img style="grid-area: auto; height: auto;" src="./images/isnta.svg" alt="Instagram"> -->
+			<img style="grid-area: auto; height: auto;" src="./images/tumblr.svg" alt="Tumblr">
+			<img style="grid-area: auto; height: auto;" src="./images/facebook.svg" alt="Facebook">
+			<img style="grid-area: auto; height: auto;" src="./images/twitter.svg" alt="Twitter">
+			<img style="grid-area: auto; height: auto;" src="./images/youtube.svg" alt="YouTube">
+		</grid-slide>
+
+		<grid-slide id="who">
+			<fitty-text>
+				<span>Who here has avoided <br /><b>liking</b> or <b>commenting</b> on something<br /> for fear that the platform would<br />out us to our employers or family?</span>
+			</fitty-text>
+		</grid-slide>
+
+		<grid-slide id="who2">
+			<fitty-text>
+				<span>Who here has knowingly changed their behavior<br /> to be <i>"less queer"</i> to avoid targetted harassment?</span>
+			</fitty-text>
+		</grid-slide>
+
+		<grid-slide label="text:Source Twitter" el-by-el>
+			<p>Social Media platforms are incapable of understanding their queer participants.</p>
+			<p>The next slide is very personal...</p>
+			<ul style="height: auto; max-height: none; list-style-type: none; line-height: 1.5; font-size: 0.5em;"></ul>
+			<script>
+				let anim;
+				const target = document.currentScript.previousElementSibling;
+				fetch('./images/interests.txt')
+					.then(r => r.text())
+					.then(body => target.innerHTML = body);
+				document.currentScript.actions = function * () {
+					const el = this.firstChild;
+					yield;
+					anim = el.animate({
+						transform: ['translateY(0)',`translateY(80vh) translateY(-${el.clientHeight}px) `]
+					},{
+						duration: 30000,
+						easing: 'linear',
+						fill: 'forwards'
+					});
+					yield;
+				}
+				document.currentScript.teardown = function () {
+					if (anim) anim.cancel();
+				}
+			</script>
+			<p>The lens of capitalism through which Social Media views me paints an incomplete picture.</p>
+			<img src="./images/horse.jpg" style="transform: scaleX(-1); grid-column: full; object-fit: cover; object-position: top;" alt="Misses the complete picture">
+		</grid-slide>
+
+		<grid-slide>
+			<p>To the straight and the cis, queer experiences and trans bodies are inherently othered and sexualised.</p>
 		</grid-slide>
 
 		<grid-slide class="opaque" label="text: The Verge;">
 			<img id="qtm" style="mix-blend-mode: darken;" src="./images/theverge.png">
 		</grid-slide>
 
+		<grid-slide class="opaque" label="text: The Daily Dot;">
+			<img id="qtm" style="mix-blend-mode: darken;" src="./images/dailydot.png">
+		</grid-slide>
+
+		<grid-slide el-by-el>
+			<p>Legislative Issues</p>
+			<p>SESTA & FOSTA</p>
+			<p>Knock-on effects to Queer Communities.</p>
+		</grid-slide>
+
+		<grid-slide id="wat" el-by-el>
+			<p>What can be done about it?</p>
+			<ul el-by-el="reveal: true;" style="font-size: 4vh;">
+				<li>Fight for changes in our existing spaces</li>
+				<li>Build spaces where Queer people feel safe to be themselves</li>
+				<li>Be an ally to Sex Workers and be aware of the struggles, it mirrors our own.</li>
+			</ul>
+		</grid-slide>
+
 		<grid-slide label="text:;">
 			<img id="qtm" src="./images/talkingaboutgender.jpg">
 		</grid-slide>
+
+		<grid-slide el-by-el>
+			<p>
+				If we build queer communities online we still don't regain
+				the presence lost from offline physical communities.
+			</p>
+			<p>
+				But what if my sci-fi childhood dream was a reality?
+			</p>
+			<p>
+				What if we could meet in virtual spaces?
+			</p>
+		</grid-slide>
+
+		<grid-slide label="text:;">
+			<p>We can build VR pages on the web</p>
+			<img id="qtm" class="centered" src="./images/webxr-logo.png">
+			<p>The API is still in it's infancy.</p>
+		</grid-slide>
+
+		<grid-slide el-by-el>
+			<img src="./images/special-feeling.svg" />
+			<img src="./images/spacejam.jpg" >
+			<img src="./images/rogerrabbit.jpg" >
+			<fitty-text style="line-height: 1.4;">Why <span style="color:var(--color-yellow)">XR</span><br />&emsp;&emsp;on the <span style="color:var(--color-red)">Web</span>??</fitty-text>
+			<fitty-text style="line-height: 1.4;">Bringing <span style="color:var(--color-yellow)">XR</span> powers to the <span style="color:var(--color-red)">Web</span> <br />&emsp;&emsp; brings <span style="color:var(--color-red)">Web</span> Powers to <span style="color:var(--color-yellow)">XR</span>.</fitty-text>
+		</grid-slide>
+
+		<grid-slide label="text:;">
+			<img id="qtm" src="./images/logos.png">
+		</grid-slide>
+
+		<grid-slide><p>Live Code</p></grid-slide>
+
+		<grid-slide el-by-el>
+			<P>
+				XR is too focused on murder simulators and shopping.
+			</P>
+			<p>
+				It's squandering it's potential for emotional connections.
+			</p>
+			<p>
+				Make Queer XR Experiences
+			</p>
+		</grid-slide>
+
+
 	</grid-slides-controller>
 
 	<div style="
