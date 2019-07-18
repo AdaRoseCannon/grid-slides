@@ -103,7 +103,8 @@ GridSlidesController.registerSlideData('el-by-el',
 					if (el.elByEl) {
 						el.elByEl.setup.bind(el)();
 						const action = el.elByEl.action();
-						return yield * action;
+						if (!nextEl) return yield * action;
+						yield * action;
 					}
 					
 					if (nextEl && nextEl.tagName !== 'SCRIPT') yield;
