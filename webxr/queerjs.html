@@ -103,7 +103,7 @@
 			}
 		</script>
 
-		<grid-slide transition-out="fade" label="text:;" style="grid-template-columns: 4fr 2fr;">
+		<grid-slide transition-out="fade" label="text:ada.is;" style="grid-template-columns: 4fr 2fr;">
 			<fitty-text style="line-height: 1;grid-area: 1 / 1;--horizontal-align: right;flex: 1;">
 				<span>
 					Ada Rose<br>Cannon
@@ -113,7 +113,7 @@
 			<img style="width: 100%;height: 100%;grid-area: 1 / 2;" src="./images/ada.svg">
 		</grid-slide>
 	
-		<grid-slide id="logo" label="text:;" a-frame-step-by-step="target: div; light: false;" transition-in="fade">
+		<grid-slide id="logo" label="text:SamsungInter.net;" a-frame-step-by-step="target: div; light: false;" transition-in="fade">
 			<div style="width: 90vw; height: 90vh; align-self: center; justify-self: center;"></div>
 			<template action="assets">
 				<a-asset-item id="si-gltf" src="./images/si-stars.glb"></a-asset-item>
@@ -138,18 +138,21 @@
 			</fitty-text>
 		</grid-slide>
 
-		<grid-slide style="grid-column: one-quarter/three-quarter;align-items: center;"><fitty-text>Disclaimer:</fitty-text></grid-slide>
+		<grid-slide style="grid-column: one-quarter/three-quarter;align-items: center;" label><fitty-text>Disclaimer:</fitty-text></grid-slide>
 
 		<grid-slide label="text: queeringthemap.com;">
 			<img id="qtm" src="./images/queeringthemap.png" alt="Queering The Map, Each point represents a memorable queer experience.">
 		</grid-slide>
 
-		<grid-slide el-by-el>
+		<grid-slide label el-by-el transition-out="fade">
 			<section style="grid-template-columns: inherit; display: grid;">
 				<img style="grid-column: auto" src="./images/Jonny-Quest-the-real-adventures-of-jonny-quest.jpg" alt="Jonny Quest">
 				<img style="grid-column: auto" src="./images/neuromancer.jpg" alt="Neuromancer">
 			</section>
 			<video src="images/netscape.mp4" style="mix-blend-mode: lighten;"></video>
+		</grid-slide>
+	
+		<grid-slide label="text:Serial Experiments Lain" transition-in="fade">
 			<img src="./images/lain.gif" alt="Serial Experiments Lain">
 		</grid-slide>
 
@@ -374,7 +377,7 @@ ${body}
 
 		<grid-slide el-by-el id="last">
 			<p>Thanks for listening...</p>
-			<section el-by-el="reveal:true;">
+			<section el-by-el>
 				<p>Be an ally to sex workers</p>
 				<p>Help build queer communities online and in the real world.</p>
 				<p>Perhaps try out building VR spaces</p>
