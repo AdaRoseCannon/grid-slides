@@ -18,14 +18,17 @@
 				<a-asset-item id="fox-big-mtl" src="models/fox-big/materials.mtl"></a-asset-item>
 			</a-assets>
 
-			<a-entity geometry="primitive: plane; width: 30; height: 10;" rotation="-90 0 0" position="0 0 -5" material="color: grey;" shadow></a-entity>
+
+			<a-plane width="30" height="10" rotation="-90 0 0" position="0 0 -5" material="color: grey;" shadow></a-plane>
+			<a-box height="4" width="3" position="3.383 1.901 -10.385" scale="5.786 1 1" material="color:#333"></a-box>
+			<a-box height="4" width="3" position="-4.489 1.522 -10.385" rotation="0 -91.845 0" scale="5.786 1 1" material="color:#935315"></a-box>
+			<a-box height="4" width="3" position="11.634 2.036 -7.973" rotation="0 -91.84513455947096 0" scale="5.786 2.873 5.809" material="color:#935315"></a-box>
+
 			<a-entity obj-model="mtl:models/fox-big/materials.mtl;obj:models/fox-big/model.obj" position="0 0.75 -5" rotation="0 -200 0" scale="0.5 0.5 0.5" shadow="receive: false;"></a-entity>
 			<a-entity obj-model="mtl:models/lamp-post/materials.mtl;obj:models/lamp-post/model.obj" position="0.427 7.048 -5.548" rotation="0 -200 0" scale="3 3 2" shadow="receive: false;"></a-entity>
 			<a-entity obj-model="mtl:models/bin/materials.mtl;obj:models/bin/model.obj" position="-0.93 1.859 -7.433" rotation="0 -200 0" scale="9.475 9.475 9.475" shadow="receive: false;"></a-entity>
 			<a-entity obj-model="mtl:models/bin/materials.mtl;obj:models/bin/model.obj" position="0.984 1.859 -7.169" rotation="0 125 0" scale="9.475 9.475 9.475" shadow="receive: false;"></a-entity>
-			<a-entity position="3.383 1.901 -10.385" scale="5.786 1 1" geometry="width:3;height:4" material="color:#333"></a-entity>
-			<a-entity position="-4.489 1.522 -10.385" rotation="0 -91.845 0" scale="5.786 1 1" geometry="height:4;width:3" material="color:#935315"></a-entity>
-			<a-entity position="11.634 2.036 -7.973" rotation="0 -91.84513455947096 0" scale="5.786 2.873 5.809" geometry="height:4;width:3" material="color:#935315"></a-entity>
+
 			<a-light type="ambient" color="navy" intensity="0.7"></a-light>
 			<a-light type="directional" color="goldenrod" position="1 0.2 1" intensity="0.7"></a-light>
 			<a-light type="spot" color="white" position="0.053 9.098 -4.897" intensity="1" rotation="-83 0 0" light="color:#fff442;shadowCameraFov:30;penumbra:0.2;castShadow:true;angle:30"></a-light>

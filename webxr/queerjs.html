@@ -138,6 +138,8 @@
 			</fitty-text>
 		</grid-slide>
 
+		<grid-slide style="grid-column: one-quarter/three-quarter;align-items: center;"><fitty-text>Disclaimer:</fitty-text></grid-slide>
+
 		<grid-slide label="text: queeringthemap.com;">
 			<img id="qtm" src="./images/queeringthemap.png" alt="Queering The Map, Each point represents a memorable queer experience.">
 		</grid-slide>
@@ -151,7 +153,7 @@
 			<img src="./images/lain.gif" alt="Serial Experiments Lain">
 		</grid-slide>
 
-		<grid-slide label="text:;" id="london" class="opaque" transition-out="fade" style="background:linear-gradient(0deg, rgba(10,43,74,1) 0%, rgba(10,43,74,1) 48%, rgba(255,179,179,1) 50%, rgba(204,238,255,1) 94%, rgba(204,238,255,1) 100%)">
+		<grid-slide label id="london" class="opaque" transition-out="fade" style="background:linear-gradient(0deg, rgba(10,43,74,1) 0%, rgba(10,43,74,1) 48%, rgba(255,179,179,1) 50%, rgba(204,238,255,1) 94%, rgba(204,238,255,1) 100%)">
 			<img src="./images/london.svg" />
 		</grid-slide>
 
@@ -159,7 +161,7 @@
 			<video src="images/lgbt.mp4" style="mix-blend-mode: lighten;"></video>
 		</grid-slide>
 
-		<grid-slide label="text:;" id="logos" style="grid-template: 1fr / 1fr 1fr 1fr 1fr; grid-gap: 5vh; margin: 0 5vw;" >
+		<grid-slide label id="logos" style="grid-template: 1fr / 1fr 1fr 1fr 1fr; grid-gap: 5vh; margin: 0 5vw;" >
 			<!-- <img style="grid-area: auto; height: auto;" src="./images/isnta.svg" alt="Instagram"> -->
 			<img style="grid-area: auto; height: auto;" src="./images/tumblr.svg" alt="Tumblr">
 			<img style="grid-area: auto; height: auto;" src="./images/facebook.svg" alt="Facebook">
@@ -167,7 +169,7 @@
 			<img style="grid-area: auto; height: auto;" src="./images/youtube.svg" alt="YouTube">
 		</grid-slide>
 
-		<grid-slide id="who">
+		<grid-slide label id="who">
 			<fitty-text>
 				<span>Who here has avoided <br /><b>liking</b> or <b>commenting</b> on something<br /> for fear that the platform would<br />out us to our employers or family?</span>
 			</fitty-text>
@@ -179,8 +181,8 @@
 			</fitty-text>
 		</grid-slide>
 
-		<grid-slide label="text:Source Twitter" el-by-el>
-			<p>Social Media platforms are incapable of understanding their queer participants.</p>
+		<grid-slide id="ads" label="text:Source Twitter" el-by-el>
+			<!-- <p>Social Media platforms are incapable of understanding their queer participants.</p> -->
 			<p>The next slide is very personal...</p>
 			<ul style="height: auto; max-height: none; list-style-type: none; line-height: 1.5; font-size: 0.5em;"></ul>
 			<script>
@@ -205,11 +207,11 @@
 					if (anim) anim.cancel();
 				}
 			</script>
-			<p>Social Media Platforms view us through the lens of capitalism which paints an incomplete picture of who we are.</p>
+			<!-- <p>Social Media Platforms view us through the lens of capitalism which paints an incomplete picture of who we are.</p> -->
 			<img src="./images/horse.jpg" style="transform: scaleX(-1); grid-column: full; object-fit: cover; object-position: top;" alt="Misses the complete picture">
 		</grid-slide>
 
-		<grid-slide id="othered">
+		<grid-slide label id="othered">
 			<p>To the straight and the cis, queer experiences and trans bodies are inherently othered and sexualised.</p>
 		</grid-slide>
 
@@ -217,7 +219,7 @@
 			<img id="qtm" style="mix-blend-mode: darken;" src="./images/dailydot.png">
 		</grid-slide>
 
-		<grid-slide>
+		<grid-slide label>
 			<p>In an age of conservative values towards sex and sex work combined with the view of queer people's existence as inherently sexual. The destruction of queer spaces follows.</p>
 		</grid-slide>
 
@@ -225,12 +227,12 @@
 			<img id="qtm" style="mix-blend-mode: darken;" src="./images/theverge.png">
 		</grid-slide>
 
-		<grid-slide el-by-el>
-			<p>Legislative Issues</p>
-			<fitty-text>SESTA & FOSTA</fitty-text>
+		<grid-slide label el-by-el>
+			<img src="./images/law.svg" alt="Law Symbol">
+			<fitty-text><span>SESTA &<br /> FOSTA</span></fitty-text>
 		</grid-slide>
 
-		<grid-slide id="wat" el-by-el>
+		<grid-slide id="wat" label el-by-el>
 			<p>What can be done about it?</p>
 			<section el-by-el="reveal: true;">
 				<p>Preserving our space in Social Media</p> 
@@ -242,7 +244,7 @@
 			</section>
 			<fitty-text>BE HORNY<br/>ON MAIN</fitty-text>
 			<section el-by-el="reveal: true;">
-				<p>Recovering our own spaces</p> 
+				<p>Creating Exclusive Queer Spaces</p> 
 				<ul el-by-el="reveal: true;" style="font-size: 4vh;">
 					<li>Spaces where Queer people feel safe from harassment</li>
 					<li>Don't have to fight to maintain a presence.</li>
@@ -251,6 +253,10 @@
 				</ul>
 			</section>
 			<img id="qtm" src="./images/talkingaboutgender.jpg">
+			<section>
+				<p style="line-height: 1.2;"><i>How exclusive tech events can foster an inclusive tech community</i> — by @AroraXD</p>
+				<p style="opacity: 0.8; font-size: 0.8em;">http://tiny.cc/exclusive-tech</p>
+			</section>
 		</grid-slide>
 
 		<grid-slide id="aside">
@@ -258,28 +264,26 @@
 			<p>i.e. "#lgbtq, #not-men etc?"</p>
 		</grid-slide>
 
-		<grid-slide el-by-el>
-			<p>
-				If we build queer communities online we still don't regain
-				the presence lost from offline physical communities.
-			</p>
-			<p>
-				But what if my sci-fi childhood dream was a reality?
-			</p>
-			<p>
-				What if we could meet in virtual spaces?
-			</p>
-		</grid-slide>
-
-		<grid-slide>
-			<p>We can bring Queer spaces to whom it was previously inaccessible</p>
-			<p>We can unite communities from far apart</p>
+		<grid-slide id="watif" el-by-el>
+			<img src="./images/pride.jpg" alt="">
+			<section>
+				<p>
+					But what if my sci-fi childhood dream was a reality?
+				</p>
+				<img src="./images/Jonny-Quest-the-real-adventures-of-jonny-quest.jpg" alt="">
+			</section>
+			<section>
+				<p>
+					What if we could meet in virtual spaces?
+				</p>
+				<img src="./images/matrixmeet.gif" alt="">
+			</section>
+			<img src="./images/barn-hut-landscape-1005258.jpg" alt="">
 		</grid-slide>
 
 		<grid-slide label="text:;" el-by-el>
-			<p>We can build VR pages on the web</p>
+			<fitty-text>VR & AR on <br /> the Web Today</fitty-text>
 			<img id="qtm" class="centered" src="./images/webxr-logo.png">
-			<p>The API is still in it's infancy.</p>
 		</grid-slide>
 
 		<grid-slide el-by-el>
@@ -290,31 +294,93 @@
 			<fitty-text style="line-height: 1.4;">Bringing <span style="color:var(--color-yellow)">XR</span> powers to the <span style="color:var(--color-red)">Web</span> <br />&emsp;&emsp; brings <span style="color:var(--color-red)">Web</span> Powers to <span style="color:var(--color-yellow)">XR</span>.</fitty-text>
 		</grid-slide>
 
-		<grid-slide label="text:;">
+
+
+		<grid-slide label="text:;" el-by-el id="howtogl">
+			<section style="font-size:0.3em;"></section>
+			<script>
+				(function () {
+					let anim1;
+					const target = document.currentScript.previousElementSibling;
+					fetch('../webvr/images/webgl-demo.txt')
+						.then(r => r.text())
+						.then(body => target.innerHTML = 
+							`<html-encode style="max-height: unset;"><template><script>
+${body}
+		${'</scr'}ipt></template></html-encode>`);
+					document.currentScript.actions = function * () {
+						const el = this.firstChild.firstChild;
+						anim1 = el.animate({
+							transform: ['translateY(0)',`translateY(80vh) translateY(-${el.clientHeight}px) `]
+						},{
+							duration: 10000,
+							easing: 'ease-in-out',
+							fill: 'forwards'
+						});
+						yield;
+					}
+					document.currentScript.teardown = function () {
+						if (anim1) anim1.cancel();
+					}
+				}());
+			</script>
 			<img id="qtm" src="./images/logos.png">
+			<html-encode style="font-size:0.3em;"><template>
+				<a-scene>
+
+					<a-plane width="30" height="10" rotation="-90 0 0" position="0 0 -5" material="color: grey;" shadow></a-plane>
+					<a-box height="4" width="3" position="3.383 1.901 -10.385" scale="5.786 1 1" material="color:#333"></a-box>
+					<a-box height="4" width="3" position="-4.489 1.522 -10.385" rotation="0 -91.845 0" scale="5.786 1 1" material="color:#935315"></a-box>
+					<a-box height="4" width="3" position="11.634 2.036 -7.973" rotation="0 -91.84513455947096 0" scale="5.786 2.873 5.809" material="color:#935315"></a-box>
+
+					<a-entity obj-model="mtl:models/fox-big/materials.mtl;obj:models/fox-big/model.obj" position="0 0.75 -5" rotation="0 -200 0" scale="0.5 0.5 0.5" shadow="receive: false;"></a-entity>
+					<a-entity obj-model="mtl:models/lamp-post/materials.mtl;obj:models/lamp-post/model.obj" position="0.427 7.048 -5.548" rotation="0 -200 0" scale="3 3 2" shadow="receive: false;"></a-entity>
+					<a-entity obj-model="mtl:models/bin/materials.mtl;obj:models/bin/model.obj" position="-0.93 1.859 -7.433" rotation="0 -200 0" scale="9.475 9.475 9.475" shadow="receive: false;"></a-entity>
+					<a-entity obj-model="mtl:models/bin/materials.mtl;obj:models/bin/model.obj" position="0.984 1.859 -7.169" rotation="0 125 0" scale="9.475 9.475 9.475" shadow="receive: false;"></a-entity>
+
+					<a-light type="ambient" color="navy" intensity="0.7"></a-light>
+					<a-light type="directional" color="goldenrod" position="1 0.2 1" intensity="0.7"></a-light>
+					<a-light type="spot" color="white" position="0.053 9.098 -4.897" intensity="1" rotation="-83 0 0" light="color:#fff442;shadowCameraFov:30;penumbra:0.2;castShadow:true;angle:30"></a-light>
+					<a-sky src="images/city.jpg"></a-sky>
+				</a-scene>
+			</template></html-encode>
+			<iframe src="../webvr/live-coding-cheat.html" frameborder="0" style="grid-column: full;width: 100%;height: 100%;"></iframe>
 		</grid-slide>
 
-		<grid-slide><p>Live Code</p></grid-slide>
+		<grid-slide label="text: Google's VR Experiments;" el-by-el>
+			<video src="./images/simpleavatars.mp4"></video>
+		</grid-slide>
 
-		<grid-slide el-by-el>
+		<grid-slide label="text:CSS Day 2017;">
+			<img src="./images/177.png" alt="">
+		</grid-slide>
+
+		<grid-slide label="text:Mozilla Hubs;">
+			<img src="./images/hubs.gif" alt="">
+		</grid-slide>
+
+		<grid-slide label el-by-el>
 			<P>
-				XR is too focused on murder simulators and shopping.
+				Commercial XR is too focused on violent games and shopping.
 			</P>
 			<p>
-				It's squandering it's potential for emotional connections.
+				It's frequently squandering it's potential for emotional connections.
 			</p>
 			<p>
 				We can set the tone for the whole platform by making Queer XR Experiences
 			</p>
-			<fitty-text>I want the XR Web to be</br>Queer!</fitty-text>
+			<fitty-text>I want the XR Web to be</br>Queer from the start!</fitty-text>
 		</grid-slide>
 
-		<grid-slide el-by-el>
-			<p>If you only take one thing away from the this talk...</p>
-			<p>it is...</p>
+		<grid-slide el-by-el id="last">
+			<p>Thanks for listening...</p>
+			<section el-by-el="reveal:true;">
+				<p>Be an ally to sex workers</p>
+				<p>Help build queer communities online and in the real world.</p>
+				<p>Perhaps try out building VR spaces</p>
+			</section>
 			<fitty-text>BE HORNY<br/>ON MAIN</fitty-text>
 		</grid-slide>
-
 
 	</grid-slides-controller>
 
