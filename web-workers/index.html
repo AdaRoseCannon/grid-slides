@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Web Workers in the Real World</title>
+	<meta property="og:title" content="Web Workers in the Real World">
+	<meta property="og:description" content="A talk by Ada Rose Cannon">
+	<meta name="description" content="A talk by Ada Rose Cannon" />
+	<meta property="og:url" content="https://ada.is/grid-slides/web-workers/">
+	<meta property="og:image" content="">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:site" content="@lady_ada_king">
+	<meta name="twitter:creator" content="@lady_ada_king">
+
+	<link href="../css/style.css" rel="stylesheet">
+	<link href="./style.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai.min.css" rel="stylesheet">
+
+
+	<script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/edf84e6e/webcomponents-sd-ce.js"></script>
+	<script>
+		navigator.serviceWorker.register('../sw.js');
+	</script>
+	<script src="https://aframe.io/releases/0.8.2/aframe.js"></script>
+	<script src="https://cdn.rawgit.com/mrdoob/three.js/r95/examples/js/loaders/GLTFLoader.js"></script>
+	<script type="module">
+		import "../scripts/esm/index.js";
+		import '../scripts/esm/plugins/aframe.js';
+		import "../scripts/web-components/vivus-component.js";
+		import "../scripts/web-components/html-encode.js";
+		import "../scripts/web-components/fitty-component.min.js";
+		import HTMLElementPlus from 'https://unpkg.com/html-element-plus/html-element-plus.js';
+		import GridSlide from '../scripts/esm/grid-slide.js';
+		import GridSlidesController from '../scripts/esm/grid-slides-controller.js';
+
+		GridSlidesController.registerSlideData('label', {
+			target: {
+				default: '#overlaytext'
+			},
+			text: {
+				default: ''
+			}
+		}, function (options) {
+			return {
+				action: function *() {
+					document.querySelector(options.target).textContent = options.text;
+				}
+			}
+		});
+	</script>
+</head>
+
+<body>
+
+	<grid-slides-controller presenting>
+		<script>
+			const hash = window.location.hash;
+			if (hash) {
+				document.currentScript.parentNode.setAttribute('slide', hash.slice(1));
+			}
+		</script>
+
+		<grid-slide transition-out="fade" label="text:ada.is;" style="grid-template-columns: 4fr 2fr;">
+			<fitty-text style="line-height: 1;grid-area: 1 / 1;--horizontal-align: right;flex: 1;">
+				<span>
+					Ada Rose<br>Cannon
+				</span><br>
+				<span style="margin-left: 8em;">@lady_ada_king</span>
+			</fitty-text>
+			<img style="width: 100%;height: 100%;grid-area: 1 / 2;" src="../brand-assets/ada/ada.svg">
+		</grid-slide>
+
+		<grid-slide id="logo" label="text:SamsungInter.net;" a-frame-step-by-step="target: div; light: false;"
+			transition-in="fade">
+			<div style="width: 90vw; height: 90vh; align-self: center; justify-self: center;"></div>
+			<template action="assets">
+				<a-asset-item id="si-gltf" src="../brand-assets/samsung/si-stars.glb"></a-asset-item>
+			</template>
+			<template>
+				<a-camera look-controls="enabled:false;" position="0 0 6" fov="30"></a-camera>
+				<a-entity scale="0 0 0" position="0 -0.5 0">
+					<a-animation delay="1000" from="0 -180 0" to="0 0 0" easing="ease-in-out" dur="5000"></a-animation>
+					<a-animation delay="1000" from="0 0 0" to="1 1 1" easing="ease-out-back" dur="5000"
+						attribute="scale"></a-animation>
+					<a-entity gltf-model="#si-gltf" position="0 0.5 0"
+						look-controls="reverseMouseDrag: true; hmdEnabled: false;"></a-entity>
+				</a-entity>
+			</template>
+		</grid-slide>
+
+		<grid-slide id="title" label="text: by Ada Rose Cannon;" transition-out="fade">
+			<fitty-text>
+				Web Workers <span style="color: deeppink;">in</span><br />
+				<span style="color: deeppink;">the</span> Real World 🌍
+			</fitty-text>
+		</grid-slide>
+
+		<grid-slide id="first"><iframe src="https://mind-map.glitch.me/1pqetyp3nx7/" frameborder="0"></iframe>
+		</grid-slide>
+
+		<grid-slide el-by-el id="async" style="font-size: 0.7em;">
+			<p>Asynchronous JavaScript</p>
+			<section>
+				<p>
+					Things used to be simple...
+				</p>
+				<html-encode>
+					<template>
+						<script>
+							var request = new XMLHttpRequest();
+							request.open('GET', '/bar/foo.txt', false);
+							request.send(null); // Can take several seconds
+							alert('done'); // Also synchronous
+							console.log('here');
+						</script>
+					</template>
+				</html-encode>
+			</section>
+			<section>
+				<html-encode>
+					<template>
+						<script>
+							function reqListener() {
+								// handle response
+							}
+
+							var oReq = new XMLHttpRequest();
+							oReq.addEventListener("load", reqListener);
+							oReq.open("GET", "http://www.example.org/example.txt");
+							oReq.send();
+						</script>
+					</template>
+				</html-encode>
+			</section>
+			<section>
+				<html-encode>
+					<template>
+						<script>
+							function successCallback() {
+								// Do something with the media
+							}
+							navigator.getUserMedia(constraints, successCallback, errorCallback);
+						</script>
+					</template>
+				</html-encode>
+			</section>
+			<section>
+				<html-encode>
+					<template>
+						<script>
+							function callbackFn(error, data) {
+								if (error) {
+									// handle error
+								}
+							}
+
+							fs.readFile('./the-gibson.txt', callbackFn)
+						</script>
+					</template>
+				</html-encode>
+			</section>
+			<section>
+				<html-encode>
+					<template>
+						<script>
+							fetch('/data.json')
+								.then(response => response.json())
+								.then(data => {
+									console.log(data);
+								});
+						</script>
+					</template>
+				</html-encode>
+			</section>
+			<section>
+				<html-encode>
+					<template>
+						<script>
+							async function getData() {
+
+								const response = await fetch('data.json');
+								const data = await response.json();
+								console.log(data);
+
+							};
+							getData();
+						</script>
+					</template>
+				</html-encode>
+			</section>
+		</grid-slide>
+		<grid-notes>
+			<ul>
+				<li>Before we get into web workers I would like to talk about asynchronous programming with JavaScript
+				</li>
+				<li>We now have the language to talk about asynchronous code</li>
+			</ul>
+		</grid-notes>
+
+
+		<grid-slide id="timeline" label="text: Wibbly-Wobbly-Timey-Liney" el-by-el>
+			<!-- So what do I mean by a thread: -->
+			<section el-by-el="reveal: true;" style="width: 100%; height: 100%; position: relative;">
+				<img style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;" src="images/timeline.svg" />
+				<vivus-svg duration="1000" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;"
+					src="./images/timeline-points.svg"></vivus-svg>
+			</section>
+			<section el-by-el>
+				<ul el-by-el="reveal: true;">
+					<li>Parse HTML</li>
+					<li>Parse CSS</li>
+					<li>Run your JavaScript</li>
+					<li>Layout the Page</li>
+					<li>Paint the layers</li>
+				</ul>
+			</section>
+		</grid-slide>
+
+	</grid-slides-controller>
+
+	<div class="overlay">
+		<span id="overlaytext"
+			style="white-space: nowrap; font-size: 4vh; position:absolute; right: 45vw; bottom: 3vh;">Hello World</span>
+	</div>
+</body>
+
+</html>

@@ -56,7 +56,7 @@
   			background: var(--bg);
 			background-size: 33%;
 		}
-		section: {
+		section {
 			grid-column: full;
 		}
 	</style>
@@ -110,13 +110,13 @@
 				</span><br>
 				<span style="margin-left: 8em;">@lady_ada_king</span>
 			</fitty-text>
-			<img style="width: 100%;height: 100%;grid-area: 1 / 2;" src="./images/ada.svg">
+			<img style="width: 100%;height: 100%;grid-area: 1 / 2;" src="../brand-assets/ada/ada.svg">
 		</grid-slide>
 	
 		<grid-slide id="logo" label="text:SamsungInter.net;" a-frame-step-by-step="target: div; light: false;" transition-in="fade">
 			<div style="width: 90vw; height: 90vh; align-self: center; justify-self: center;"></div>
 			<template action="assets">
-				<a-asset-item id="si-gltf" src="./images/si-stars.glb"></a-asset-item>
+				<a-asset-item id="si-gltf" src="../brand-assets/samsung/si-stars.glb"></a-asset-item>
 			</template>
 			<template>
 				<a-camera look-controls="enabled:false;" position="0 0 6" fov="30"></a-camera>
@@ -394,7 +394,7 @@ ${body}
 		width: 100%;
 		height: 100%;
 		pointer-events: none;
-		background: url(./images/Screen-Overlay-Type-1-Blank.svg);
+		background: url(../brand-assets/ada/Screen-Overlay-Type-1-Blank.svg);
 		background-size: cover;
 		background-position: bottom center;
 		font-family: comfortaa;

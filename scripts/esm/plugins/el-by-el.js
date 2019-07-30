@@ -72,7 +72,7 @@ GridSlidesController.registerSlideData('el-by-el',
 					el.elByEl = GridSlidesController.getSlideData('el-by-el', el, options);
 				}
 			});
-			firstChild = children.shift();
+			if (!children[0].elByEl) firstChild = children.shift();
 
 			if (!children.length) {
 				console.warn('Empty elByEl target', this);
@@ -81,7 +81,9 @@ GridSlidesController.registerSlideData('el-by-el',
 			}
 
 			out.action = (function * () {
-				yield;
+
+				// If a first child is already added then wait before showing it.
+				if (firstChild) yield;
 				let i = 0;
 				for (const el of children) {
 					i++;
@@ -123,7 +125,7 @@ GridSlidesController.registerSlideData('el-by-el',
 				}
 			}
 			this.innerHTML = '';
-			run(firstChild);
+			if (firstChild) run(firstChild);
 		};
 
 		return out;
