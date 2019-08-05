@@ -1,6 +1,6 @@
 import "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js";
 import HTMLElementPlus from 'https://unpkg.com/html-element-plus/html-element-plus.js';
-import html from 'https://unpkg.com/html-element-plus/noop.js';
+import html from 'https://unpkg.com/html-element-plus@1.1.0/noop.js';
 
 function similarStart(a,b,l) {
 	if (!a || !b) return 0;

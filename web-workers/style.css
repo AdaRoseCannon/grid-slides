@@ -68,7 +68,7 @@ grid-slide code {
 
 grid-slides-controller {
     background: var(--lighterpink);
-    --padding: 0;
+    --padding: 2vmax;
 }
 
 body.fonts-ready fitty-text {
@@ -149,4 +149,39 @@ grid-slide > iframe {
     grid-area: auto/full;
     width: 100%;
     height: 100%;
+}
+
+blockquote, blockquote {
+    padding: 0.5em 1.5em;
+    font-family: serif;
+    font-style: italic;
+    font-size: 140%
+}
+
+blockquote:before, blockquote:after {
+    font-size: 3em;
+    position: absolute;
+    display: block;
+    opacity: 0.3;
+    padding: 0.1em;
+    margin: -0.2em 0;
+    height: 1em
+}
+
+blockquote:before, blockquote:before {
+    content: "\201c";
+    left: 0;
+    top: -0.1em
+}
+
+blockquote:after, blockquote:after {
+    content: "\201d";
+    right: 0;
+    bottom: 0.1em
+}
+
+[el-by-el*="morph"] * {
+    transition-property: all;
+    transition-timing-function: ease;
+    transition-duration: 1000ms;
 }

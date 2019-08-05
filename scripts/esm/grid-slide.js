@@ -2,6 +2,8 @@ import GridSlidesController from './grid-slides-controller.js';
 import HTMLElementPlus from 'https://unpkg.com/html-element-plus/html-element-plus.js';
 import html from 'https://unpkg.com/html-element-plus/noop.js';
 
+const defaultAttributes = new Map();
+
 class GridSlide extends HTMLElementPlus {
 	constructor() {
 		super();
@@ -31,10 +33,19 @@ class GridSlide extends HTMLElementPlus {
 		`;
 	}
 
+	static setDefaultAttribute(name, val) {
+		defaultAttributes.set(name, val);
+	}
+
 	allAttributesChangedCallback() {
 		if (this.firstSetup) return;
 		if (!this.__data) return;
 		this.firstSetup = true;
+
+		for (const [name, value] of defaultAttributes.entries()) {
+			if (!this.hasAttribute(name)) this.setAttribute(name, value); 
+		}
+
 		this.setup();
 		this.run();
 	}

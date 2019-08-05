@@ -50,6 +50,8 @@
 				}
 			}
 		});
+
+		GridSlide.setDefaultAttribute('label', 'text:;')
 	</script>
 </head>
 
@@ -200,22 +202,272 @@
 			</ul>
 		</grid-notes>
 
-
-		<grid-slide id="timeline" label="text: Wibbly-Wobbly-Timey-Liney" el-by-el>
-			<!-- So what do I mean by a thread: -->
-			<section el-by-el="reveal: true;" style="width: 100%; height: 100%; position: relative;">
-				<img style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;" src="images/timeline.svg" />
-				<vivus-svg duration="1000" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;"
-					src="./images/timeline-points.svg"></vivus-svg>
+		<grid-slide el-by-el="morph:true;" id="morph">
+			<section style="display: flex; flex-direction: column;">
+				<fitty-text id="ft-1" style="flex-grow: 1; --vertical-align: top;">Asynchronous</fitty-text>
+				<div style="flex-grow: 1;"></div>
 			</section>
+			<section style="display: flex; flex-direction: column;">
+				<fitty-text id="ft-1" style="flex-grow: 1; --vertical-align: top;">Asynchronous</fitty-text>
+				<fitty-text style="flex-grow: 1; --vertical-align: top;"><span style="color: deeppink;">not</span> Paralell</fitty-text>
+			</section>
+		</grid-slide>
+
+		<grid-slide el-by-el="reveal: true;">
+			<img style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;" src="images/timeline.svg" />
+			<vivus-svg duration="1000" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;"
+				src="./images/timeline-points.svg"></vivus-svg>
+		</grid-slide>
+
+		<grid-slide id="quote" el-by-el>
+			<section el-by-el="morph:true;">
+				<blockquote>
+					In the beginning computers were created.
+					<span>This has made a lot of people very angry and been widely regarded as a bad move.
+					<br /><br />— Apologies to Douglas Adams</span>
+				</blockquote>
+				<blockquote>
+					In the beginning computers were created.
+					<span style="opacity: 0;">This has made a lot of people very angry and been widely regarded as a bad move.
+					<br /><br />— Apologies to Douglas Adams</span>
+				</blockquote>
+				<section style="
+					display: flex;
+					flex-direction: column;
+					padding-bottom: 5rem;
+				">
+					<blockquote>
+						In the beginning computers were created.
+						<span style="opacity: 0; display: none;">This has made a lot of people very angry and been widely regarded as a bad move.
+						<br /><br />— Apologies to Douglas Adams</span>
+					</blockquote>
+					<img src="./images/cpu.svg" alt="computing model">
+				</section>
+			</section>
+			<img src="./images/mobilecpu.png" alt="No longer makes sense.">
+		</grid-slide>
+
+		<grid-slide el-by-el="morph: true;">
+			<ul>
+				<li>Parse HTML</li>
+			</ul>
+			<ul>
+				<li>Parse HTML</li>
+				<li>Parse CSS</li>
+			</ul>
+			<ul>
+				<li>Parse HTML</li>
+				<li>Parse CSS</li>
+				<li>Run your JavaScript</li>
+			</ul>
+			<ul>
+				<li>Parse HTML</li>
+				<li>Parse CSS</li>
+				<li>Run your JavaScript</li>
+				<li>Layout the Page</li>
+			</ul>
+			<ul>
+				<li>Parse HTML</li>
+				<li>Parse CSS</li>
+				<li><span style="font-size: 1em;">Run your JavaScript</span></li>
+				<li>Layout the Page</li>
+				<li>Paint the layers</li>
+			</ul>
+			<ul>
+				<li>Parse HTML</li>
+				<li>Parse CSS</li>
+				<li><span style="font-size: 3em;">Run your JavaScript</span></li>
+				<li>Layout the Page</li>
+				<li>Paint the layers</li>
+			</ul>
+			<ul>
+				<li>Parse HTML</li>
+				<li>Parse CSS</li>
+				<li><span style="font-size: 15em;">Run your JavaScript</span></li>
+				<li>Layout the Page</li>
+				<li>Paint the layers</li>
+			</ul>
+		</grid-slide>
+
+		<grid-slide id="timeline" label="text: Wibbly-Wobbly-Timey-Liney" el-by-el> 
+
+			<iframe src="https://a-slice-of-pi.glitch.me" frameborder="0"></iframe>
+
+			<p>In normal apps this manifests as Jank.</p>
+
+			<p>You could use less giant frameworks to solve this problem.</p>
+
+			<p>Hah kidding, I know that would never happen.</p>
+
+			<iframe src="https://a-slice-of-pi.glitch.me" frameborder="0"></iframe>
+		</grid-slide>
+
+		<grid-slide id="limits" el-by-el="reveal: true;">
 			<section el-by-el>
-				<ul el-by-el="reveal: true;">
-					<li>Parse HTML</li>
-					<li>Parse CSS</li>
-					<li>Run your JavaScript</li>
-					<li>Layout the Page</li>
-					<li>Paint the layers</li>
-				</ul>
+				<p>Limits caused by running JS in a different thread.</p>
+				<section style="display: grid; grid-template: 1fr / 1fr 1fr; grid-gap: 2em;">
+					<div style="grid-area: 1/1; width: 100%; text-align: center; border: 2px solid black; padding: 1em;"><p style="border-bottom: 1px solid black;">
+						Main Thread
+					</p><img src="./images/cpu.svg" alt=""></div>
+					<div style="grid-area: 1/auto; width: 100%; text-align: center; border: 2px solid black; padding: 1em;"><p style="border-bottom: 1px solid black;">
+						my-web-worker.js
+					</p><img src="./images/cpu.svg" alt=""></div>
+				</section>
+				<section style="display: grid; grid-template: 1fr / 1fr 1fr; grid-gap: 2em;">
+					<div style="grid-area: 1/1; width: 100%; text-align: center; border: 2px solid black; padding: 1em;"><p style="border-bottom: 1px solid black;">
+						Main Thread
+					</p><ul style="text-align: left;">
+						<li>Document Model</li>
+						<li>Style Sheets</li>
+						<li>Some JavaScript</li>
+						<li>Some State</li>
+					</ul></div>
+					<div style="grid-area: 1/auto; width: 100%; text-align: center; border: 2px solid black; padding: 1em;"><p style="border-bottom: 1px solid black;">
+						my-web-worker.js
+					</p><ul style="text-align: left;">
+						<li>Your Javascript</li>
+						<li>Some state</li>
+					</ul></div>
+				</section>
+			</section>
+			<section style="position: absolute;
+			width: 100%;
+			height: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;">
+				<span style="font-size: 9em;
+				filter: drop-shadow(0.01em 0.03em 0px #fffa);">⮀</span>
+			</section>
+		</grid-slide>
+
+		<grid-slide id="transferring">
+			<html-encode>
+				<template>
+					<script>
+						// In the worker:
+						self.postMessage({
+							name: "Ada",
+							role: "Developer Advocate",
+							age: NaN 
+						});
+					</script>
+				</template>
+			</html-encode>
+			<html-encode>
+				<template>
+					<script>
+						// In the main thread:
+						worker.addEventListener('message', msg => console.log(msg.data));	
+					</script>
+				</template>
+			</html-encode>
+		</grid-slide>
+
+		<grid-slide id="transfer" el-by-el="morph: true;">
+			<section style="display: grid; grid-template: 1fr min-content / 1fr 1fr; grid-gap: 2em;">
+				<div style="grid-area: 1/1; width: 100%; text-align: center; border: 2px solid black; padding: 1em;"><p style="border-bottom: 1px solid black;">
+					Main Thread
+				</p></div>
+				<div style="grid-area: 1/auto; width: 100%; text-align: center; border: 2px solid black; padding: 1em;"><p style="border-bottom: 1px solid black;">
+					my-web-worker.js
+				</p><pre style="text-align: left; font-size: 0.5em; color: blue;">{
+	name: "Ada",
+	role: "Developer Advocate"
+}</pre></div>
+				<div style="grid-row: 2; grid-column: 1/ span 2;"></div>
+			</section>
+			<section style="display: grid; grid-template: 1fr min-content / 1fr 1fr; grid-gap: 2em;">
+				<div style="grid-area: 1/1; width: 100%; text-align: center; border: 2px solid black; padding: 1em;"><p style="border-bottom: 1px solid black;">
+					Main Thread
+				</p></div>
+				<div style="grid-area: 1/auto; width: 100%; text-align: center; border: 2px solid black; padding: 1em;"><p style="border-bottom: 1px solid black;">
+					my-web-worker.js
+				</p><pre style="text-align: left; font-size: 0.5em;">{
+	name: "Ada",
+	role: "Developer Advocate"
+}</pre></div>
+				<div style="grid-row: 2; grid-column: 1/ span 2;">
+					<pre style="text-align: left; font-size: 0.5em; color: blue;">ewoJCQkJCQkJbmFtZTogIkFkYSIsCgkJCQkJCQlyb2xlOiAiRGV2ZWxvcGVyIEFkdm9jYXRlIiwKCQkJCQkJCWFnZTogTmFOIAoJCQkJCQl9</pre>
+				</div>
+			</section>
+			<section style="display: grid; grid-template: 1fr min-content / 1fr 1fr; grid-gap: 2em;">
+				<div style="grid-area: 1/1; width: 100%; text-align: center; border: 2px solid black; padding: 1em;"><p style="border-bottom: 1px solid black;">
+					Main Thread
+				</p><pre style="text-align: left; font-size: 0.5em; color: blue;">{
+	name: "Ada",
+	role: "Developer Advocate"
+}</pre></div>
+				<div style="grid-area: 1/auto; width: 100%; text-align: center; border: 2px solid black; padding: 1em;"><p style="border-bottom: 1px solid black;">
+					my-web-worker.js
+				</p><pre style="text-align: left; font-size: 0.5em;">{
+	name: "Ada",
+	role: "Developer Advocate"
+}</pre></div>
+				<div style="grid-row: 2; grid-column: 1/ span 2;"></div>
+			</section>
+		</grid-slide>
+
+		<grid-slide el-by-el="morph: true;">
+			<ul>
+				<li>ArrayBuffer</li>
+				<li>MessagePort</li>
+				<li>ImageBitmap</li>
+				<li>OffscreenCanvas</li>
+			</ul>
+			<ul>
+				<li><b>ArrayBuffer</b></li>
+				<li>MessagePort</li>
+				<li>ImageBitmap</li>
+				<li>OffscreenCanvas</li>
+			</ul>
+		</grid-slide>
+
+		<grid-slide id="transfer2" el-by-el="morph: true;">
+			<section style="display: grid; grid-template: 1fr min-content / 1fr 1fr; grid-gap: 2em;">
+				<div style="grid-area: 1/1; width: 100%; text-align: center; border: 2px solid black; padding: 1em;"><p style="border-bottom: 1px solid black;">
+					Main Thread
+				</p></div>
+				<div style="grid-area: 1/auto; width: 100%; text-align: center; border: 2px solid black; padding: 1em;"><p style="border-bottom: 1px solid black;">
+					my-web-worker.js
+				</p><pre style="text-align: left; font-size: 0.5em; color: blue;">{
+	name: "Ada",
+	role: "Developer Advocate",
+	photo: [Buffer 0x0f]
+}</pre></div>
+				<div style="grid-row: 2; grid-column: 1/ span 2;"></div>
+			</section>
+			<section style="display: grid; grid-template: 1fr min-content / 1fr 1fr; grid-gap: 2em;">
+				<div style="grid-area: 1/1; width: 100%; text-align: center; border: 2px solid black; padding: 1em;"><p style="border-bottom: 1px solid black;">
+					Main Thread
+				</p></div>
+				<div style="grid-area: 1/auto; width: 100%; text-align: center; border: 2px solid black; padding: 1em;"><p style="border-bottom: 1px solid black;">
+					my-web-worker.js
+				</p><pre style="text-align: left; font-size: 0.5em;">{
+	name: "Ada",
+	role: "Developer Advocate",
+	photo: <span style="color:red;">[Buffer <b>INERT</b>]</span>
+}</pre></div>
+				<div style="grid-row: 2; grid-column: 1/ span 2;">
+					<pre style="text-align: left; font-size: 0.5em; color: blue;">ewoJCQkJCQkJbmFtZTogIkFkYSIsCgkJCQkJCQlyb2xlOiAiRGV2ZWxvcGVyIEFkdm9jYXRlIiwKCQkJCQkJCWFnZTogTmFOIAoJCQkJCQl9</pre>
+				</div>
+			</section>
+			<section style="display: grid; grid-template: 1fr min-content / 1fr 1fr; grid-gap: 2em;">
+				<div style="grid-area: 1/1; width: 100%; text-align: center; border: 2px solid black; padding: 1em;"><p style="border-bottom: 1px solid black;">
+					Main Thread
+				</p><pre style="text-align: left; font-size: 0.5em; color: blue;">{
+	name: "Ada",
+	role: "Developer Advocate",
+	photo: [Buffer 0x0f]
+}</pre></div>
+				<div style="grid-area: 1/auto; width: 100%; text-align: center; border: 2px solid black; padding: 1em;"><p style="border-bottom: 1px solid black;">
+					my-web-worker.js
+				</p><pre style="text-align: left; font-size: 0.5em;">{
+	name: "Ada",
+	role: "Developer Advocate",
+	photo: <span style="color:red;">[Buffer <b>INERT</b>]</span>
+}</pre></div>
+				<div style="grid-row: 2; grid-column: 1/ span 2;"></div>
 			</section>
 		</grid-slide>
 

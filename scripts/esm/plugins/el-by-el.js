@@ -1,6 +1,7 @@
 /* eslint-disable require-atomic-updates */
 import GridSlide from '../grid-slide.js';
 import GridSlidesController from '../grid-slides-controller.js';
+import morphdom from 'https://unpkg.com/morphdom@2.5.4/dist/morphdom-esm.js';
 
 const schema = { //schema
 	preserve: {
@@ -11,6 +12,9 @@ const schema = { //schema
 	},
 	root: {
 		default: ''
+	},
+	morph: {
+		default: false
 	}
 };
 
@@ -26,13 +30,23 @@ GridSlidesController.registerSlideData('el-by-el',
 		const root = (options.root && this.querySelector(options.root)) || this;
 		let firstChild;
 		let children;
+		let morphTarget;
 
 		function replaceWithEl(el, target) {
-			target.innerHTML = '';
-			preserve.forEach(function (el) {
+			if (options.morph) {
+				if (!morphTarget) {
+					morphTarget = el.cloneNode(true);
+					target.appendChild(morphTarget);
+				} else {
+					morphdom(morphTarget, el.cloneNode(true));
+				}
+			} else {
+				target.innerHTML = '';
+				preserve.forEach(function (el) {
+					target.appendChild(el);
+				});
 				target.appendChild(el);
-			});
-			target.appendChild(el);
+			}
 		}
 
 		const out = {
@@ -125,6 +139,7 @@ GridSlidesController.registerSlideData('el-by-el',
 				}
 			}
 			this.innerHTML = '';
+			morphTarget = false;
 			if (firstChild) run(firstChild);
 		};
 
