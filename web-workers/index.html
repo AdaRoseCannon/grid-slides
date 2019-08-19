@@ -231,42 +231,26 @@
 					<span style="opacity: 0;">This has made a lot of people very angry and been widely regarded as a bad move.
 					<br /><br />— Apologies to Douglas Adams</span>
 				</blockquote>
-				<section style="
-					display: flex;
-					flex-direction: column;
-					padding-bottom: 5rem;
-				">
+				<section style="display: flex;flex-direction: column;height: 100%;">
 					<blockquote>
 						In the beginning computers were created.
-						<span style="opacity: 0; display: none;">This has made a lot of people very angry and been widely regarded as a bad move.
-						<br /><br />— Apologies to Douglas Adams</span>
 					</blockquote>
-					<img src="./images/cpu.svg" alt="computing model">
+					<div style="background: url('./images/cpu.svg');background-position:center center;background-size:70% 100%;background-repeat:no-repeat;flex-grow: 1;"></div>
 				</section>
+				<section style="display: flex;flex-direction: column;height: 100%;">
+					<blockquote>
+						In the beginning computers were created.
+					</blockquote>
+					<div style="background: url('./images/cpu.svg');background-position:center center;background-size:14% 20%;flex-grow: 1;"></div>
+				</section>
+				<img src="./images/mooreslaw.png">
+				<img src="./images/mobilecpu.png" alt="No longer makes sense.">
 			</section>
-			<img src="./images/mobilecpu.png" alt="No longer makes sense.">
 		</grid-slide>
 
-		<grid-slide el-by-el="morph: true;">
-			<ul>
-				<li>Parse HTML</li>
-			</ul>
-			<ul>
-				<li>Parse HTML</li>
-				<li>Parse CSS</li>
-			</ul>
-			<ul>
-				<li>Parse HTML</li>
-				<li>Parse CSS</li>
-				<li>Run your JavaScript</li>
-			</ul>
-			<ul>
-				<li>Parse HTML</li>
-				<li>Parse CSS</li>
-				<li>Run your JavaScript</li>
-				<li>Layout the Page</li>
-			</ul>
-			<ul>
+		<grid-slide el-by-el="morph: true;" id="reveal-morph">
+			<img src="./images/surmaquote.png" alt="">
+			<ul el-by-el="reveal: true;">
 				<li>Parse HTML</li>
 				<li>Parse CSS</li>
 				<li><span style="font-size: 1em;">Run your JavaScript</span></li>
@@ -276,14 +260,21 @@
 			<ul>
 				<li>Parse HTML</li>
 				<li>Parse CSS</li>
-				<li><span style="font-size: 3em;">Run your JavaScript</span></li>
+				<li><span style="font-size: 1em; font-weight: bold;">Run your JavaScript</span></li>
 				<li>Layout the Page</li>
 				<li>Paint the layers</li>
 			</ul>
 			<ul>
 				<li>Parse HTML</li>
 				<li>Parse CSS</li>
-				<li><span style="font-size: 15em;">Run your JavaScript</span></li>
+				<li><span style="font-size: 7.5vw; font-weight: bold;">Run your JavaScript</span></li>
+				<li>Layout the Page</li>
+				<li>Paint the layers</li>
+			</ul>
+			<ul>
+				<li>Parse HTML</li>
+				<li>Parse CSS</li>
+				<li><span style="font-size: 15vw; font-weight: bold;">Run your JavaScript</span></li>
 				<li>Layout the Page</li>
 				<li>Paint the layers</li>
 			</ul>
@@ -293,11 +284,16 @@
 
 			<iframe src="https://a-slice-of-pi.glitch.me" frameborder="0"></iframe>
 
-			<p>In normal apps this manifests as Jank.</p>
+			<section el-by-el="reveal: true;">
+				<p>In normal apps this manifests as Jank.</p>
+				<p>Time to Render Frame > Time between screen refreshes</p>
+			</section>
+
+			<p>Usually caused by JavaScript</p>
 
 			<p>You could use less giant frameworks to solve this problem.</p>
 
-			<p>Hah kidding, I know that would never happen.</p>
+			<p>Let's take advantage of multiple threads.</p>
 
 			<iframe src="https://a-slice-of-pi.glitch.me" frameborder="0"></iframe>
 		</grid-slide>
@@ -305,6 +301,7 @@
 		<grid-slide id="limits" el-by-el="reveal: true;">
 			<section el-by-el>
 				<p>Limits caused by running JS in a different thread.</p>
+				<p>Can't pick CPU to use.</p>
 				<section style="display: grid; grid-template: 1fr / 1fr 1fr; grid-gap: 2em;">
 					<div style="grid-area: 1/1; width: 100%; text-align: center; border: 2px solid black; padding: 1em;"><p style="border-bottom: 1px solid black;">
 						Main Thread
@@ -469,6 +466,32 @@
 }</pre></div>
 				<div style="grid-row: 2; grid-column: 1/ span 2;"></div>
 			</section>
+		</grid-slide>
+
+		<grid-slide el-by-el="reveal:true;" id="messaging">
+			<section style="display: grid; grid-template: 1fr / 1fr 1fr; grid-gap: 2em;">
+				<div style="grid-area: 1/1; width: 100%; text-align: center; border: 2px solid black; padding: 1em;"><p style="border-bottom: 1px solid black;">
+					Main Thread
+				</p><p>
+					Some State
+				</p></div>
+				<div style="grid-area: 1/auto; width: 100%; text-align: center; border: 2px solid black; padding: 1em;"><p style="border-bottom: 1px solid black;">
+					my-web-worker.js
+				</p><p>
+					Some State
+				</p></div>
+			</section>
+			<section el-by-el style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;">
+				<div class="message message-left">Please do some math.</div>
+				<div class="message message-right">Response</div>
+				<div class="message message-left">Please do some math.</div>
+				<div class="message message-right">Response</div>
+			</section>
+		</grid-slide>
+
+		<grid-slide>
+			<p>MEASURE BEFORE, THEN AFTER</p>
+			<p>I made some changes which did not give a notable improvement</p>
 		</grid-slide>
 
 	</grid-slides-controller>

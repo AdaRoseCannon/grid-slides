@@ -33,14 +33,19 @@ GridSlidesController.registerSlideData('el-by-el',
 		let morphTarget;
 
 		function replaceWithEl(el, target) {
-			if (options.morph) {
-				if (!morphTarget) {
+			if (options.morph && !el.elByEl) {
+				if (!morphTarget || morphTarget.tagName !== el.tagName) {
 					morphTarget = el.cloneNode(true);
+					target.innerHTML = "";
 					target.appendChild(morphTarget);
 				} else {
 					morphdom(morphTarget, el.cloneNode(true));
 				}
 			} else {
+
+				// In case we are not doing morph for an element
+				// make sure next time there is no morph
+				morphTarget = false;
 				target.innerHTML = '';
 				preserve.forEach(function (el) {
 					target.appendChild(el);
@@ -119,8 +124,17 @@ GridSlidesController.registerSlideData('el-by-el',
 					if (el.elByEl) {
 						el.elByEl.setup.bind(el)();
 						const action = el.elByEl.action();
-						if (!nextEl) return yield * action;
+						if (!nextEl) {
+							return yield * action;
+						}
 						yield * action;
+
+						// If in morph mode replace the el with a clone at
+						// the end to enable morphing
+						if (options.morph) {
+							const newNode = el.cloneNode(true);
+							replaceWithEl(newNode, root);
+						}
 					}
 					
 					if (nextEl && nextEl.tagName !== 'SCRIPT') yield;
