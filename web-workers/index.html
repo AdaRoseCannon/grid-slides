@@ -104,7 +104,7 @@
 		</grid-slide>
 
 		<grid-slide el-by-el id="async" style="font-size: 0.7em;">
-			<p>Asynchronous JavaScript</p>
+			<fitty-text>Asynchronous JavaScript</fitty-text>
 			<section>
 				<p>
 					Things used to be simple...
@@ -291,17 +291,48 @@
 
 			<p>Usually caused by JavaScript</p>
 
-			<p>You could use less giant frameworks to solve this problem.</p>
+			<!-- <p>You could use less giant frameworks to solve this problem.</p> -->
 
-			<p>Let's take advantage of multiple threads.</p>
+			<p>Let's take advantage of multiple threads to run the JavaScript.</p>
 
 			<iframe src="https://a-slice-of-pi.glitch.me" frameborder="0"></iframe>
+
+			<html-encode>
+				<template>
+					<script>
+						// Load external JS file as a Worker
+						const myWorker = new Worker('./worker-script.js');
+					</script>
+				</template>
+			</html-encode>
+
+			<html-encode>
+				<template>
+					<script>
+						// Generate a blob
+						const blob = new Blob([`;
+							console.log('hello from the other side.');
+						`], { type: 'text/javascript' });
+						
+						// Make a URL for the blob
+						const url = URL.createObjectURL(blob);
+						
+						// Load it as a Worker
+						const myWorker = new Worker(url);
+					</script>
+				</template>
+			</html-encode>
 		</grid-slide>
 
 		<grid-slide id="limits" el-by-el="reveal: true;">
 			<section el-by-el>
 				<p>Limits caused by running JS in a different thread.</p>
-				<p>Can't pick CPU to use.</p>
+				<section el-by-el="reveal:true;">
+					<p>Can't pick CPU to use.</p>
+					<p>Can't access the document</p>
+					<p>Can't share state</p>
+					<p>Can't access some device resources</p>
+				</section>
 				<section style="display: grid; grid-template: 1fr / 1fr 1fr; grid-gap: 2em;">
 					<div style="grid-area: 1/1; width: 100%; text-align: center; border: 2px solid black; padding: 1em;"><p style="border-bottom: 1px solid black;">
 						Main Thread
@@ -481,7 +512,7 @@
 					Some State
 				</p></div>
 			</section>
-			<section el-by-el style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;">
+			<section el-by-el="reveal:true;" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;">
 				<div class="message message-left">Please do some math.</div>
 				<div class="message message-right">Response</div>
 				<div class="message message-left">Please do some math.</div>
@@ -489,9 +520,300 @@
 			</section>
 		</grid-slide>
 
-		<grid-slide>
-			<p>MEASURE BEFORE, THEN AFTER</p>
-			<p>I made some changes which did not give a notable improvement</p>
+		<grid-slide el-by-el="reveal:true;" id="messaging2">
+			<section style="display: grid; grid-template: 1fr / 1fr 1fr; grid-gap: 2em;">
+				<div style="grid-area: 1/1; width: 100%; text-align: center; border: 2px solid black; padding: 1em;"><p style="border-bottom: 1px solid black;">
+					Main Thread
+				</p><p>
+					Some State
+				</p></div>
+				<div style="grid-area: 1/auto; width: 100%; text-align: center; border: 2px solid black; padding: 1em;"><p style="border-bottom: 1px solid black;">
+					my-web-worker.js
+				</p><p>
+					Some State
+				</p></div>
+			</section>
+			<section el-by-el="reveal:true;" class="fill">
+				<div class="message message-left">Please do some math.</div>
+				<div class="message message-left">Please do some math.</div>
+				<div class="message message-left">Please do some math.</div>
+				<div class="message message-right">Response</div>
+				<div class="message message-right">Response</div>
+				<div class="message message-left">Please do some math.</div>
+				<div class="message message-right">Response</div>
+				<div class="message message-right">Response</div>
+			</section>
+		</grid-slide>
+
+		<grid-slide el-by-el="">
+			<p>PostMessage Architecture not ideal</p>
+			<ul el-by-el="reveal:true">
+				<li>Hard to match messages to responses</li>
+				<li>Hard to sync state between threads</li>
+				<li>Hard to force serial commands</li>
+				<li>Requires rearchitecting your app</li>
+			</ul>
+		</grid-slide>
+
+		<grid-slide el-by-el id="comlink">
+			<fitty-text>COMLINK!</fitty-text>
+			<html-encode style="font-size: 0.8em;">
+				<template>
+					<script>
+						import {MyMathLibrary} from './mymathlib.js';
+
+						async function main() {
+							const myMath = new MyMathLibrary();
+							const result1 = myMath.add(2,2);
+							const result2 = myMath.add(3,7);
+							return myMath.multiply(result1, result2);
+						}
+					</script>
+				</template>
+			</html-encode>
+			<section el-by-el="reveal:true;" class="fill">
+				<html-encode style="font-size: 0.8em;">
+					<template>
+						<script>
+							import {wrap} from '/comlink/comlink.js';
+
+							// This web worker uses Comlink's 
+							// expose to expose a function
+							const MyMathLibrary = wrap(new Worker('/mymath.js'));
+
+							async function main() {
+								const myMath = await new MyMathLibrary();
+								const result1 = await myMath.add(2,2);
+								const result2 = await myMath.add(3,7);
+								return await myMath.multiply(result1, result2);
+							}
+						</script>
+					</template>
+				</html-encode>
+				<div style="font-size: 1em;" class="message message-left">Please create a new instance.</div>
+				<div style="font-size: 1em;" class="message message-right">{Proxied Interface}</div>
+				<div style="font-size: 1em;" class="message message-left">Please add 2 and 2.</div>
+				<div style="font-size: 1em;" class="message message-right">4</div>
+				<div style="font-size: 1em;" class="message message-left">Please add 3 and 7.</div>
+				<div style="font-size: 1em;" class="message message-right">10</div>
+				<div style="font-size: 1em;" class="message message-left">Please multiply 4 and 10.</div>
+				<div style="font-size: 1em;" class="message message-right">40</div>
+			</section>
+		</grid-slide>
+
+		<grid-slide el-by-el id="measure">
+			<fitty-text><span style="font-size: 2em;">⏱️</span><span>Refactoring for<br>performance</span></fitty-text>
+			<fitty-text>Measure Before<br /><span style="color: hotpink;">Refactor</span><br />Measure After</fitty-text>
+			<html-encode style="font-size: 0.8em;">
+					<template>
+						<script>
+						performance.clearMarks('start-doing-thing');
+						performance.clearMarks('end-doing-thing');
+						performance.clearMeasures("Time to do things");
+						performance.mark('start-doing-thing');
+
+						for (let i=0;i<100;i++) await myMath.doThing(i);
+
+						performance.mark('end-doing-thing');
+						performance.measure("Time to do things", 'start-doing-thing', 'end-doing-thing');
+					</script>
+				</template>
+			</html-encode>
+			<p style="font-size: 2em;">If you made the readibility worse without a significant performance improvement revert it.</p>
+			<section>
+				<fitty-text style="flex-grow: 1;">⚖️</fitty-text>
+				<fitty-text style="flex-grow: 1;">Performance vs<br />Maintenance</fitty-text>
+			</section>
+			<fitty-text>The best way to speed up your code is<br>to <span style="color:red">delete it</span></fitty-text>
+			<p>Pick your battles</p>
+			<ol el-by-el="reveal:true">
+				<li>
+					<p>Loops in PointerMove events, (runs faster than 60fps)</p>
+				</li>
+				<li>
+					<p>Loops in Request Animation Frame (60fps)</p>
+				</li>
+				<li>
+					<p>Loops which block app start up</p>
+				</li>
+				<li>
+					<p>PointerMove Events</p>
+				</li>
+				<li>
+					<p>Request Animation Frame</p>
+				</li>
+			</ol>
+			<p>Work out what can become asychronous and what has to remain in serial.</p>
+			<section el-by-el="reveal:true;" class="fill">
+				<html-encode style="font-size: 0.8em;">
+					<template>
+						<script>
+							async function main() {
+								const myMath = await new MyMathLibrary();
+
+								// Do both at the same time
+								const [result1, result2] = await Promise.all(
+									[myMath.add(2,2), myMath.add(3,7)]
+								);
+
+								return await myMath.multiply(result1, result2);
+							}
+						</script>
+					</template>
+				</html-encode>
+				<div style="font-size: 1em;" class="message message-left">Please create a new instance.</div>
+				<div style="font-size: 1em;" class="message message-right">{Proxied Interface}</div>
+				<div style="font-size: 1em;" class="fill">
+					<div style="font-size: 1em;--offset-y: 50%;" class="message message-left">Please add 2 and 2.</div>
+					<div style="font-size: 1em;--offset-y: -50%;" class="message message-left">Please add 3 and 7.</div>
+				</div>
+				<div style="font-size: 1em;" class="fill">
+					<div style="font-size: 1em;--offset-y: 50%;" class="message message-right">4</div>
+					<div style="font-size: 1em;--offset-y: -50%;" class="message message-right">10</div>
+				</div>
+				<div style="font-size: 1em;" class="message message-left">Please multiply 4 and 10.</div>
+				<div style="font-size: 1em;" class="message message-right">40</div>
+			</section>
+			<p>A real example</p>
+			<html-encode style="font-size: 0.8em;">
+				<template>
+					<script>
+						// Expensive physics calc
+						for (let i=0;i<100;i++) points[i].doPhysics();
+
+						// became
+						for (let i=0;i<100;i++) await points[i].doPhysics();
+					</script>
+				</template>
+			</html-encode>
+			<section el-by-el="reveal:true;">
+				<p>Fixed jank 👍</p>
+				<p>Physics was slow 👎</p>
+			</section>
+			<html-encode style="font-size: 0.8em;">
+				<template>
+					<script>
+						for (let i=0;i<100;i++) await points[i].doPhysics();
+
+						// became
+
+						const promises = [];
+						for (let i=0;i<100;i++) {
+							completed.push( points[i].doPhysics() );
+						}
+						await Promise.all(promises);
+					</script>
+				</template>
+			</html-encode>
+			<section el-by-el="reveal:true;">
+				<p>Better...</p>
+				<p>Triggers frequent garbage collection</p>
+			</section>
+			<html-encode style="font-size: 0.8em;">
+				<template>
+					<script>
+						const promises = [];
+						for (let i=0;i<100;i++) {
+							completed.push( points[i].doPhysics() );
+						}
+						await Promise.all(promises);
+
+						// became a single message
+
+						const pointIds = [];
+						for (let i=0;i<100;i++) pointIds.push( point.id )
+						await system.doPhysicsFor( point.id );
+					</script>
+				</template>
+			</html-encode>
+		</grid-slide>
+
+		<grid-slide el-by-el id="gc">
+			<p>Large messages can also trigger frequent GC</p>
+			<html-encode style="font-size: 0.8em;">
+				<template>
+					<script>
+						// In a RAF
+						const positions = 
+							await system.getAllPointPositions();
+
+						renderPoints(positions);
+
+						// positions looks like:
+						[
+							{
+								id: 4
+								position: [69.0, 420.0]
+							} // × 100s
+						]
+					</script>
+				</template>
+			</html-encode>
+			<section>
+				<ul>
+					<li>Large Object</li>
+					<li>Serialised</li>
+					<li>Reconstructed</li>
+					<li>Immediately Discarded</li>
+				</ul>
+				<fitty-text>🗑️</fitty-text>
+			</section>
+			<section>
+				<ul style="list-style-type: none; text-align: center;">
+					<li>Reduce</li>
+					<li>Reuse</li>
+					<li>Recycle</li>
+				</ul>
+				<fitty-text>♻</fitty-text>
+			</section>
+			<section el-by-el="reveal:true">
+				<p>JavaScript has Memory Management!</p>
+				<p style="text-align: center; font-weight: bold; font-size: 1.5em;"><code>ArrayBuffer</code></p>
+			</section>
+			<html-encode>
+				<template>
+					<script>
+						const buffer = new ArrayBuffer(32); // 32 Bytes
+						// >> ArrayBuffer { byteLength: 32 }
+
+						const array = new Float32Array(buffer);
+						// >> Float32Array [ 0, 0, 0, 0, 0, 0, 0, 0 ];
+
+						// 4 Bytes (32 bits) per element, so 8 elements long.
+					</script>
+				</template>
+			</html-encode>
+			<p><code>ArrayBuffers</code> are transferable.<br><br>(The TypedArray is not)</p>
+			<html-encode>
+				<template>
+					<script>
+						// In the worker
+
+						function fetchPoints(arrayOfIds) {
+							const array = new Float32Array(arrayOfIds.length * 2);
+							arrayOfIds.forEach((id, index) => {
+								array[index*2] = points[id].position[0];
+								array[index*2+1] = points[id].position[1];
+							});
+
+							// transfer is from Comlink
+							return transfer(array.buffer, [array.buffer]);
+						}
+					</script>
+				</template>
+			</html-encode>
+			<fitty-text style="line-height: 2;"><span>Being fast and light: Using binary data to optimise<br>librarieson the client and the server.</span>
+<br>				<span style="color: var(--space-blue-light);
+				text-decoration: underline;">http://tiny.cc/binarydata</span></fitty-text>
+		</grid-slide>
+		<grid-slide el-by-el id="final">
+			<p>Some things to take away...</p>
+			<fitty-text>Multithreaded programming is<br><span style="color: hotpink; padding: 0 0.5em">HARD</span></fitty-text>
+			<fitty-text><span style="font-size: 2em;">⏱️</span><span>Measure Twice<br>Cut Once</span></fitty-text>
+			<section>
+				<fitty-text style="flex-grow: 1;">⚖️</fitty-text>
+				<fitty-text style="flex-grow: 1;">Performance vs<br />Maintenance</fitty-text>
+			</section>
 		</grid-slide>
 
 	</grid-slides-controller>
