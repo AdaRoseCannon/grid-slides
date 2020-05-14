@@ -14,8 +14,6 @@
     --space-white: #faf7ff;
 }
 
-
-
 html, body {
     min-height: 100vh;
     min-width: 100vw;
@@ -46,6 +44,7 @@ grid-slide {
     font-size: 3rem;
     background-size: cover;
     background-position: center center;
+    width: 100vw;
 }
 
 /* @media screen and (orientation: portrait) {

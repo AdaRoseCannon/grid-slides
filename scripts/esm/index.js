@@ -4,6 +4,7 @@
 
 import './plugins/el-by-el.js';
 import './plugins/transitions.js';
+import './plugins/script.js';
 import GridSlide from './grid-slide.js';
 import GridSlidesController from './grid-slides-controller.js';
 

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- COMMON TAGS -->
+	<meta charset="utf-8">
+	<title>WebXR and the Immersive Web!</title>
+	<!-- Search Engine -->
+	<meta name="description" content="WebXR and the Immersive Web!">
+	<meta name="image" content="https://snag.gy/VETS15.jpg">
+	<!-- Schema.org for Google -->
+	<meta itemprop="name" content="The present and future of XR on the Web!">
+	<meta itemprop="description" content="WebXR and the Immersive Web!">
+	<meta itemprop="image" content="https://snag.gy/VETS15.jpg">
+	<!-- Twitter -->
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="The present and future of XR on the Web!">
+	<meta name="twitter:description" content="WebXR and the Immersive Web!">
+	<meta name="twitter:site" content="@lady_ada_king">
+	<meta name="twitter:image:src" content="https://snag.gy/VETS15.jpg">
+	<!-- Open Graph general (Facebook, Pinterest & Google+) -->
+	<meta name="og:title" content="The present and future of XR on the Web!">
+	<meta name="og:description" content="WebXR and the Immersive Web!">
+	<meta name="og:type" content="website">
+
+	<link href="../css/style.css" rel="stylesheet">
+	<link href="./style.css" rel="stylesheet">
+	<link href="https://samsungcreate.com/f/fonts.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai.min.css" rel="stylesheet" >
+
+    <style>
+        h1 {
+            font-family: var(--fancy-font);
+        }
+    </style>
+
+	<template id="custom-slide-template">
+		<style>
+			footer {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				padding: 0.2em;
+				color: white;
+				display: flex;
+                justify-content: space-between;
+                align-items: baseline;
+				grid-column: full;
+                font-size: 1.5rem;
+                z-index: 101;
+            }
+            img.border {
+                position: absolute;
+                left: 0;
+                top: 0;
+                z-index: 100;
+                height: 100%;
+                width: 100%;
+                pointer-events: none;
+            }
+			:host {
+				padding-bottom: 1em !important;
+			}
+        </style>
+        <img src="./images/Screen-Overlay-Type-1-Blank.png" class="border">
+		<footer>
+			<span style="font-family: var(--fancy-font);">Ada Rose Cannon</span>
+			<span style="text-align: right; font-size: 1rem;"><img src="images/samsung-internet_256x256.png" style="vertical-align: text-bottom; height: 20px;" /> Samsung Internet</span>
+		</footer>
+	</template>
+
+	<script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/edf84e6e/webcomponents-sd-ce.js"></script>
+	<script>
+		navigator.serviceWorker.register('../sw.js');
+	</script>
+	<script type="module">
+        import "../scripts/esm/index.js";
+        import "../scripts/esm/plugins/script.js"
+		import "../scripts/web-components/html-encode.js";
+        import "../scripts/web-components/fitty-component.min.js";
+		import HTMLElementPlus from 'https://unpkg.com/html-element-plus/html-element-plus.js';
+		import GridSlide from '../scripts/esm/grid-slide.js';
+		GridSlide.template.content.appendChild(
+			document.getElementById('custom-slide-template').content
+		);
+	</script>
+</head>
+<body>
+<grid-slides-controller>
+    <grid-slide>
+        <fitty-text style="width: 70vw; line-height: 1.2;">VR on the Web<br><span
+                style="font-family: 'Samsung One'; opacity: 0.9;">Using the WebXR Device API</span></fitty-text>
+        <img src="./images/ada2.png" alt="Ada"
+            style="position: absolute; width: 30vw; height: auto; right: 0; bottom: 0.5em;">
+    </grid-slide>
+    <grid-slide id="standalonevtethered" script transition-out="slide-down">
+        <style>
+            #standalonevtethered div {
+                grid-row: 1;
+                grid-column: full-start/full-end;
+                background-blend-mode: color-burn;
+                overflow: hidden;
+                display: flex;
+                transition: transform ease 1s;
+            }
+
+            #standalonevtethered .standalone {
+                background: hotpink linear-gradient(to bottom left, var(--space-blue-light), var(--space-blue-dark));
+                transform: skewX(-5deg) translateX(-50%);
+                justify-content: end;
+            }
+
+            #standalonevtethered .tethered {
+                background: skyblue linear-gradient(to bottom left, var(--space-blue-light), var(--space-blue-dark));
+                transform: skewX(-5deg) translateX(50%);
+                justify-content: start;
+            }
+
+            #standalonevtethered .standalone img {
+                transform: skewX(5deg);
+                height: 100%;
+                transition: transform ease 1s;
+            }
+
+            #standalonevtethered .tethered img {
+                height: 100%;
+                transform: skewX(5deg) scale(0.8) scaleX(-1) translateX(-100%);
+                transform-origin: top left;
+                transition: transform ease 1s;
+            }
+
+            #standalonevtethered.standalone .standalone {
+                transform: skewX(-5deg) translateX(-10%);
+            }
+            #standalonevtethered.standalone .tethered {
+                transform: skewX(-5deg) translateX(90%);
+            }
+            #standalonevtethered.standalone .standalone img {
+                transform: skewX(5deg) translateX(-50%);
+            }
+            #standalonevtethered.tethered .standalone {
+                transform: skewX(-5deg) translateX(-90%);
+            }
+            #standalonevtethered.tethered .tethered {
+                transform: skewX(-5deg) translateX(10%);
+            }
+            #standalonevtethered.tethered .tethered img {
+                transform: translateX(15%) skewX(5deg) scale(0.8) scaleX(-1) translateX(-100%);
+            }s
+        </style>
+        <div class="standalone">
+            <img src="./images/quest.png">
+        </div>
+        <div class="tethered">
+            <img src="./images/valveindexheadset.png">
+        </div>
+        <script>
+            document.currentScript.actions = function * () {
+                this.className = '';
+                yield;
+                this.className = 'tethered';
+                yield;
+                this.className = 'standalone';
+            }
+        </script>
+    </grid-slide>
+    <grid-slide script transition-in="slide-up">
+        <img src="./images/cardboard.png" class="cardboard" style="position: absolute;">
+        <script>
+            document.currentScript.setup = function () {
+                this.querySelector('.cardboard').style.display = 'none';
+            }
+            document.currentScript.actions = function * () {
+                this.querySelector('.cardboard').style.display = '';
+                this.querySelector('.cardboard').animate({
+                    transform: ['translateY(100%)', 'scale(1)']
+                }, {
+                    duration: 1000,
+                    easing: 'ease'
+                })
+            }
+        </script>
+    </grid-slide>
+    <grid-slide id="support">
+        <style>
+            #support > div {
+                grid-column: full;
+                display: grid;
+                grid-auto-flow: column;
+                grid-auto-columns: 1fr;
+                grid-template-columns: 1fr;
+                gap: 1em;
+            }    
+            #support > div > img {
+                width: 100%;
+                margin: auto;
+            }    
+        </style>
+        <div>
+            <img src="./images/samsung-internet_256x256.png" alt="">
+            <img src="./images/chrome.png" alt="">
+            <img src="./images/firefox.png" alt="">
+            <img src="./images/oculusbrowser.png" alt="">
+        </div>
+    </grid-slide>
+
+    <grid-slide>
+        <img src="./images/webxrio.svg" alt="">
+    </grid-slide>
+
+    <grid-slide>
+        <img src="./images/logos.png" alt="">
+    </grid-slide>
+
+    <grid-slide>immersiveweb.dev</grid-slide>
+
+    <grid-slide>
+        This is just half the story, WebXR can handle AR as well but that's a future talk...
+    </grid-slide>
+	</grid-slides-controller>
+</body>
+</html>
+
